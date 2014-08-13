@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<html>
+<head>
+<title>Mogo Content Management System</title>
+<%= stylesheet_link_tag "xtree", "admin_style", :media => "all" %>
+<%= javascript_include_tag "admin_menubar" %>
+<%= javascript_include_tag "xtree" %>
+
+</head>
+
+<body 
+  text="#ffffff" vLink="#66cccc" aLink="#99cccc" link="#66cccc" bgColor="white"
+  leftMargin="0" background="/themes/lp/images/bk-stripe.jpg" topMargin="0"
+  marginheight="0" marginwidth="0" >
+
+<div class=container>
+<!--
+===================================
+top menu
+===================================
+-->
+<table cellSpacing="0" cellPadding="0" width="100%" border="0">
+	<tr>
+		<td valign="top">
+			<!--
+			===================================
+			left panel
+			===================================
+			-->
+			<div class=left-panel>
+			<div id=sidebar-left-top>
+				<table>
+				<tr><td><IMG src="/images/mogo-logo-small.gif" border=0></td></tr>
+				</table>
+			</div>
+
+			<div id=sidebar-left>
+				<div class=block id="block-explore-channel">
+					<a id=block-title href="javascript:toggle('n-block-0')" >
+						<IMG id="n-block-0image"
+						height=10 src="/images/arrow-rt.gif" width=10 border=0>Explore channels</a>
+
+					<div class=block-content id="n-block-0" style="DISPLAY: none">
+						<script type="text/javascript">
+							var tree = new WebFXTree('Root');
+							tree.setBehavior('explorer');
+							tree.text = "";
+
+							function toggle_open_close(tree_item)
+							{
+								if (tree_item.open)
+									tree_item.collapse();
+								else
+									tree_item.expand();
+							}
+
+							<% channels = Channel.find(:all, :order => :channel_sequence) %>      			
+							<% nchannel = 0 %>
+							<% for channel in channels %>
+								<% nchannel+= 1 %>
+								var channel<%=nchannel.to_s%> = new WebFXTreeItem("<%=channel.channel_name%>");
+								channel<%=nchannel.to_s%>.open = false;
+								channel<%=nchannel.to_s%>.action = "javascript: window.location='/admin/show_channel?id=<%=channel.channel_id%>'";
+								tree.add(channel<%=nchannel.to_s%>);
+
+								<% categorys = channel.categorys %>
+								<% ncategory = 0 %>
+								<% for category in categorys %>
+									<% ncategory += 1 %>
+
+									var category<%=ncategory.to_s%> = new WebFXTreeItem("<%=category.category_name_zh%>");
+									category<%=ncategory.to_s%>.open=false;
+									category<%=ncategory.to_s%>.action = "javascript:window.location='/admin/show_category?id=<%=category.category_id%>'";
+									channel<%=nchannel.to_s%> .add(category<%=ncategory.to_s%>);
+
+									<% programs = category.programs %>
+									<% for program in programs %>
+										var program = new WebFXTreeItem("<%=program.program_name%>"); 
+										category<%=ncategory.to_s%>.add(program);							
+										program.action = "javascript:window.location='/admin/show_program?id=<%=program.program_id%>'";
+									<%end%>
+								<%end%>
+							<%end%>
+
+							document.write(tree);
+						</script>	
+      			
+					</div>
+				</div>
+
+				<div class=block id="block-channels">
+					<a id=block-title href="javascript:toggle('n-block-1')" >
+						<IMG id="n-block-1image"
+						height=10 src="/images/arrow-rt.gif" width=10 border=0>Channels</a>
+
+					<div class=block-content id="n-block-1" style="DISPLAY: none">
+						<ul>
+							<li><%= link_to 'show channels', :action => 'list_channels' %></li>
+							<li><%= link_to 'new channel', :action => 'new_channel' %></li>
+						</ul>  
+					</div>
+				</div>
+
+				<div class=block id="block-categories">
+					<a id=block-title href="javascript:toggle('n-block-2')" >
+						<IMG id="n-block-2image"
+						height=10 src="/images/arrow-rt.gif" width=10 border=0>Categories</a>
+
+					<div class=block-content id="n-block-2" style="DISPLAY: none">
+						<ul>
+							<li><%= link_to 'show categories', :action => 'list_categorys' %></li>
+							<li><%= link_to 'new category', :action => 'new_category' %></li>
+						</ul>  
+					</div>
+				</div>
+
+				<div class=block id="block-programs">
+					<a id=block-title href="javascript:toggle('n-block-3')" >
+						<IMG id="n-block-3image"
+						height=10 src="/images/arrow-rt.gif" width=10 border=0>Programs</a>
+
+					<div class=block-content id="n-block-3" style="DISPLAY: none">
+						<ul>
+							<li><%= link_to 'show programs', :action => 'list_programs' %></li>
+							<li><%= link_to 'new program', :action => 'new_program' %></li>
+						</ul>  
+					</div>
+				</div>
+
+			</div>
+
+			<div id=sidebar-left-bottom>
+			</div>
+			</div>
+
+			<!--
+			===================================
+			left panel end
+			===================================
+			-->
+		</td>
+		<td valign=top>
+			<table cellSpacing="0" cellPadding="0" width="100%" border="0">
+				<tr>
+					<td>
+						<!--
+						===================================
+						top panel
+						===================================
+						-->
+						<div class=top-panel>
+						</div>
+						<!--
+						===================================
+						top panel end
+						===================================
+						-->
+					</td>
+				</tr>
+				<tr>
+					<td valign=top>
+						<table cellSpacing="0" cellPadding="0" width="100%" border="0">
+							<tr>
+								<td bgcolor=#666666 valign=top>
+									<!--
+									===================================
+									main panel
+									===================================
+									-->
+									<div class=main-panel>
+									<div id=main>
+									<!-- start main content -->
+									<% if flash[:notice] -%>
+									<div id="notice" ><%= flash[:notice] %></div>
+									<% end -%>
+									<%= yield :layout %>
+										<!-- end main content -->
+									</div>
+									</div>
+
+									<!--
+									===================================
+									main panel end
+									===================================
+									-->
+								</td>
+								<td bgcolor=#333333>
+									<!--
+									===================================
+									right panel
+									===================================
+									-->
+									<div class=right-panel>
+									<div id=sidebar-right>
+									</div>
+									</div>
+
+									<!--
+									===================================
+									right panel end
+									===================================
+									-->
+								</td>
+							</tr>
+						</table>	
+					</td>
+				</tr>
+				
+		</td>
+	</tr>
+</table>	
+
+<script language=JavaScript>
+<!--
+open_all_nodes();
+open_node('n-user-0');
+open_node('n-user-1');
+open_node('n-block-7');
+-->
+</SCRIPT>
+
+</td>
+</tr>
+</table>
+<!--
+===================================
+outer most table end
+===================================
+-->
+
+</body>
+</html>

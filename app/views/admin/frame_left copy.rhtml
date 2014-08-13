@@ -1,0 +1,370 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<html>
+<head>
+<title>Mogo Content Management System</title>
+<%= stylesheet_link_tag "admin_style", :media => "all" %>
+
+<style type="text/css">
+<!--
+	a.highlite {
+		background: gray;
+	}
+
+	ul#channel-list {
+		margin: 0 0 0 15px;
+		padding: 0 0 0 10px;
+	}
+-->
+</style>
+
+
+<%= javascript_include_tag "jquery" %>
+<%= javascript_include_tag "admin_menubar" %>
+<script type="text/javascript">
+function content_onClick(action_path)
+{
+	parent.frames.frame_center.location.href = action_path;
+}
+
+$(function() {
+	$('li.explorer:has(ul)')
+		.click(function(event){
+			if (this == event.target) {
+        channel_id = $(this).attr("channel_id");
+        category_id = $(this).attr("category_id");
+        program_id = $(this).attr("program_id");        
+        if (category_id == '0') {
+					 content_onClick('/admin/show_channel?id=' + channel_id);
+        } 
+        else {
+          content_onClick('/admin/show_category?id=' + category_id);
+        }
+        
+        if ($(this).children('ul').is(':hidden')) {
+        	$(this)
+          	.css({'list-style-image':'url(/images/tree-down-arrow2.gif)'})
+            .children('ul').slideDown();
+        }
+        else {
+        	$(this)
+            .css({'list-style-image':'url(/images/tree-right-arrow2.gif)'})
+            .children('ul').slideUp();
+        }
+        
+        $('.highlite').removeClass('highlite');
+  			$(this).children('a').addClass('highlite');
+
+      }
+      return false;
+    })
+    .css({cursor:'pointer', 'list-style-image':'url(/images/tree-right-arrow2.gif)'})
+    .children('ul').hide()
+    .parent().children('a')
+		.click(function(event){
+			if (this == event.target) {
+				$(this).parent().trigger('click');
+			}
+			return false;
+    });
+          
+	$('li.explorer:not(:has(ul))')
+	.click(function(event) {
+		channel_id = $(this).attr("channel_id");
+    category_id = $(this).attr("category_id");
+    program_id = $(this).attr("program_id");        
+         
+   	$('.highlite').removeClass('highlite');
+  	$(this).children('a').addClass('highlite');
+
+		if (program_id == '0') {
+    	content_onClick('/admin/show_category?id=' + category_id);
+    }
+    else {
+       content_onClick('/admin/show_program?id=' + program_id);
+    }
+		return false;
+	})
+	.css({
+     cursor: 'pointer', 'list-style-image':'url(/images/tv-icon-white.gif)',
+     'list-style-type':'none'
+  })
+	.children('a')
+	.click(function(event) {
+  	if (this == event.target) {
+			$(this).parent().trigger('click');
+  	}
+  	return false;
+
+	});
+  
+});
+
+</script>
+
+</head>
+
+<body 
+  text="#ffffff" vLink="#66cccc" aLink="#99cccc" link="#66cccc" bgColor="white"
+  leftMargin="0" background="/themes/lp/images/bk-stripe.jpg" topMargin="0"
+  marginheight="0" marginwidth="0">
+
+<script type="text/javascript">
+function content_onClick(action_path)
+{
+	parent.frames.frame_center.location.href = action_path;
+}
+</script>
+
+<%
+  	user_id = session[:user_id]
+    user = User.find(user_id)
+%>
+
+<!--
+===================================
+left panel
+===================================
+-->
+<div class=left-panel>
+	<div id=sidebar-left-top>
+		<IMG src="/images/mogo-logo-small.gif" border=0>
+	</div>
+
+	<div id=sidebar-left>
+		<!-- block ================================================== -->
+		<div class=block id="block-login">
+				<a id=block-title href="javascript:toggle('n-block-x')" >
+					<IMG id="n-block-ximage"
+					height=10 src="/images/arrow-rt.gif" width=10 border=0><%=user.user_name%></a>
+
+				<div class=block-content id="n-block-x" style="DISPLAY: none">
+					<ul>
+						<li><a href=# onClick="javascript:parent.location.href='/login/logout'">logout</a></li>
+					</ul>  
+				</div>
+		</div>
+
+
+		<!-- block ================================================== -->
+		<div class=block id="block-explore-channel">
+				<a id=block-title href="javascript:toggle('n-block-0')" >
+					<IMG id="n-block-0image"
+					height=10 src="/images/arrow-rt.gif" width=10 border=0>Explore channels</a>
+
+				<div class=block-content id="n-block-0" style="DISPLAY: none">
+<ul id="channel-list">
+<% channels = Channel.find(:all, :conditions => "channel_id <> 8", :order => :weight) %>      			
+<% nchannel = 0 %>
+<% for channel in channels %>
+	<% nchannel+= 1 %>
+	<li class="explorer channel-<%=channel.channel_id%>" channel_id="<%=channel.channel_id%>" category_id="0" program_id="0"><a href="#"><%=channel.channel_name%></a>
+	<% categorys = channel.categorys %>
+	<% ncategory = 0 %>
+	<ul>
+	<% for category in categorys %>
+		<% ncategory += 1 %>
+		<li class="explorer category-<%=category.category_id%>" channel_id="<%=channel.channel_id%>" category_id="<%=category.category_id%>" program_id="0"><a href="#"><%=category.category_name_cn%></a>
+		<% subcategorys = category.categorys %>
+		<% if subcategorys.size > 0 %>
+			<% nsubcategory = 0 %>
+			<ul>
+			<% for subcategory in subcategorys %>
+				<% nsubcategory += 1 %>
+				<li class="explorer category-<%=subcategory.category_id%>" channel_id="<%=channel.channel_id%>"  category_id="<%=subcategory.category_id%>" program_id="0"><a href="#"><%=subcategory.category_name_cn%></a>
+				<% programs = subcategory.programs %>
+				<ul>
+				<% for program in programs %>
+					<li class="explorer program-<%=program.program_id%>" channel_id="<%=channel.channel_id%>" category_id="<%=subcategory.category_id%>" program_id="<%=program.program_id%>"><a href="#"><%=program.program_name_cn%></a></li>
+				<% end %>
+				</ul>
+				</li>
+			<% end %>
+			</ul>
+		<% else %>
+			<% programs = category.programs %>
+			<ul>
+			<% for program in programs %>
+				<li class="explorer program-<%=program.program_id%>" channel_id="<%=channel.channel_id%>" category_id="<%=category.category_id%>" program_id="<%=program.program_id%>"><a href="#"><%=program.program_name_cn%></a></li>
+			<% end %>
+			</ul>
+		<% end %>
+		</li>
+	<% end %>
+	</ul>
+	</li>
+<% end %>
+</ul>
+
+				</div>
+		</div>
+
+		<!-- block ================================================== -->
+		<div class=block id="block-channels">
+				<a id=block-title href="javascript:toggle('n-block-1')" >
+					<IMG id="n-block-1image"
+					height=10 src="/images/arrow-rt.gif" width=10 border=0>Channels</a>
+
+				<div class=block-content id="n-block-1" style="DISPLAY: none">
+					<ul>
+						<li><a href=# onClick="javascript:content_onClick('/admin/list_channels')">show channels</a></li>
+						<li><a href=# onClick="javascript:content_onClick('/admin/new_channel')">add channel</a></li>
+					</ul>  
+				</div>
+		</div>
+
+		<!-- block ================================================== -->
+		<div class=block id="block-categories">
+				<a id=block-title href="javascript:toggle('n-block-2')" >
+					<IMG id="n-block-2image"
+					height=10 src="/images/arrow-rt.gif" width=10 border=0>Categories</a>
+
+				<div class=block-content id="n-block-2" style="DISPLAY: none">
+					<ul>
+						<li><a href=# onClick="javascript:content_onClick('/admin/list_categorys')">show categories</a></li>
+						<li><a href=# onClick="javascript:content_onClick('/admin/new_category')">add category</a></li>
+					</ul>  
+				</div>
+		</div>
+
+		<!-- block ================================================== -->
+		<div class=block id="block-programs">
+				<a id=block-title href="javascript:toggle('n-block-3')" >
+					<IMG id="n-block-3image"
+					height=10 src="/images/arrow-rt.gif" width=10 border=0>Programs</a>
+
+				<div class=block-content id="n-block-3" style="DISPLAY: none">
+					<ul>
+						<li><a href=# onClick="javascript:content_onClick('/admin/list_programs')">show programs</a></li>
+						<li><a href=# onClick="javascript:content_onClick('/admin/list_new_programs')">show new programs</a></li>
+						<li><a href=# onClick="javascript:content_onClick('/admin/list_disabled_programs')">show disabled programs</a></li>
+						<li><a href=# onClick="javascript:content_onClick('/admin/list_coming_programs')">show coming programs</a></li>
+						<li><a href=# onClick="javascript:content_onClick('/admin/list_expired_programs')">show expired programs</a></li>
+						<li><a href=# onClick="javascript:content_onClick('/admin/new_program')">add program</a></li>
+					</ul>  
+				</div>
+		</div>
+
+		<!-- block ================================================== -->
+		<div class=block id="block-video-ads">
+				<a id=block-title href="javascript:toggle('n-block-7')" >
+					<IMG id="n-block-7image"
+					height=10 src="/images/arrow-rt.gif" width=10 border=0>Video Ads</a>
+
+				<div class=block-content id="n-block-7" style="DISPLAY: none">
+					<ul>
+						<li><a href=# onClick="javascript:content_onClick('/admin/list_ads')">show video ads</a></li>
+						<li><a href=# onClick="javascript:content_onClick('/admin/new_ad')">add video ad</a></li>
+					</ul>  
+				</div>
+		</div>
+
+		<!-- block ================================================== -->
+		<div class=block id="block-partners">
+				<a id=block-title href="javascript:toggle('n-block-8')" >
+					<IMG id="n-block-8image"
+					height=10 src="/images/arrow-rt.gif" width=10 border=0>Partners</a>
+
+				<div class=block-content id="n-block-8" style="DISPLAY: none">
+					<ul>
+						<li><a href=# onClick="javascript:content_onClick('/admin/list_partners')">show partners</a></li>
+						<li><a href=# onClick="javascript:content_onClick('/admin/new_partner')">add partner</a></li>
+					</ul>  
+				</div>
+		</div>
+
+		<!-- block ================================================== -->
+		<div class=block id="syndications">
+				<a id=block-title href="javascript:toggle('n-block-13')" >
+					<IMG id="n-block-13image"
+					height=10 src="/images/arrow-rt.gif" width=10 border=0>Syndications</a>
+
+				<div class=block-content id="n-block-13" style="DISPLAY: none">
+					<ul>
+						<li><a href=# onClick="javascript:content_onClick('/admin/list_syndications')">show syndications</a></li>
+						<li><a href=# onClick="javascript:content_onClick('/admin/new_syndication')">add syndication</a></li>
+					</ul>  
+				</div>
+		</div>
+
+		<!-- block ================================================== -->
+		<div class=block id="block-system">
+				<a id=block-title href="javascript:toggle('n-block-9')" >
+					<IMG id="n-block-9image"
+					height=10 src="/images/arrow-rt.gif" width=10 border=0>System operations</a>
+
+				<div class=block-content id="n-block-9" style="DISPLAY: none">
+					<ul>
+						<li><a href=# onClick="javascript:content_onClick('/admin/program_index')">reindex programs</a></li>
+					</ul>  
+					<ul>
+						<li><a href=# onClick="javascript:content_onClick('/admin/dump_db')">synchronize database</a></li>
+					</ul>  
+					<ul>
+						<li><a href=# onClick="javascript:content_onClick('/admin/program_stats_update')">update video statistics</a></li>
+					</ul>  
+				</div>
+		</div>
+
+		<!-- block ================================================== -->
+		<div class=block id="block-logs">
+				<a id=block-title href="javascript:toggle('n-block-10')" >
+					<IMG id="n-block-10image"
+					height=10 src="/images/arrow-rt.gif" width=10 border=0>Logs</a>
+
+				<div class=block-content id="n-block-10" style="DISPLAY: none">
+					<ul>
+						<li><a href=# onClick="javascript:content_onClick('/admin/show_stats')">show stats</a></li>
+						<li><a href=# onClick="javascript:content_onClick('/admin/list_logs')">search logs</a></li>
+					</ul>  
+				</div>
+		</div>
+
+		<!-- block ================================================== -->
+		<div class=block id="block-recommdations">
+				<a id=block-title href="javascript:toggle('n-block-12')" >
+					<IMG id="n-block-12image"
+					height=10 src="/images/arrow-rt.gif" width=10 border=0>Email recommendations</a>
+
+				<div class=block-content id="n-block-12" style="DISPLAY: none">
+					<ul>
+						<li><a href=# onClick="javascript:content_onClick('/admin/list_video_recommendations')">search email recommendations</a></li>
+					</ul>  
+				</div>
+		</div>
+
+		<!-- block ================================================== -->
+		<div class=block id="block-users">
+				<a id=block-title href="javascript:toggle('n-block-11')" >
+					<IMG id="n-block-11image"
+					height=10 src="/images/arrow-rt.gif" width=10 border=0>Users</a>
+
+				<div class=block-content id="n-block-11" style="DISPLAY: none">
+					<ul>
+						<li><a href=# onClick="javascript:content_onClick('/login/list_users')">show users</a></li>
+						<li><a href=# onClick="javascript:content_onClick('/login/add_user')">add user</a></li>
+					</ul>  
+				</div>
+		</div>
+	</div>
+
+	<div id=sidebar-left-bottom>
+	</div>
+</div>
+
+<!--
+===================================
+left panel end
+===================================
+-->
+
+<script language=JavaScript>
+<!--
+//open_all_nodes();
+//open_node('n-block-0');
+-->
+</SCRIPT>
+
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<h1>Listing channel</h1>
+
+<table>
+  <tr>
+  <% for column in Channel.content_columns %>
+    <th><%= column.human_name %></th>
+  <% end %>
+  </tr>
+  
+<% for channel in @channel %>
+  <tr>
+  <% for column in Channel.content_columns %>
+    <td><%=h channel.send(column.name) %></td>
+  <% end %>
+    <td><%= link_to 'Show', :action => 'show', :id => channel %></td>
+    <td><%= link_to 'Edit', :action => 'edit', :id => channel %></td>
+    <td><%= link_to 'Destroy', { :action => 'destroy', :id => channel }, :confirm => 'Are you sure?', :method => :post %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Previous page', { :page => @channel_pages.current.previous } if @channel_pages.current.previous %>
+<%= link_to 'Next page', { :page => @channel_pages.current.next } if @channel_pages.current.next %> 
+
+<br />
+
+<%= link_to 'New channel', :action => 'new' %>

@@ -1,0 +1,15 @@
+<%= error_messages_for 'ad' %>
+
+<table width=550 cellpadding="0" cellspacing="2">
+<tr>
+	<td width=220 bgcolor="#333333"><label for="ad_name">Ad name:</label></td>
+	<td width=300 bgcolor="#333333"><%= text_field 'ad', 'ad_name'  %></td>
+</tr>
+<tr>
+	<td width=220 bgcolor="#333333"><label for="logo">Video path:</label></td>
+	<td width=300 bgcolor="#333333">
+		<%= text_field 'ad', 'ad_flv_video', {'readonly'=>'true', 'style'=>'background-color:#fbc5f8'} %>
+		<%= select_tag 'ad_flv_video_select', file_select_options(["public" + $path_ad_video], /.*/)%>
+	</td>
+</tr>
+</table>

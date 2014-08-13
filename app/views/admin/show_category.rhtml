@@ -1,0 +1,362 @@
+<% role = session[:role] %>
+<%= stylesheet_link_tag "admin_style", :media => "all" %>
+
+<%= javascript_include_tag "jquery" %>
+
+<script type="text/javascript">
+jQuery.noConflict(); 
+
+function delete_program(programId) {
+	if (confirm("Are you sure you want to delete?")) {
+		jQuery.get('/admin/destroy_program', {id:programId},                  
+    	function(data) { 
+				jQuery('#program-' + data).remove();
+				jQuery('#program-weight-' + data).remove();
+			}
+		);
+
+	}
+}
+
+function unlink_program(categoryId, programId) {
+	if (confirm("Are you sure you want to unlink?")) {
+		jQuery.get('/admin/destroy_category_program', {category_id:categoryId, program_id:programId},                  
+    	function(data) { 
+				jQuery('#program-' + data).remove();
+				jQuery('#program-weight-' + data).remove();
+			}
+		);
+
+	}
+}
+    
+function view_program_brief(programId) {
+	jQuery('#view-program-brief-button-' + programId).addClass('active');
+	jQuery('#view-program-detail-button-' + programId).removeClass('active');
+	jQuery('#edit-program-button-' + programId).removeClass('active');
+	jQuery('#play-program-button-' + programId).removeClass('active');
+	jQuery('#youku-program-button-' + programId).removeClass('active');
+	jQuery('#koobee-program-button-' + programId).removeClass('active');
+
+	jQuery('#program-brief-' + programId).show();
+	jQuery('#program-detail-' + programId).hide();
+	jQuery('#program-edit-' + programId).hide();	
+	jQuery('#program-play-' + programId).hide();	
+	jQuery('#program-youku-' + programId).hide();	
+	jQuery('#program-koobee-' + programId).hide();		
+}
+
+function view_program_detail(programId) {
+	jQuery('#view-program-brief-button-' + programId).removeClass('active');
+	jQuery('#view-program-detail-button-' + programId).addClass('active');
+	jQuery('#edit-program-button-' + programId).removeClass('active');
+	jQuery('#play-program-button-' + programId).removeClass('active');
+	jQuery('#youku-program-button-' + programId).removeClass('active');
+	jQuery('#koobee-program-button-' + programId).removeClass('active');
+
+	jQuery('#program-brief-' + programId).hide();
+	jQuery('#program-detail-' + programId).show().load('/admin/show_program?id=' + programId);
+	jQuery('#program-edit-' + programId).hide();
+	jQuery('#program-play-' + programId).hide();	
+	jQuery('#program-youku-' + programId).hide();	
+	jQuery('#program-koobee-' + programId).hide();		
+}
+
+function edit_program(programId) {	
+	jQuery('#view-program-brief-button-' + programId).removeClass('active');
+	jQuery('#view-program-detail-button-' + programId).removeClass('active');
+	jQuery('#edit-program-button-' + programId).addClass('active');
+	jQuery('#play-program-button-' + programId).removeClass('active');
+	jQuery('#youku-program-button-' + programId).removeClass('active');
+	jQuery('#koobee-program-button-' + programId).removeClass('active');
+
+	jQuery('#program-brief-' + programId).hide();
+	jQuery('#program-detail-' + programId).hide();
+	jQuery('#program-edit-' + programId).show()
+	.css({'height':'500px'})
+	.get(0).src = '/admin/edit_program?id=' + programId;
+	jQuery('#program-play-' + programId).hide();	
+	jQuery('#program-youku-' + programId).hide();	
+	jQuery('#program-koobee-' + programId).hide();		
+}
+
+function play_program(programId) {
+	jQuery('#view-program-brief-button-' + programId).removeClass('active');
+	jQuery('#view-program-detail-button-' + programId).removeClass('active');
+	jQuery('#edit-program-button-' + programId).removeClass('active');
+	jQuery('#play-program-button-' + programId).addClass('active');
+	jQuery('#youku-program-button-' + programId).removeClass('active');
+	jQuery('#koobee-program-button-' + programId).removeClass('active');
+
+	jQuery('#program-brief-' + programId).hide();
+	jQuery('#program-detail-' + programId).hide();
+	jQuery('#program-edit-' + programId).hide();	
+	jQuery('#program-play-' + programId).show()
+	.css({'height':'408px', 'width':'495px'})
+	.get(0).src = '/admin/play_program?id=' + programId + "&source=mogo";
+	jQuery('#program-youku-' + programId).hide();
+	jQuery('#program-koobee-' + programId).hide();		
+}
+
+function youku_program(programId) {
+	jQuery('#view-program-brief-button-' + programId).removeClass('active');
+	jQuery('#view-program-detail-button-' + programId).removeClass('active');
+	jQuery('#edit-program-button-' + programId).removeClass('active');
+	jQuery('#play-program-button-' + programId).removeClass('active');
+	jQuery('#youku-program-button-' + programId).addClass('active');
+	jQuery('#koobee-program-button-' + programId).removeClass('active');
+
+	jQuery('#program-brief-' + programId).hide();
+	jQuery('#program-detail-' + programId).hide();
+	jQuery('#program-edit-' + programId).hide();	
+	jQuery('#program-play-' + programId).hide();	
+	jQuery('#program-youku-' + programId).show()
+	.css({'height':'408px', 'width':'495px'})
+	.get(0).src = '/admin/play_program?id=' + programId + "&source=youku";
+	jQuery('#program-koobee-' + programId).hide();		
+}
+
+function koobee_program(programId) {
+	jQuery('#view-program-brief-button-' + programId).removeClass('active');
+	jQuery('#view-program-detail-button-' + programId).removeClass('active');
+	jQuery('#edit-program-button-' + programId).removeClass('active');
+	jQuery('#play-program-button-' + programId).removeClass('active');
+	jQuery('#youku-program-button-' + programId).removeClass('active');
+	jQuery('#koobee-program-button-' + programId).addClass('active');
+
+	jQuery('#program-brief-' + programId).hide();
+	jQuery('#program-detail-' + programId).hide();
+	jQuery('#program-edit-' + programId).hide();	
+	jQuery('#program-play-' + programId).hide();	
+	jQuery('#program-youku-' + programId).hide();		
+	jQuery('#program-koobee-' + programId).show()
+	.css({'height':'408px', 'width':'495px'})
+	.get(0).src = '/admin/play_program?id=' + programId + "&source=koobee";
+}
+
+  
+jQuery(function() {
+	jQuery('ul.panel-title-ul')
+		.click(function(event) {
+      	if (jQuery(this).parent().children('.panel-content').is(':hidden')) {
+        	jQuery(this)
+           .children('li.panel-title-li').css({'list-style-image':'url(/images/arrow-dn.gif)'})
+           .parent().parent().children('.panel-content').slideDown();
+       	}
+        else {
+        	jQuery(this)
+           .children('li.panel-title-li').css({'list-style-image':'url(/images/arrow-rt.gif)'})
+           .parent().parent().children('.panel-content').slideUp()
+       	}
+        
+      return false;
+    });
+          
+  // *** open the categories panel
+	jQuery('.categories:has(.panel)').children('ul.panel-title-ul').trigger('click');
+	  
+  // *** open the programs panel
+	jQuery('.programs:has(.panel)').children('ul.panel-title-ul').trigger('click');
+});
+
+</script>
+
+<!-- ***** update category start ***** -->
+<div class="panel category"><ul class="panel-title-ul"><li class="panel-title-li">Category: <%= @category.category_name_cn %></li></ul>
+
+<!-- ***** update category content start ***** -->
+<div class="panel-content" style="DISPLAY: none">
+	<iframe width="600" height="50" src="/admin/edit_category?id=<%=@category.id%>" ALLOWTRANSPARENCY="true" vspace="0" scrolling="no" frameborder="0" hspace="0" ></iframe>
+</div>
+<!-- ***** update category content end ***** -->
+
+</div>
+<!-- ***** update category end ***** -->
+
+<!-- ***** show linked categories start ***** -->
+<% category_categorys = CategoryCategory.find(:all, :conditions => {:parent_category_id => @category.id}, :order => "weight") %>
+<div class="panel categories"><ul class="panel-title-ul"><li class="panel-title-li">Linked categories (<%=category_categorys.length()%>)</li></ul>
+
+<!-- ***** show linked categories content start ***** -->
+<div class="panel-content" style="DISPLAY: none">
+<% form_tag :action => 'update_category_category_weights' do %>
+	<%= hidden_field_tag "parent_category_id", @category.id%>
+	<% if category_categorys.size > 0 %>
+		<% for category_category in category_categorys %>
+			<% child_category = Category.find(category_category.child_category_id) %>
+
+				<!-- ***** edit category start ***** -->
+				<div class="panel edit-category" style="border: none;"><ul class="panel-title-ul"><li class="panel-title-li"><%=child_category.category_name_cn%></li></ul>
+					<div class="panel-content" style="DISPLAY: none">
+						<iframe width="600" height="50" src="/admin/edit_category?id=<%=child_category.id%>" ALLOWTRANSPARENCY="true" vspace="0" scrolling="no" frameborder="0" hspace="0" ></iframe>
+<% if role == "admin" %>
+						<%= link_to 'delete', {:action => 'destroy_category', :id => child_category}, :confirm => 'Are you sure? This will premanently delete the category', :method => :post %> - 
+						<%= link_to "unlink", {:action => "destroy_category_category", :parent_category_id => @category.id, :child_category_id => child_category.id}, :confirm => "Are you sure?", :method => :post%>
+<% end %>
+					</div>
+				</div>
+				<!-- ***** edit category end ***** -->
+		
+			<table width=500 cellpadding="0" cellspacing="0">
+				<tr>
+					<td align=right>weight:&nbsp;<%= select_tag 'weight['+ child_category.id.to_s + ']', options_for_select(list_weights, category_category.weight) %></td>
+				</tr>
+			</table>
+
+		<% end %>
+<% if role == "admin" %>
+		<%= submit_tag 'Update weights' %>
+<% end %>
+	<% else %>
+		No sub categories.
+	<% end %>
+<% end %>
+</div>
+<!-- ***** show linked categories content end ***** -->
+
+</div>
+<!-- ***** show linked categories end ***** -->
+
+<% if role == "admin" %>
+<!-- ***** link category start ***** -->
+<div class="panel link-category"><ul class="panel-title-ul"><li class="panel-title-li">Link a category</li></ul>
+
+<!-- ***** link category content start ***** -->
+<div class="panel-content" style="DISPLAY: none">
+<% form_tag :action => 'create_category_category' do %>
+	<%= hidden_field_tag "category_category[parent_category_id]", @category.id%>
+		<table width=700 cellpadding="0" cellspacing="0">
+			<tr>
+				<td colspan=2 align=left><select id="category_category_link_setting" name="category_category_link_setting"><option value="-1">-- select an option --</option><option value="unlinked">Show only unlinked categories</option><option value="0">Show all categories</option></select></td>
+			</tr>
+			<tr><td colspan=2 height=10></td></tr>
+			<tr>
+				<td width=500 align=left>categories:&nbsp;<div id="category_category_link_div"><select id="category_category[child_category_id]" name="category_category[child_category_id]"><option>-- select a subcategory to link --</option></select></div></td>
+				<td width=200 align=left>weight:&nbsp;<%= select_tag 'category_category[weight]', options_for_select(list_weights) %></td>
+					<%= observe_field "category_category_link_setting", :update => "category_category_link_div",
+						:with => "channel_id", :url => { :action => "get_category_category_link_select_options"} %>					
+			</tr>
+			<tr><td colspan=2 height=20></td></tr>
+		 <tr>
+				<td><%= submit_tag 'Link in sub category' %></td>
+		 		<td>&nbsp;</td>
+			</tr>
+		</table>
+		<br>
+<% end %>
+</div>
+<!-- ***** link category content end ***** -->
+<% end %>
+</div>
+<!-- ***** link category end ***** -->
+
+<!-- ***** show linked programs start ***** -->
+<% category_programs = CategoryProgram.find(:all, :conditions => {:category_id => @category.id}, :order => "weight") %>
+<div class="panel programs"><ul class="panel-title-ul"><li class="panel-title-li">Linked programs (<%= category_programs.length() %>)</li></ul>
+
+<!-- ***** show linked programs content start ***** -->
+<div class="panel-content" style="DISPLAY: none">
+<% form_tag :action => 'update_category_programs' do %>
+	<%= hidden_field_tag "category_id", @category.id%>
+	<% if category_programs.size > 0 %>
+		<% for category_program in category_programs %>
+			<% program = Program.find(category_program.program_id) %>
+
+			<!-- ***** show one linked program start ***** -->
+			<div id="program-<%=program.program_id%>" class="panel program" style="border: none;"><ul class="panel-title-ul"><li class="panel-title-li"><%=program.program_name_cn%></li></ul>
+
+				<!-- ***** show one linked program content start ***** -->
+				<div class="panel-content program-content" style="DISPLAY: none">
+
+					<div class="tab-container">
+						<ul id="tabnav">
+							<li><a id="view-program-brief-button-<%=program.program_id%>" href="javascript:view_program_brief(<%=program.program_id%>);" class="view-program-brief-button active">brief</a></li>
+							<li><a id="view-program-detail-button-<%=program.program_id%>" href="javascript:view_program_detail(<%=program.program_id%>);" class="view-program-detail-button ">detail</a></li>
+							<li><a id="edit-program-button-<%=program.program_id%>" href="javascript:edit_program(<%=program.program_id%>);" class="edit-program-button ">edit</a></li>
+							<li><a id="play-program-button-<%=program.program_id%>" href="javascript:play_program(<%=program.program_id%>);" class="play-program-button ">play</a></li>
+							<% if program.youku_id != nil && program.youku_id != '' %>
+							<li><a id="youku-program-button-<%=program.program_id%>" href="javascript:youku_program(<%=program.program_id%>);" class="youku-program-button ">youku</a></li>
+							<% end %>
+							<% if program.koobee_uploaded_dt != nil && program.koobee_uploaded_dt != '' %>
+							<li><a id="koobee-program-button-<%=program.program_id%>" href="javascript:koobee_program(<%=program.program_id%>);" class="koobee-program-button ">koobee</a></li>
+							<% end %>
+						</ul>
+					</div>
+			
+					<div id="program-brief-<%=program.program_id%>">
+					</div>
+				<script type="text/javascript">
+						jQuery('#program-brief-<%=program.program_id%>').load('/admin/show_program_brief?id=<%=program.program_id%>');
+					</script>
+					<div id="program-detail-<%=program.program_id%>">
+					</div>
+					<iframe id="program-edit-<%=program.program_id%>" height="0" width="750" frameborder="0" scrolling="auto" class="autoHeight"></iframe>
+					<iframe id="program-play-<%=program.program_id%>" height="0" width="750" frameborder="0" scrolling="auto" class="autoHeight"></iframe>
+					<iframe id="program-youku-<%=program.program_id%>" height="0" width="750" frameborder="0" scrolling="auto" class="autoHeight"></iframe>
+					<iframe id="program-koobee-<%=program.program_id%>" height="0" width="750" frameborder="0" scrolling="auto" class="autoHeight"></iframe>
+					<br>
+<% if role == "admin" %>
+					<a href="javascript:unlink_program('<%=@category.id%>','<%=program.program_id%>');">unlink</a>
+					<a href="javascript:delete_program('<%=program.program_id%>');">delete</a>
+<% end %>
+				</div>
+				<!-- ***** show one linked program content end ***** -->
+
+			</div>
+			<!-- ***** show one linked program end ***** -->
+
+				<table id="program-weight-<%=program.program_id%>" width=600 cellpadding="0" cellspacing="0">
+					<tr>
+						<td align="right">
+							weight:&nbsp;<%= select_tag 'weight['+ program.id.to_s + ']', options_for_select(list_weights, category_program.weight) %>
+						</td>
+					</tr>
+				</table>
+
+		<% end %>
+		<br>
+<% if role == "admin" %>
+		<%= submit_tag 'Update weights' %>
+<% end %>
+	<% else %>
+		No programs
+	<% end %>
+<% end %>
+</div>
+<!-- ***** show linked programs content end ***** -->
+
+</div>
+<!-- ***** show linked programs end ***** -->
+
+<% if role == "admin" %>
+<!-- ***** link program start ***** -->
+<div class="panel link-program"><ul class="panel-title-ul"><li class="panel-title-li">Link a program</li></ul>
+
+<!-- ***** link program content start ***** -->
+<div class="panel-content" style="DISPLAY: none">
+<% form_tag :action => 'create_category_program' do %>
+	<%= hidden_field_tag "category_program[category_id]", @category.id%>
+		<table width=700 cellpadding="0" cellspacing="0">
+			<tr>
+				<td colspan=2 width=100 align=left><select id="category_program_link_setting" name="category_program_link_setting"><option value="-1">-- select an option --</option><option value="0">Show only unlinked programs</option><option value="<%=@category.id%>">Show all programs</option></select></td>
+			</tr>
+			<tr><td colspan=2 height=10></td></tr>
+			<tr>
+				<td width=500 align=left>programs:&nbsp;<div id="category_program_link_div"><select id="category_program[program_id]" name="category_program[program_id]"><option>-- select a program to link --</option></select></div></td>
+				<td width=200 align=left>&nbsp;&nbsp;weight:&nbsp;<%= select_tag 'category_program[weight]', options_for_select(list_weights) %></td>
+					<%= observe_field "category_program_link_setting", :update => "category_program_link_div",
+						:with => "category_id", :url => { :action => "get_category_program_link_select_options"} %>					
+			</tr>
+			<tr><td colspan=2 height=20></td></tr>
+			<tr>
+				<td><%= submit_tag 'Link in program' %></td>
+				<td>&nbsp;</td>
+			</tr>
+		</table>
+		<br>
+<% end %>
+</div>
+<!-- ***** link program content end ***** -->
+<% end %>
+</div>
+<!-- ***** link program end ***** -->

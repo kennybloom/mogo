@@ -1,0 +1,508 @@
+<!doctype html public "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>Carousel Component - Documentation</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.2.2/build/reset-fonts-grids/reset-fonts-grids.css">
+<link href="css/yui.css" rel="stylesheet" type="text/css">
+
+<style type="text/css">
+	table thead td { border: 1px solid #DDDDDD; background-color: #EEEEEE;}
+	table td { padding: 0px; vertical-align: top; border: 1px solid #DDDDDD; }
+</style>
+
+</head>
+<body>
+<div id="doc" class="yui-t7">
+   <div id="hd">
+      <h1>Carousel Component - 0.5.1 - 06/03/2007</h1>
+   </div>
+
+   <div id="bd">
+ 	  <p><a href="updates.html">Release Notes &amp; Download Information</a></p>
+	  <p><a href="http://groups.yahoo.com/group/ycarousel">Join the ycarousel forum (a Yahoo! group)</a><img src="images/new.gif" alt="New!"/></p>
+   	  <p><a href="http://developer.yahoo.com/yui">Requires the Yahoo! UI Library</a></p>
+   	  <img src="images/carousel-screenshot_example.png" alt="Snapshot of Carousel"/>
+   	  <h2>Overview</h2>
+   	  <p>The carousel component manages a list of content (HTML UL and LI elements) that can be displayed horizontally or vertically. The content can be scrolled back and forth with or without animation. The content can reference static HTML content or the list items can be created dynamically on-the-fly (with or without Ajax).</p>
+   	  <p>In order to make the carousel as flexible as possible, several mechanisms have been separated from the component. This separation of concerns allows the application to control:</p>
+   	  <ul>
+   	  <li><strong>Content Loading.</strong> During initial load, next and previous navigation events the application can choose how to load each item (could just use static HTML, use JavaScript arrays or make requests through XMLHttpRequest calls.) Additionally, the application controls what gets put into each list item by supplying an HTML text string defining the item.</li>
+   	  <li><strong>Navigation Control.</strong> The application can specify HTML elements that control the navigation. This allows the carousel to be driven by any type of control the application might want to drive the carousel navigation with.</li>
+   	  <li><strong>External Style.</strong> Style is driven from an external CSS file that may be overriden with application stylesheets.</li>
+   	  </ul>
+
+
+
+   	  <p>Understanding the separation of these three mechanisms from the actual carousel is key to understanding how to adapt it to your solution.</p>
+   	  
+   	  <p>Knowing that you control how and what gets loaded will allow the carousel to be adapted to different data environments. Knowing that navigation controls are not part of the carousel gives you the flexibility to drive the navigation with buttons, sliders, scrollers or whatever navigation you may find useful. Finally, realizing that you can style the carousel in a multitude of ways (combined with the flexibility of what gets put into each item) will allow you to use the carousel for things like scrolling lists, picture galleries, content viewers or advertising panels.<p>
+   	     	  
+      <h2><a name="examples">Examples</a></h2>
+      <p>The following examples illustrate various aspects of the components flexibility. The examples do not show the full extent of the flexibility-- just illustrate some of the possibilities.</p>
+      <ul id="examples">
+      <li style="margin-top:10px;">Illustrating various loading techniques</li>
+      <ul>
+      <li><a href="carousel_html_static.html">Static HTML</a> - Carousel content expressed
+      solely in HTML markup.</li>
+      <li><a href="carousel_dhtml_load.html">JavaScript Load</a> - Carousel content loaded via
+      JavaScript (client side load) displayed horizontally.</li>
+      <li><a href="carousel_ajax_load.html">Ajax Load</a> - Loading Carousel via Ajax (server side load).</li>
+      <li><a href="carousel_ajax_search.html">Ajax Search</a> - Loading and reloading content via Ajax.</li>
+      <li><a href="carousel_ajax_search_vert.html">Ajax Search (Vertical)</a> - Loading and reloading content via Ajax in a vertical strip illustrating resize during reload.</li>
+      <li><a href="two_carousels_ajax_load.html">Ajax Load - Two Carousels</a> - Loading two Carousels on same page via Ajax (server side load).</li>
+      </ul>
+      <li style="margin-top:10px;">Illustrating flexibility of style</li>
+      <ul>
+      <li><a href="carousel_dhtml_load_vert.html">Vertical Orientation</a> - Carousel
+      content loaded via JavaScript (client side load) displayed horizontally.</li>
+      <li><a href="carousel_slides.html">Slide Show</a> - Showing a carousel managing one large image at a time.</li>      
+      <li><a href="carousel_endless_module.html">Module Scrolling</a> - Example of a news module supporting scrolling of content.</li>      
+      <li><a href="carousel_tabs.html">Module Tabset</a> - Example of showing one page of
+      content at at time in tabs. </li>
+      </ul>
+      <li style="margin-top:10px;">Illustrating key features</li>
+      <ul>
+      <li><a href="carousel_dhtml_load_autoplay.html">Auto Play</a> - Demonstrates the autoPlay functionality. Every 5 seconds the content is scrolled. If user interacts, autoPlay is turned off.</li>
+      <li><a href="carousel_dhtml_load_bounded_wrap.html">Wrap</a> - Demonstrates the wrap functionality.</li>
+      <li><a href="carousel_dhtml_load_bounded_wrap_offset.html">Offset</a> - Demonstrates setting the firstItemVisible property (with wrap.)</li>
+      <li><a href="carousel_dhtml_load_bounded.html">Bounded Carousel</a> - Loading
+      Carousel via JavaScript (client side load) with the size constrained.</li>
+      <li><a href="carousel_html_no_anim.html">No Animation</a> - Carousel configured for no animation.</li>  
+      <li><a href="carousel_manage_items.html">Managing Items</a> - Inserting items, clearing and reload items in the list.</li>  
+      <li><a href="carousel_spotlight.html">Spotlight</a> - Illustrates how to use the carousel for a spotlight with preview.</li>  
+      </ul>
+      </ul>
+      
+      <h2>Compatibility</h2>
+		<p>The Carousel component has been most recently tested and works on these browsers:</p>
+		<ul>
+		<li>IE 7/PC</li>
+		<li>IE 6/PC</li>
+		<li>Firefox 1.5.0.5/Mac</li>
+		<li>Firefox 1.5.0.5/PC</li>
+		<li>Firefox 2.0.0.2/PC</li>
+		<li>Firefox 2.0.0.2/Mac</li>
+		<li>Camino 1.0.4/Mac</li>
+		<li>Safari 2.0.4/Mac</li>
+		<li>Opera 9.21/PC. <em>One issue: Module Scrolling example not working on Opera.</em></li>
+		<li>Opera 9.21/Mac. <em>One issue: Module Scrolling example not working on Opera.</em></li>
+		</ul>
+		
+      <h2>Usage</h2>
+      
+      <h3><a name="getting_started">Getting Started</a></h3>
+      <p>To use the Carousel component, include the source files for Carousel and its dependencies in your web page with the script tag:</p>
+      <pre>
+	&lt;script src="yahoo.js"&gt;&lt;/script&gt; 
+	&lt;script src="event.js"&gt;&lt;/script&gt;  
+	&lt;script src="container_core.js"&gt;&lt;/script&gt;  
+	&lt;script src="dom.js"&gt;&lt;/script&gt;  
+	&lt;script src="animation.js"&gt;&lt;/script&gt; 
+
+	&lt;!-- Source file --&gt;
+	&lt;script src="carousel.js"&gt;&lt;/script&gt;      
+      </pre>
+      
+      <p>The carousel contains a basic CSS stylesheet that must be included. You can 
+      include it like this:</p>
+      <pre>
+	&lt;link href="css/carousel.css" rel="stylesheet" type="text/css"&gt; 
+      </pre>
+      
+      <p>The Carousel object is defined by YAHOO.extension.Carousel.</p>
+		<p>Adding a carousel is a two step process. 
+			<ol>
+				<li>Add the correct HTML markup that will either
+			define the carousel content or be a placeholder for its content.</li>
+			<li>Create an instance of the Carousel component.</li>
+      </ol>
+      <h3><a name="markup">HTML Markup for a Carousel</a></h3>
+  
+      <p>The Carousel expects a very basic HTML markup structure:<p>
+      <pre>
+	&lt;div id="mycarousel" class="carousel-component"&gt;
+	  &lt;div class="carousel-clip-region"&gt;
+	    &lt;ul class="carousel-list">
+	      &lt;-- LI items go here; 
+	          you can specify the LI items in the HTML code directly or 
+	          you can defer the creation of the LI items to later 
+	          (see the <a href="#loading_items">Loading Items</a> section for details.) 
+	      --&gt;
+	    &lt;/ul&gt;
+	&lt;/div&gt;
+	&lt;/div&gt;
+	 </pre>
+	
+	<p>The DIV/DIV/UL structure is expected by the carousel component. The LI items can either be
+		statically placed on the page (see <a href="carousel_html_static.html">Static Load Example</a>) or dynamically loaded 
+		(see <a href="carousel_dhtml_load.html">JavaScript Load Example</a>). 
+	</p>
+	<p>The class names 'carousel-component', 'carousel-clip-region' and 'carousel-list' are important and
+		must be included as illustrated above.</p>
+	<p>The id of the outermost div will be used when creating the carousel component.</p>
+	<p>	
+		Notice that the carousel does not directly contain the user's prev/next
+	 navigation controls. You can nest these controls within the outermost DIV 
+	 of the carousel or you can place them elsewhere within your markup. To allow
+	 the carousel to wire up user events and navigation to your controls, specify them
+	 to the carousel component with the <em>prevElement</em> and the <em>nextElement</em>
+	 configuration parameters. You can pass an ID, an object or a list of IDs or objects.</p>
+
+	<p>For example, you might want to provide an image button for these controls. You
+    might write the HTML like this:</p>
+	<pre>
+	&lt;div&gt;
+	   &lt;img id="prev-arrow" class="left-button-image" src="images/left-enabled.gif"/&gt;
+	&lt;/div&gt;
+	&lt;div&gt;
+	   &lt;img id="next-arrow" class="right-button-image" src="images/right-enabled.gif"/&gt;
+	&lt;/div&gt;
+	</pre>
+
+	<p>Additionally, you will need to pass the configuration parameters
+	<em>prevElement</em> and the <em>nextElement</em> for the previous and next elements. 
+	In this example, the configuration parameters would be passed like this (along with
+	other parameters):</p>
+	<pre>
+	var carousel = new YAHOO.extension.Carousel("dhtml-carousel", 
+	{
+	   "prevElement":     "prev-arrow",
+	   "nextElement":     "next-arrow",
+	});
+	</pre>
+	
+	<p>If you need more than one element controlling the navigation, you can pass a list of ids or objects.</p>
+	<pre>
+	// illustrates getting object reference and passing to nextElement property
+	var nextText  = YAHOO.util.Dom.get("next-text");
+	var nextArrow = YAHOO.util.Dom.get("next-arrow");
+
+	var carousel = new YAHOO.extension.Carousel("dhtml-carousel", 
+	{
+	   "prevElement":     ["prev-arrow", "prev-text"],
+	   "nextElement":     [ nextArrow,    nextText],
+	});
+	</pre>
+	
+	
+	<p>When creating a new a Carousel object, you will need to pass the ID of the top level DIV 
+		from your HTML markup (in this example, you would pass 'mycarousel'</p>
+		<p>When creating LI items statically, make sure you name the ids of each LI item to match. Each LI item should follow the pattern of CAROUSEL_ID + '-item-' + INDEX_OF_LI. If the carousel id is 'mycarousel' then each item will be named: 'mycarousel-item-1', 'mycarousel-item-2', and so on.
+		</p>
+		 
+	 <h3><a name="creation">Instantiating the Carousel Component</a></h3>
+	      <p>
+	 <pre>
+	var carousel = new YAHOO.extension.Carousel("mycarousel", 
+	{
+		"numVisible":        4,
+		"animationSpeed":   .25,
+		"scrollInc":         3,
+		"navMargin":         40,
+		"prevElement":     "prev-arrow",
+		"nextElement":     "next-arrow",
+		"loadInitHandler":   loadInitialItems,
+		"loadNextHandler":   loadNextItems,
+		"loadPrevHandler":   loadPrevItems,
+		"prevButtonStateHandler":   handlePrevButtonState
+	}
+	);
+		</pre>
+
+		<h3><a name="properties">Configuring the Carousel component</a></h3>
+		<p>
+			The carousel constructor accepts configuration properties as an optional second argument. Configuration properties are set when an object is instantiated. These properties are passed to the constructor as an object literal. For example, if you wanted the carousel to be rendered with 4 items visible, you would do the following:</p>
+			<pre>
+	var carousel = new YAHOO.extension.Carousel("mycarousel", 
+	{
+		"numVisible": 4
+	};
+			</pre>
+		  <p>Configuration properties are accessible at runtime through the configuration object's getProperty and setProperty methods. For example the following would grow the number of visible items shown by one:</p>
+			<pre>
+	var numVisible = carousel.cfg.getProperty("numVisible");
+	carousel.cfg.setProperty("numVisible", numVisible+1);
+			</pre>
+		<p>Here are the available properties:</p>
+		  <table>
+		  <thead><tr><td>Property</td><td>Default Value</td><td>Description</td></tr></thead>
+		  <tbody>
+		  <tr><td>firstVisible</td><td>1</td><td>Sets which item should be the first visible item in the carousel.</td></tr>
+		  <tr><td>numVisible</td><td>3</td><td>The number of items that will be visible.</td></tr>
+		  <tr><td>scrollInc</td><td>3</td><td>The number of items to scroll by.</td></tr>
+		  <tr><td>size</td><td>1000000</td><td>The upper hand for scrolling in the 'next' set of content. Set to a large value by default (this means unlimited scrolling.) </td></tr>
+		  <tr><td>wrap</td><td>false</td><td>Specifies whether to wrap when at the end of scrolled content. Only has effect when the <em>size</em> attribute is set.</td></tr>
+		  <tr><td>orientation</td><td>horizontal</td><td>Either "horizontal" or "vertical". Changes carousel from a 
+		  left/right style carousel to a up/down style carousel.</td></tr>
+		  <tr><td>navMargin</td><td>0</td><td>The margin space for the navigation controls. This is only useful for horizontal carousels in which you have embedded navigation controls. The <em>navMargin</em> allocates space between the left and right margins (each navMargin wide) giving space for the navigation controls.</td></tr>
+		  <tr><td>animationSpeed</td><td>.25</td><td>The time (in seconds) it takes to complete the scroll animation. If set to 0, animated transitions are turned off and the new page of content is moved immdediately into place.</td></tr>
+		  <tr><td>animationMethod</td><td>YAHOO.util.Easing.easeOut</td><td>The <a href="http://developer.yahoo.com/yui/docs/animation/YAHOO.util.Easing.html">YAHOO.util.Easing</a> method.</td></tr>
+		  <tr><td>animationCompleteHandler</td><td>null</td><td>JavaScript function that is called when the Carousel finishes animation after a next or previous nagivation. Only invoked if animationSpeed > 0. Two parameters are passed: type (set to 'onAnimationComplete') and args array (args[0] = direction [either: 'next' or 'previous']).</td></tr>
+		  <tr><td>autoPlay</td><td>0</td><td>Specifies how many milliseconds to periodically auto scroll the content. If set to 0 (default) then autoPlay is turned off. If the user interacts by clicking left or right navigation, autoPlay is turned off. You can restart autoPlay by calling the <em>startAutoPlay()</em>. If you externally control navigation (with your own event handlers) then you can turn off the autoPlay by calling<em>stopAutoPlay()</em></td></tr>
+		  <tr><td>loadInitHandler</td><td>null</td><td>JavaScript function that is called when the Carousel needs to load the initial set of visible items. Two parameters are passed: type (set to 'onLoadInit') and args array (args[0] = start, args[1] = last indices).</td></tr>
+		  <tr><td>loadNextHandler</td><td>null</td><td>JavaScript function that is called when the Carousel needs to load the next set of items (in response to the user navigating to the next set.) Two parameters are passed: type (set to 'onLoadInit') and args array (args[0] = start, args[1] = last indices).</td></tr>
+		  <tr><td>loadPrevHandler</td><td>null</td><td>JavaScript function that is called when the Carousel needs to load the previous set of items (in response to the user navigating to the previous set.) Two parameters are passed: type (set to 'onLoadInit') and args array (args[0] = start, args[1] = last indices).</td></tr>
+		  <tr><td>prevElement</td><td>null</td><td>The element ID (string ID) or element object of the HTML element that
+		  will provide the previous navigation control. Can be a list (array) of element IDs or element objects.</td></tr>
+		  <tr><td>nextElement</td><td>null</td><td>The element ID (string ID) or element object of the HTML element that
+		  will provide the previous navigation control. Can be a list (array) of element IDs or element objects.</td></tr>
+		  <tr><td>prevButtonStateHandler</td><td>null</td><td>JavaScript function that is called when the enabled state of the 'previous' control is changing. The responsibility of 
+		  this method is to enable or disable the 'previous' control. Two parameters are passed to this method: <em>type</em> (which is set to "onPrevButtonStateChange") and <em>args</em>, an array that contains two values. The parameter args[0] is a flag denoting whether the 'previous' control is being enabled or disabled. The parameter args[1] is the element object derived from the <em>prevElement</em> parameter.</td></tr>
+		  <tr><td>nextButtonStateHandler</td><td>null</td><td>JavaScript function that is called when the enabled state of the 'next' control is changing. The responsibility of 
+		  this method is to enable or disable the 'next' control. Two parameters are passed to this method: <em>type</em> (which is set to "onPrevButtonStateChange") and <em>args</em>, an array that contains two values. The parameter args[0] is a flag denoting whether the 'next' control is being enabled or disabled. The parameter args[1] is the element object derived from the <em>nextElement</em> parameter.</td></tr>
+		  </tbody>
+		  </table>
+	
+	<h3><a name="styling">Styling the Carousel with CSS</a></h3>
+	<p>The standard markup references three style class names that control the basic layout &amp; style of the carousel.
+		This illustration shows the area each style class is applied to.</p>
+      
+      <div><img src="images/carousel-html-css-structure.png" alt="HTML and CSS Structure"/></div>
+	<ul>
+      <li>DIV class="carousel-component" : The DIV for the overall carousel component. The ID of this DIV should be passed to the Carousel constructor.</li>
+      <li>DIV class="carousel-clip-region" : The DIV that clips the visible region of the Carousel.</li>
+      <li>UL class="carousel-list" : The UL (unordered list) containing the scrolled content. LI items are added dynamically to this area during load, next and previous. The convenience method <em>addItem</em> can be used to populate LI items within UL list.</li>
+      <ul>
+      <li>If the carousel is oriented vertically, the "carousel-vertical" style class is 
+      added to the UL element. This allows unique styling to be applied to the UL element
+      when the carousel is vertical.</li>
+      </ul>
+      </ul>
+      
+      <p>The carousel.css file creates a standard layout and style for the carousel. To override simply add your own CSS file and override the desired styles. To get an idea
+      of the flexibility of the styles you can apply, reference the example pages above.</p>
+      
+      <h4>Core CSS Configuration</h4>
+      <p>The standard carousel.css file is divided into two sections. The first section
+      defines behavior that is integral to the carousel behavior (core behavior.)
+      It controls things like
+      clipping, positioning, initial visibility and z-ordering.</p>
+      
+      <pre>
+	.carousel-component { 
+		position:relative;
+		overflow:hidden;   /* causes the clipping */
+		visibility:hidden; /* component turns it on when first item is rendered */
+	}
+
+	.carousel-component ul.carousel-list { 
+		width:10000000px;
+		position:relative;
+		z-index:1; 
+	}
+
+	.carousel-component .carousel-list li { 
+		float:left;
+		list-style:none;
+		overflow:hidden;
+	}
+
+	/**
+	 * VERTICAL CAROUSEL DEFAULTS
+	 **/
+	.carousel-component .carousel-vertical li { 
+		float:none;
+		margin-bottom:0px;
+		/* Force the LI to respect the HEIGHT specified */
+		overflow:hidden;
+		display:block;
+	}
+
+	/* For vertical carousel, not set, width defaults to auto */
+	/* Note if you explicitly set width to auto, this might cause */
+	/* problems with Safari */	 
+	.carousel-component ul.carousel-vertical {
+	}
+
+	.carousel-component .carousel-clip-region { 
+		overflow:hidden; /* Secret to the clipping */
+		margin:0px auto;
+		position:relative; 
+	}
+
+</pre>
+
+		<h4>What CSS Styles You May Override</h4>
+		<p>The following styles may be of interest to override fonts, colors, margins,
+		padding, etc. <strong>Note that the <em>.carousel-component .carousel-list li</em> selector must have its <em>width</em> parameter configured for the carousel to determine the correct width for each item in the list.</strong></p>
+
+	  <table>
+	  <thead><tr><td>Class Selector</td><td>Default Value</td><td>Description</td></tr></thead>
+	  <tbody>
+	  <tr><td>.carousel-component</td><td>background:#e2edfa;
+		padding:0px;
+		-moz-border-radius:6px;
+		color:#618cbe;</td><td>The style of the overall carousel component. Controls
+	the outermost DIV.</td></tr>
+	  <tr><td>.carousel-component ul.carousel-list</td><td>margin:0px;
+	padding:0px;</td><td>The style of UL list (which contains the items
+	being scrolled.)</td></tr>
+	  <tr><td>.carousel-component .carousel-list li</td><td>text-align:center;
+	margin:0px;
+	padding:0px;
+	font:10px verdana,arial,sans-serif;
+	color:#666;</td><td>The style of each individual item managed by the carousel (LI). <strong>Be sure to specify the <em>width</em> of individual elements by setting the <em>width</em> attribute for this selector. The <em>width</em> should be set the width of the contents plus any margin or paddings specified for elements within the LI item.</strong></td></tr>
+	  <tr><td>.carousel-component ul.carousel-vertical</td><td>&nbsp;</td><td>The style of UL list for vertical carousels.</td></tr>
+	  <tr><td>.carousel-component .carousel-vertical li</td><td>&nbsp;</td><td>The style of each individual item managed by a vertical carousel (LI). <strong>For vertical carousels, be sure to specify the <em>height</em> of individual elements by setting the <em>height</em> attribute for this selector. The <em>height</em> should be set the width of the contents plus any margin or paddings specified for elements within the LI item.</td></tr>
+	  </tbody>
+	  </table>
+		
+	  <h3><a name="controlling">Controlling the Carousel component</a></h3>
+	  <p>The Carousel component has several convenience methods for external manipulation.</p>
+	  <table >
+	  <thead><tr><td>Method</td><td>Parameters</td><td>Description</td></tr></thead>
+	  <tbody>
+
+	  <tr><td>scrollNext()</td><td>none</td><td>Simulates a next button event. Causes the carousel to scroll the next set of content into view.</td></tr>
+	  <tr><td>scrollPrev()</td><td>none</td><td>Simulates a previous button event. Causes the carousel to scroll the previous set of content into view.</td></tr>
+	  <tr><td>scrollTo(itemNum)</td><td><ul><li>itemNum - the item to scroll to</td><td>Scrolls the content to place itemNum as the start item in the view (if size is specified, the last element will not scroll past the end.). Uses current animation speed &amp; method.</li></ul></td></tr>
+	  <tr><td>moveTo(itemNum)</td><td><ul><li>itemNum - the item to move to</td><td>Moves the content to place itemNum as the start item in the view (if size is specified, the last element will not scroll past the end.) Ignores animation speed &amp; method; moves directly to the item. Note that you can also set the <em>firstVisible</em> property upon initialization to get the carousel to start at a position different than 1.</li></ul></td></tr>
+	  <tr><td>clear()</td><td></td><td>Clears all items from the list and resets to initial state just prior to loading items.</td></tr>
+	  <tr><td>reload([numVisible])</td><td>Optional parameter: numVisible. If set, the carousel will resize on the reload to show numVisible items.</td><td>Clears all items from the list and calls the loadInitHandler to load new items into the list. The carousel size is reset to the original size set during creation.</td></tr>
+	  <tr><td>show()</td><td></td><td>Sets the display style to block (making the carousel visible) and recalculates the size of the carousel based on its current contents.</td></tr>
+	  <tr><td>hide()</td><td></td><td>Sets the display style to none (making the carousel hidden).</td></tr>
+	  <tr><td>calculateSize()</td><td></td><td>Will recalculate the size of the carousel based on the current configuration and content.</td></tr>
+	  <tr><td>getItem(index)</td><td>index: for the carousel item</td><td>Returns the LI carousel item at index. Indices start at one (1).</td></tr>
+	  <tr><td>addItem(index, innerHTML)</td><td>Returns &lt;LI&gt; created.<ul><li>index: which item in the list to potentially create. If item already exists it will not create a new item.</li><li>innerHTML: The innerHTML string to use to create an &lt;li&gt; element.</li></ul></td><td>Pass the innerHTML of an &lt;li&gt; element containing the markup for this <em>item's</em> content.</td></tr>
+	  <tr><td>insertBefore(index, innerHTML)</td><td><ul><li>index: which item in the list to insert this item before. </li><li>innerHTML: The innerHTML string to use to create the &lt;li&gt; element.</li></ul></td><td>Pass the innerHTML of an &lt;li&gt; element containing the markup for this <em>item's</em> content.</td></tr>	  
+	  <tr><td>insertAfter(index, innerHTML)</td><td><ul><li>index: which item in the list to insert this item after. If the index is > size of the carousel, the item is appended at the end of the list.</li><li>innerHTML: The innerHTML string to use to create the &lt;li&gt; element.</li></ul></td><td>Pass the innerHTML of an &lt;li&gt; element containing the markup for this <em>item's</em> content.</td></tr>	  	
+	  <tr><td>startAutoPlay([interval])</td><td><ul><li>interval: optional parameter that sets the interval for auto play the next time the autoplay fires.</li></ul></td><td>If autoPlay has been stopped (by calling stopAutoPlay or by user interaction), you can start it back up by calling startAutoPlay().</td></tr>
+	  <tr><td>stopAutoPlay()</td><td></td><td>Stops autoplay. Useful for when you want to control what events will stop the autoplay feature. Call <em>startAutoPlay()</em> to restart autoplay.</td></tr>
+	  </tbody>
+	  </table>
+      <h3><a name="loading_items">Loading Items</a></h3>
+      <h4>Dynamic Content</h4>
+     <p>There are three moments that the Carousel component can create LI items for the content:</p>
+     
+     	  <table >
+	  <thead><tr><td>Event</td><td>Handler</td><td>Description</td></tr></thead>
+	  <tbody>
+	  <tr><td>Load Initial</td><td><em>loadInitHandler</em></td><td>The configuration parameter <em>loadInitHandler</em> defines the JavaScript function to call when the carasoul needs to load the initial set of items. The parameters passed to this function are: <em>type</em> and <em>args</em>. The <em>type</em> is set to to "onLoadInit". The <em>args</em> is an array of two values: <em>start</em> and <em>last</em> which define the first and last indices to load. Will also be called when the reload() method is invoked.</td></tr>
+	  <tr><td>Load Previous</td><td><em>loadPrevHandler</em></td><td>The configuration parameter defines the JavaScript function to call when the carasoul needs to load a set of items when navigating to the previous set. The parameters passed to this function are: <em>type</em> and <em>args</em>. The <em>type</em> is set to to "onLoadPrev". The <em>args</em> is an array of two values: <em>start</em> and <em>last</em> which define the first and last indices to load and <em>alreadyCached</em> which indicates whether the items have already been loaded. If they have already been cached, you can choose to not reload and just use the cached items for the scroll operation.</td></tr>
+	  <tr><td>Load Next</td><td><em>loadNextHandler</em></td><td>The configuration parameter defines the JavaScript function to call when the carasoul needs to load a set of items when navigating to the next set. The parameters passed to this function are: <em>type</em> and <em>args</em>. The <em>type</em> is set to to "onLoadNext". The <em>args</em> is an array of three values: <em>start</em> and <em>last</em> which define the first and last indices to load and <em>alreadyCached</em> which indicates whether the items have already been loaded. If they have already been cached, you can choose to not reload and just use the cached items for the scroll operation.</td></tr>
+      </tbody>
+      </table>
+      
+     <p>Carousel contains a convenience method, <em>addItem</em> that can be passed the index of the item to create and the innerHTML string of the item to be created. This method creates and adds the innerHTML only when an item has not been seen before. If you need a different strategy, simply write your own method to add items.</p>
+     
+     <p>In the <a href="carousel_dhtml_load_bounded.html">carousel_dhtml_load_bounded</a> example the following methods were defined to load images from an array during the initial load, next and previous events:</p>
+     <pre>
+	var fmtItem = function(imgUrl, url, title) {
+
+		var innerHTML = 
+		'&lt;a href="' + 
+		url + 
+		'"&gt;&lt;img src="' + 
+		imgUrl +
+		'" width="' +
+		75 +
+		'" height="' +
+		75+
+		'"/&gt;' + 
+		title + 
+		'&lt;/a&gt;';
+
+		return innerHTML;
+
+	}
+
+	var loadInitialItems = function(type, args) {
+
+		var start = args[0];
+		var last = args[1]; 
+
+		load(this, start, last);	
+	}
+
+	var loadNextItems = function(type, args) {	
+
+		var start = args[0];
+		var last = args[1]; 
+		var alreadyCached = args[2];
+
+		if(!alreadyCached) {
+			load(this, start, last);
+		}
+	}
+
+	var loadPrevItems = function(type, args) {
+		var start = args[0];
+		var last = args[1]; 
+		var alreadyCached = args[2];
+
+		if(!alreadyCached) {
+			load(this, start, last);
+		}
+	}     
+
+	var load = function(carousel, start, last) {
+
+		for(var i=start; i&lt;=last; i++) {
+			carousel.addItem(i, fmtItem(imageList[i], "#", "Number "+i));
+		}
+	}
+     </pre>
+     <h4>Static HTML</h4>
+     <p>Though not really a load technique, you can just create the full HTML markup including all of the &lt;li&gt; items. If you take this approach, you will not need to specify a <em>loadInitHandler</em>, <em>loadNextHandler</em>, or a <em>loadPrevHandler</em> since the content already exists.</p>
+     
+     <p>This approach is especially helpful for HTML mockups that need to incorporate a carousel. Just provide the mockup data as &lt;li&gt; items in the markup and instantiate the carousel. You will most likely need to set the <em>size</em> attribute to match the number of &lt;li&gt; items.</p>
+     
+     <p>For an example of managing content in this manner see the <a href="carousel_html_static.html">Static HTML demo</a>.</p>
+     
+     <p>You can also reload the carousel which will remove all current items, reset values back to initial state and trigger the loadInitHandler to load the initial set of your choosing.</p>
+     <h3><a name="disabling">Disabling Navigation</a></h3>
+     <p>When the previous control needs to be enabled or disabled, a JavaScript handler will be called. The handler is defined with the <em>prevButtonStateHandler</em> configuration parameter. Two parameters are passed to this method: <em>type</em> (which is set to "onPrevButtonStateChange") and <em>args</em>, an array that contains two values. The parameter args[0] is a flag denoting whether the previous control is being enabled or disabled. The parameter args[1] is the element object of the previous control calculated from the prevElement configuration parameter.</p>
+     <p>When the next control needs to be enabled or disabled, a JavaScript handler may be called. The handler is defined with the <em>nextButtonStateHandler</em> configuration parameter. Two parameters are passed to this method: <em>type</em> (which is set to "onNextButtonStateChange") and <em>args</em>, an array that contains two values. The parameter args[0] is a flag denoting whether the next control is being enabled or disabled. The parameter args[1] is the element object of the next control calculated from the nextElement configuration parameter.</p>
+      <h3><a name="animation">Controlling Animation</a></h3>
+      <p>Several parameters control the animated transitions while moving content left or right.</p>
+      <p>Use the <em>animationSpeed</em> configuration parameter to control the speed of animation. The value is the time it takes to complete the animation. You can specify a 0 (zero) value to turn off all animation. By default, the <em>animationMethod</em> is set to YAHOO.util.Easing.easeOut. Any <a href="http://developer.yahoo.com/yui/docs/animation/YAHOO.util.Easing.html">valid animation method</a> may be used. Finally, the <em>scrollInc</em> determines how many elements will be scrolled on each transition.</p>
+
+<h2><a name="faq">FAQ</a></h2>
+<p>Here are some of the frequently asked questions about the carousel</p>
+<strong>Changing either the ID of the carousel DIV element or changing the ID name passed to the carousel causes the carousel not to display.</strong>
+<p>The DIV ID and the name passed to the carousel must match. In addition, if the LI items are being supplied directly in the HTML, make sure each LI item matches the name as well. If the id name is 'mycarousel', then the LI items would need to have the IDs: 'mycarousel-item-1', 'mycarousel-item-2', and so on.</p>
+<strong>I have multiple carousels but only show one at a time (as in a tabview or through some other hide/show mechanism). When I make the other carousels visible they have no visible content.</strong>
+<p>You will need to use the show() method to cause the carousel to become visible and recalculate its size. In the case of inside a tab, you can just call calculateSize() since the carousel is already set to display:block when the parent (tab panel) is made visible.</p>
+<strong>I see your examples that randomly load pictures in the carousel, how do I do that sequentially?</strong>
+<p>This is a basic JavaScript style question, but I have received this question in various forms about a dozen times... so here goes. In a few of the examples I use the JavaScript random function to calculate which index to use. Just remove the call to random() and use the index directly.</p>
+<strong>Is it possible to have the thumbnails lead to the full image either on the same page or another page?</strong>
+<p>Sure, the carousel items are just HTML. So you can wrap your image in an anchor tag which can be set to point to the full image. For showing the image on the same page you will need to add an event listener to the LI item. Do this when items are added to the carousel. The addItem() method returns the created LI. Use the YAHOO.util.Event.addListener to add a listener to the LI. In the listener method show the full image in another area of the page.</p>
+<strong>I would like to display something other than images in my carousel.</strong>
+<p>Each LI is populated with any HTML you desire. When your loadInitHandler, loadNextHandler and loadPrevHandler are invoked, add the appropriate HTML that defines what each item will look like. You can see an example with just paragraphs in the <a href="carousel_endless_module.html">Module Scrolling</a> example.</p>
+<strong>I would like to have the 5th item show up as the first item visible. Is there a way to do that?</strong>
+<p>Yes, either set the firstVisible property when instantiating the carousel or set it later (carousel.cfg.setProperty("firstVisible", 5) OR carousel.moveTo(5))</p>
+
+
+<h2><a name="downloading">Downloading</a></h2>
+<p>See the <a href="updates.html#downloading">Updates page</a> for download instructions</p>
+	  <h2>Future Features/Direction</h2>
+	
+	<p>Your ideas are welcome! Just send me mail, b dot scott at yahoo dot com.</p>
+	
+	<h3><a name="sites">See the Carousel in the wild</a></h3>
+	<p>This is not complete, just a few that I had time to jot down. If you have an example, please email me and I will post it here.</p>
+	<ul>
+		<li><a href="http://www.housemath.us">http://www.housemath.us</a></li>
+		<li><a href="http://www.ifilm.com">http://www.ifilm.com</a></li>
+		<li><a href="http://itn.co.uk">http://itn.co.uk</a></li>
+		<li><a href="http://celebrating200years.noaa.gov/topics.html">http://celebrating200years.noaa.gov/topics.html</a></li>
+		<li><a href="http://www.stringify.com/columnav/">http://www.stringify.com/columnav/</a></li>
+		<li><a href="http://www.maxcase.info/">http://www.maxcase.info/</a></li>
+		<li><a href="http://www.avore.net/resume/index.cfm">http://www.avore.net/resume/index.cfm</a></li>
+		<li><a href="http://jedentageinbild.de/index.php?showimage=456">http://jedentageinbild.de/index.php?showimage=456</a></li>
+		<li><a href="http://www.thedriveshow.com/">http://www.thedriveshow.com/</a></li>
+		<li>Loosely based on my carousel (using jQuery) <a href="http://www.avore.net/resume/index.cfm">http://www.avore.net/resume/index.cfm</a></li>
+		<li>Various Yahoo! properties</li>
+
+	</ul>
+	  <h2>Credits</h2>
+		<p>The Carousel component was written by <a href="http://looksgoodworkswell.com">Bill Scott</a>. Special thanks to <a href="http://dustindiaz.com">Dustin Diaz</a> for providing an example of the correct way to structure the HTML to get around some annoying layout issues. Also thanks to Matt Sweeney for pointing out a way around a Firefox/IE discrepency when adding a temporary node. And special thanks to the Yahoo! User Interface team for the <a href="http://developer.yahoo.com/yui">excellent Y!UI library</a>. </p>
+		<p>Other contributors have been Dan Hobbs (CNet) for ideas about prebuilding elements for out of order loading; Yuval Karjevski for initial contribution for insert items (and soon remove items); Lawrence Carvalho for many ideas including making the carousel accessible (future version!). Also thanks for ideas &amp; bug reports &amp; questions from: Alexander Buze, Andrew Wong, Anders Pedersen, Bernie Ott, Bill Bizeau, Brad Flynn, Bram Whillock, Brent Engels, Brett Williams, Burc Hasergin, Chris Maxwell, Chris McShane, Christian Taylor, Christopher Avore, Daniel Matienzo Iriarte, Daniel Sims, David Ehlers, David Lindquist, Dethe Elza, Einar Paul Qvale, Emmanuel Vanasse, Fred Welterlin, Guy Katz, James Bennett, Jean Vence, Jerry Lau, Johan Baaij, Johan Vandenrym, Kaylan Varma, Kirill Sheynkman, Kurt Lidl, Laine, Marek Solneman, Mathias Brodala, Matthieu Fauveau, Mattia Battistich, Max Case, Meirion Williams, Michael Dowling, N. Drew Stainton, Noah Tsusui, Patrick Tran, Peter Foti, Robert Ames, Rodrigo Diniz, Russ Bombardieri, Sam Allen, Sebastian Grabert, Stephen Clark, Steve Yates, Soren Pedersen, Tim Tully, Tom Lyczko, Tony Hirst, Ave Wrigley, Yuval Karjevski, Claude Jones and others.
+		</p>
+	</div>
+</div>
+
+</body>
+</html>

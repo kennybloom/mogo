@@ -1,0 +1,8 @@
+<h1>Editing host</h1>
+
+<% form_tag( { :action => 'update_host', :id => @host}, :multipart => true ) do %>
+  <%= render :partial => 'host_form' %>
+  <%= submit_tag 'Update' %>
+<% end %>
+
+<%= link_to 'Show host', :action => 'show_host', :id => @host %>

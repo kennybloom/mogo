@@ -1,0 +1,7 @@
+<h1>New multimedia ad</h1>
+
+<% form_tag( { :action => 'create_sponsor' }, :multipart => true ) do %>
+  <%= render :partial => 'sponsor_form' %>
+  <br>
+  <%= submit_tag "Create" %>
+<% end %>

@@ -1,0 +1,19 @@
+<h1>Host</h1>
+
+<br>
+
+<table width=550 cellpadding="0" cellspacing="2" >
+<tr>
+	<td width=220 height=25 bgcolor="#333333"><label for="host_name">Host name:</label></td>
+	<td width=300 height=25 bgcolor="#333333"><%= @host.host_name  %></td>
+</tr>
+<tr>
+	<td width=220 height=25 bgcolor="#333333"><label for="host_image">Image:</label></td>
+	<td width=300 height=25 bgcolor="#333333"><img src="<%= make_path($path_host_icon, @host.host_image) %>"><p><%= @host.host_image  %></p></td>
+</tr>
+</table>
+
+<br>
+
+<%= link_to 'Edit host', :action => 'edit_host', :id => @host %>
+

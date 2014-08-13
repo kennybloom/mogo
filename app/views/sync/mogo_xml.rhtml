@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<channels>
+
+	<% channels = Channel.find(:all, :order => :weight) %>      			
+	<% nchannel = 0 %>
+	<% for channel in channels %>
+		
+		<channel>
+		  <channel-id><%=channel.channel_id%></channel-id>
+			<channel-name><![CDATA[<%=channel.channel_name%>]]></channel-name>
+			<channel-icon1>video/Graphics/Channel Icons/<%= channel.channel_icon %></channel-icon1>
+			<channel-icon2>video/Graphics/Channel Icons/<%= channel.channel_small %></channel-icon2>
+		
+		<% categorys = channel.categorys %>
+		<% for category in categorys %>
+			
+			<category>
+				<category-id><%=category.category_id%></category-id>
+				<category-name><![CDATA[<%=category.category_name_cn%>]]></category-name>
+			
+			<% subcategorys = category.categorys %>
+			<% if subcategorys.size > 0 %>
+				<% for subcategory in subcategorys %>
+					
+					<category>
+						<category-id><%=subcategory.category_id%></category-id>
+						<category-name><![CDATA[<%=subcategory.category_name_cn%>]]></category-name>						
+
+					<% programs = subcategory.programs %>
+					<% for program in programs %>
+						<program>
+							<program-id><%=program.program_id%></program-id>
+							<program-name><![CDATA[<%=program.program_name_cn%>]]></program-name>
+							<program-video>video/<%= program.program_path_stream %></program-video>
+							<program-thumbnail>video/Graphics/Program Thumbs/<%=program.program_icon%></program-thumbnail>
+						</program>
+					<% end %>
+					
+					</category>
+					
+				<% end %>
+			<% else %>
+				<% programs = category.programs %>
+				<% for program in programs %>
+
+						<program>
+							<program-id><%=program.program_id%></program-id>
+							<program-name><![CDATA[<%=program.program_name_cn%>]]></program-name>
+							<program-video>video/<%= program.program_path_stream %></program-video>
+							<program-thumbnail>video/Graphics/Program Thumbs/<%=program.program_icon%></program-thumbnail>
+						</program>
+
+				<% end %>
+
+			<% end %>
+			
+			</category>
+
+		<% end %>
+	
+		</channel>
+
+	<% end %>
+
+</channels>

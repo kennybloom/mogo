@@ -1,0 +1,93 @@
+		<table width=600 cellpadding="0" cellspacing="0">
+			<tr>
+				<td colspan=2 bgcolor="#333333">
+					<%=@program.program_name_cn%>
+				</td>
+			</tr>	
+			<tr>
+				<td width=200 height=25 valign="top"><label for="program id">Id: </label></td>
+				<td width=400 height=25><%=@program.program_id%>&nbsp;&nbsp;(<label for="external id">external id: </label><%=@program.external_id%>)</td>
+			</tr>
+			<tr>
+				<td width=200 height=25><label>Video thumbnail:</label></td>
+				<td width=400>
+					<%=
+						if @program.program_icon != nil
+							link_to(image_tag(make_path($path_program_icon, @program.program_icon), :border => 0), {:action => "show_program", :id => @program.id}) 
+						else
+							"no icon"
+						end
+					%>
+				</td>
+			</tr>
+			<tr>
+				<td width=200 height=25 valign="top"><label for="viewed">Created: </label></td>
+				<td width=400 height=25><%=@program.created%></td>
+			</tr>
+			<tr>
+				<td width=200 height=25><label for="enable_date">Enabled dates:</label></td>
+				<td width=400 height=25>enabled? <%= check_box_tag 'enable_yn['+ @program.id.to_s + ']', 'y', @program.enable_yn=='y'  %>&nbsp;&nbsp;<%= @program.enable_start_date.to_formatted_s(:my_date_format) unless @program.enable_start_date == nil %> to <%= @program.enable_end_date.to_formatted_s(:my_date_format)  unless @program.enable_end_date == nil %></td>
+			</tr>
+			<tr>
+				<td width=200 height=25 valign="top"><label for="viewed">Viewed: </label></td>
+				<td width=400 height=25><%=@program.viewed%></td>
+			</tr>
+			<tr>
+				<td width=200 height=25 valign="top"><label for="tags">Tags: </label></td>
+				<td width=400 height=25><%=@program.program_tags%></td>
+			</tr>
+			<tr>
+				<td width=200 height=25 valign="top"><label for="keywords">Keywords: </label></td>
+				<td width=400 height=25><%=@program.keywords%></td>
+			</tr>
+			<tr>
+					<td>
+					</td>
+					<td align=left>
+						<table>
+							<tr>
+								<td align="right">new? <%= check_box_tag 'new_yn['+ @program.id.to_s + ']', 'y', @program.new_yn=='y'  %></td>
+								<td align="right">new prog weight: &nbsp;<%= select_tag 'new_yn_weight['+ @program.id.to_s + ']', options_for_select(list_weights, @program.new_yn_weight) %></td>
+							</tr>
+							<tr>
+								<td align="right">MOGO 最新 音乐专题? <%= check_box_tag 'new1_yn['+ @program.id.to_s + ']', 'y', @program.new1_yn=='y'  %></td>
+								<td align="right">weight: &nbsp;<%= select_tag 'new1_yn_weight['+ @program.id.to_s + ']', options_for_select(list_weights, @program.new1_yn_weight) %></td>
+							</tr>
+							<tr>
+								<td align="right">MOGO 最新 音乐现场? <%= check_box_tag 'new2_yn['+ @program.id.to_s + ']', 'y', @program.new2_yn=='y'  %></td>
+								<td align="right">weight: &nbsp;<%= select_tag 'new2_yn_weight['+ @program.id.to_s + ']', options_for_select(list_weights, @program.new2_yn_weight) %></td>
+							</tr>
+							<tr>
+								<td align="right">MOGO 最新 艺术文化? <%= check_box_tag 'new3_yn['+ @program.id.to_s + ']', 'y', @program.new3_yn=='y'  %></td>
+								<td align="right">weight: &nbsp;<%= select_tag 'new3_yn_weight['+ @program.id.to_s + ']', options_for_select(list_weights, @program.new3_yn_weight) %></td>
+							</tr>
+							<tr>
+								<td align="right">MOGO 最新 潮流生活? <%= check_box_tag 'new4_yn['+ @program.id.to_s + ']', 'y', @program.new4_yn=='y'  %></td>
+								<td align="right">weight: &nbsp;<%= select_tag 'new4_yn_weight['+ @program.id.to_s + ']', options_for_select(list_weights, @program.new4_yn_weight) %></td>
+							</tr>
+							<tr>
+								<td align="right">recommend? <%= check_box_tag 'recommend_yn['+ @program.id.to_s + ']', 'y', @program.recommend_yn=='y'  %></td>
+								<td align="right">recommend weight: &nbsp;<%= select_tag 'recommend_weight['+ @program.id.to_s + ']', options_for_select(list_weights, @program.recommend_weight) %></td>
+							</tr>
+							<tr>
+								<td align="right">include in top 10? <%= check_box_tag 'ipopular_yn['+ @program.id.to_s + ']', 'y', @program.ipopular_yn=='y'  %></td>
+								<td align="right">top 10 weight: &nbsp;<%= select_tag 'ipopular_weight['+ @program.id.to_s + ']', options_for_select(list_weights, @program.ipopular_weight) %></td>
+							</tr>
+							<tr>
+								<td align="right">exclude from top 10? <%= check_box_tag 'xpopular_yn['+ @program.id.to_s + ']', 'y', @program.xpopular_yn=='y'  %></td>
+								<td align="right"></td>
+							</tr>
+						</table>
+					</td>
+			</tr>
+			<tr>
+				<td>
+						<%= link_to "show",   {:action => "show_program",    :id => @program}%> -
+						<%= link_to "edit",   {:action => "edit_program",    :id => @program}%> - 
+						<%= link_to "delete", {:action => "destroy_program", :id => @program}, :confirm => "Are you sure? This will delete the program permanently", :method => :post%>
+				</td>
+				<td>
+				</td>
+			</tr>
+		</table>
+		<br>

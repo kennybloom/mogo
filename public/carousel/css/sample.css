@@ -1,0 +1,27 @@
+html, body {
+	font-family: arial, serif;
+	margin:5px;
+	color: #333;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	font
+}
+
+h3 {
+	color:#666;
+	margin-top:8px;
+	margin-bottom:8px;
+}
+
+h4 {
+	margin-top:0px;
+	margin-bottom:10px;
+}
+
+a.navLink {
+	padding:5px;
+	color:#000;
+	text-decoration:none;
+	font:14px sans-serif;
+}

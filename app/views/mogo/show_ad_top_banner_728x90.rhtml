@@ -1,0 +1,64 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title></title>
+
+<% if $syndication_id == 94 %>
+<% elsif $syndication_id == 9996 %>
+<!-- Google Ad Manager -->
+<script type="text/javascript" src="http://partner.googleadservices.com/gampad/google_service.js">
+</script>
+<script type="text/javascript">
+  GS_googleAddAdSenseService("ca-pub-8784537074311178");
+  GS_googleEnableAllServices();
+</script>
+<script type="text/javascript">
+  GA_googleAddSlot("ca-pub-8784537074311178", "mogo-top-banner-728x90");
+</script>
+<script type="text/javascript">
+	<% if @channel_id == nil %>
+   GA_googleAddAttr("channels", "nil");
+	<% else %>
+   GA_googleAddAttr("channels", "<%=@channel_id%>");
+	<% end %>
+   GA_googleFetchAds();
+</script>
+<!-- end Google Ad Manager -->
+<% else %>
+<!-- Google Ad Manager -->
+<script type="text/javascript" src="http://partner.googleadservices.com/gampad/google_service.js">
+</script>
+<script type="text/javascript">
+  GS_googleAddAdSenseService("ca-pub-4319899706835777");
+  GS_googleEnableAllServices();
+</script>
+<script type="text/javascript">
+  GA_googleAddSlot("ca-pub-4319899706835777", "top-banner-728x90");
+</script>
+<script type="text/javascript">
+	<% if @channel_id == nil %>
+   GA_googleAddAttr("channels", "nil");
+	<% else %>
+   GA_googleAddAttr("channels", "<%=@channel_id%>");
+	<% end %>
+   GA_googleFetchAds();
+</script>
+<!-- end Google Ad Manager -->
+<% end %>
+</head>
+<body leftmargin="0" topmargin="0">
+<% if $syndication_id == 94 %>
+<div id='ab_512'></div>
+<script type="text/javascript" src="http://html.atm.youku.com/html?p=512&k="></script>
+<% elsif $syndication_id == 9996 %>
+<script type="text/javascript">
+	GA_googleFillSlot("mogo-top-banner-728x90");
+</script>
+<% else %>
+<script type="text/javascript">
+	GA_googleFillSlot("top-banner-728x90");
+</script>
+<!--img src="/images/ads/top-banner-728x90.jpg" -->
+<% end %>
+</body>
+</html>

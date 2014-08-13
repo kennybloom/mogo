@@ -1,0 +1,6 @@
+<h1>New default multimedia ad</h1>
+
+<% form_tag( { :action => 'create_billboard' }, :multipart => true ) do %>
+  <%= render :partial => 'billboard_form' %>
+  <%= submit_tag "Create" %>
+<% end %>

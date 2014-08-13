@@ -1,0 +1,181 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Channel Detail</title>
+<style type="text/css">
+<!--
+	body,td,th, a {
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: 12px;
+		color: #545358;
+		text-decoration: none;
+
+	scrollbar-base-color:#afabad;
+	scrollbar-3dlight-color:#ebebeb;
+	scrollbar-track-color:#ebebeb;
+	scrollbar-darkshadow-color:#ebebeb;
+	}
+	
+	a, a:hover, a:visited {
+		text-decoration:none;
+		background: white;
+	}
+	
+	a.highlite {
+		background: #B5D5FF;
+	}
+
+	ul {
+		margin: 0 0 0 16px;
+		padding: 0 0 0 0px;
+	}
+	li {
+		margin: 0 0 0 0;
+		padding: 0 0 0 0;
+	}
+	ul#channel-list {
+		margin: 0 0 0 15px;
+		padding: 0 0 0 10px;
+	}
+
+
+-->
+</style>
+
+<%= javascript_include_tag "jquery" %>
+<%= javascript_include_tag "mogo" %>
+
+<script type="text/javascript">
+$(function() {
+	$('li:has(ul)')
+		.click(function(event){
+			if (this == event.target) {
+        channel_id = $(this).attr("channel_id");
+        category_id = $(this).attr("category_id");
+        if (category_id == '0') {
+					list_type = 'channel';
+        } else {
+          list_type = 'parent_category';
+        }
+        if ($(this).children('ul').is(':hidden')) {
+        	$(this)
+          	.css({'list-style-image':'url(/images/tree-down-arrow2.gif)'})
+            .children('ul').slideDown();
+        }
+        else {
+        	$(this)
+            .css({'list-style-image':'url(/images/tree-right-arrow2.gif)'})
+            .children('ul').slideUp();
+        }
+        
+        parent.unset_special_category_highlite();  
+        $('.highlite').removeClass('highlite');
+  			$(this).children('a').addClass('highlite');
+
+        //alert("chanid:" + channel_id + " catid:" + category_id);
+        category_onClick('/mogo/list_programs/' + list_type + '-' + channel_id + '-' + category_id)
+      }
+      return false;
+    })
+    .css({cursor:'pointer', 'list-style-image':'url(/images/tree-right-arrow2.gif)'})
+    .children('ul').hide()
+    .parent().children('a')
+		.click(function(event){
+			if (this == event.target) {
+				$(this).parent().trigger('click');
+			}
+			return false;
+    });
+          
+	$('li:not(:has(ul))')
+	.click(function(event) {
+		channel_id = $(this).attr("channel_id");
+    category_id = $(this).attr("category_id");
+    list_type = 'child_category';
+         
+    parent.unset_special_category_highlite();  
+   	$('.highlite').removeClass('highlite');
+  	$(this).children('a').addClass('highlite');
+
+	  //alert("chanid:" + channel_id + " catid:" + category_id);
+    category_onClick('/mogo/list_programs/' + list_type + '-' + channel_id + '-' + category_id)
+		return false;
+	})
+	.css({
+     cursor: 'pointer', 'list-style-image':'url(/images/tv-icon-white.gif)',
+     'list-style-type':'none'
+  })
+	.children('a')
+	.click(function(event) {
+  	if (this == event.target) {
+			$(this).parent().trigger('click');
+  	}
+  	return false;
+
+	});
+  
+});
+
+function remove_highlite() {
+  $('.highlite').removeClass('highlite');
+}
+
+function show_channel_category(channel_id, category_id, program_id) {
+	//parent.window.location.hash = "bottom";
+
+	$('li:has(ul)').children('ul').hide().parent().css({cursor:'pointer', 'list-style-image':'url(/images/tree-right-arrow2.gif)'})
+
+	$('.channel-' + channel_id + ':has(ul)').trigger('click');
+	
+  parent_category_id = $('.category-' + category_id).parent().parent().attr("category_id");
+	if (parent_category_id != null && parent_category_id != '') {
+		$('.category-' + parent_category_id).trigger('click');
+		list_type = "parent_category"
+	}
+	else {
+		list_type = "child_category"
+	}
+
+	$('.category-' + category_id).trigger('click');
+
+	parent.frames.nextvideoframe.location.href = "/mogo/next_video/" + list_type + "-" + channel_id + "-" + category_id + "-" + program_id + "-" + parent_category_id;
+}
+</script>
+
+</head>
+<body id="show_channel_body" topmargin="0" leftmargin="0" rightmargin="3" style="background-color: white">
+<div id="channel-programs" style="margin: 0 0 0 5px;">
+
+<ul id="channel-list">
+<% channels = Channel.find(:all, :conditions => "channel_id <> 8", :order => :weight) %>      			
+<% nchannel = 0 %>
+<% for channel in channels %>
+	<% nchannel+= 1 %>
+	<li class="channel-<%=channel.channel_id%>" channel_id="<%=channel.channel_id%>" category_id="0"><a href="#"><%=channel.channel_name%></a>
+	<% categorys = channel.categorys %>
+	<% ncategory = 0 %>
+	<ul>
+	<% for category in categorys %>
+		<% ncategory += 1 %>
+		<li class="category-<%=category.category_id%>" channel_id="<%=channel.channel_id%>" category_id="<%=category.category_id%>"><a href="#"><%=category.category_name_cn%></a>
+		<% subcategorys = category.categorys %>
+		<% if subcategorys.size > 0 %>
+			<% nsubcategory = 0 %>
+			<ul>
+			<% for subcategory in subcategorys %>
+				<% nsubcategory += 1 %>
+				<li class="category-<%=subcategory.category_id%>" channel_id="<%=channel.channel_id%>"  category_id="<%=subcategory.category_id%>"><a href="#"><%=subcategory.category_name_cn%></a></li>
+			<% end %>
+			</ul>
+		<% end %>
+		</li>
+	<% end %>
+	</ul>
+	</li>
+<% end %>
+</ul>
+
+</div>
+	
+	</body>
+</html>

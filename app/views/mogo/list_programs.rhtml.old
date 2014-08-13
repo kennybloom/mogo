@@ -1,0 +1,244 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<META HTTP-EQUIV="Expires" CONTENT="-1">
+		<title>Show programs</title>
+
+<%= stylesheet_link_tag "mogo" , :media => "all" %>
+<%= stylesheet_link_tag "carousel" , :media => "all" %>
+<%= stylesheet_link_tag "mogo-carousel" , :media => "all" %>
+
+<%= javascript_include_tag "utilities_2_1_1" %>
+<%= javascript_include_tag "container_core_2_1_1" %>
+<%= javascript_include_tag "carousel" %>
+<%= javascript_include_tag "jquery" %>
+<%= javascript_include_tag "mogo" %>
+
+<%
+if @programs.size % 16 == 0
+	nframes = @programs.size / 16
+else
+	nframes = @programs.size / 16 + 1
+end	
+%>
+
+<script type="text/javascript">
+/**
+ * Custom button state handler for enabling/disabling button state. 
+ * Called when the carousel has determined that the previous button
+ * state should be changed.
+ * Specified to the carousel as the configuration
+ * parameter: prevButtonStateHandler
+ **/
+var handlePrevButtonStateNewPrograms = function(type, args) {
+	var enabling = args[0];
+	var leftImage = args[1];
+	if(enabling) {
+		leftImage.src = "/images/left-arrow-enabled.gif";	
+	} else {
+		leftImage.src = "/images/left-arrow-disabled.gif";	
+	}
+};
+
+/**
+ * Custom button state handler for enabling/disabling button state. 
+ * Called when the carousel has determined that the next button
+ * state should be changed.
+ * Specified to the carousel as the configuration
+ * parameter: nextButtonStateHandler
+ **/
+var handleNextButtonStateNewPrograms = function(type, args) {
+	var enabling = args[0];
+	var rightImage = args[1];
+	
+	if(enabling) {
+		rightImage.src = "/images/right-arrow-enabled.gif";
+	} else {
+		rightImage.src = "/images/right-arrow-disabled.gif";
+	}
+};
+
+/**
+ * You must create the carousel after the page is loaded since it is
+ * dependent on an HTML element (in this case 'mycarousel'.) See the
+ * HTML code below.
+ **/
+var carouselAllNewPrograms;
+var pageLoadAllNewPrograms = function() 
+{
+	carouselAllNewPrograms = new YAHOO.extension.Carousel("carousel-list-program", 
+		{
+			numVisible:        1,
+			animationSpeed:    .25,
+			scrollInc:         1,
+			navMargin:         0,
+			prevElement:       "prev-arrow-list-programs",
+			nextElement:       "next-arrow-list-programs",
+			size:              <%=nframes%>,
+			prevButtonStateHandler:   handlePrevButtonStateNewPrograms,
+			nextButtonStateHandler:   handleNextButtonStateNewPrograms
+		}		
+	);
+};
+
+YAHOO.util.Event.addListener(window, 'load', pageLoadAllNewPrograms);
+</script>
+
+<script type="text/javascript">
+
+function set_image_highlite(program_id) {
+	$("img.playing").removeClass("playing");
+	$("#program-" + program_id).addClass("playing");
+}
+
+function image_over_listner(event) {
+	$(this).children('img.thumbnail').addClass('highlite');
+}
+
+function image_out_listner(event) {
+	$(this).children('img.thumbnail').removeClass('highlite');
+}
+
+$(function() {
+	curr_video_obj = parent.document.getElementById('curr_video_program_id');
+	
+	if (curr_video_obj != null) {
+		program_id = parent.document.getElementById('curr_video_program_id').value;
+		if (program_id != null && program_id != '') {
+			set_image_highlite(program_id);
+		}     
+	}
+	
+	$('a:has(img.thumbnail)').hover(image_over_listner, image_out_listner);	
+	
+});
+
+
+
+</script>
+
+<%
+case @list_type
+	when "new"
+		context_name = "你在［New 最新节目］"
+
+	when "popular"
+		context_name = "你在［Hot 最火节目］"
+	
+	when "recommend"
+		context_name = "你在［Recommended 推荐］"
+		
+	when "channel"
+		context_name = "你在 " + @container_channel.channel_name
+		
+	when "parent_category"
+		if @container_channel != nil
+			context_name = "你在 " + @container_channel.channel_name + " > " + @container_category.category_name_cn
+		else
+			context_name = "你在 " + @container_category.category_name_cn
+		end	
+		
+	when "child_category"
+		if @container_channel != nil
+			context_name = "你在 " + @container_channel.channel_name + " > " + @container_category.category_name_cn
+		else
+			context_name = "你在 " + @container_category.category_name_cn
+		end
+		
+	when "search"
+		context_name = "你在［搜索结果］"
+
+	when "related"
+		context_name = "你在［相關視頻］"
+	else
+		context_name = ""	
+end
+%>
+</head>
+
+<body>
+<div id="carousel-list-program" class="carousel-component">
+	<table id="search-section" cellpadding="0" cellspacing="0" border="0">
+		<tr>
+			<td width="383"><span id="program-context"><%=context_name%></span></td>
+			<td width="200" valign="middle" align="left"><span id="search-title">Search 搜索</span><input id="searchkey" name="query" type="text" size="15" value="<%=@keyword%>" ></td>
+			<td valign="middle" align="left"><span id="search-button"><a href="javascript:goSearch()"><img src="/images/search-arrow-right.jpg" border="0" size=0></a></span></td>
+		</tr>
+	</table>
+	<div><img id="prev-arrow-list-programs" class="left-button-image" src="/images/left-arrow-enabled.gif" alt="Previous Button"/></div>
+	<div><img id="next-arrow-list-programs" class="right-button-image" src="/images/right-arrow-enabled.gif" alt="Next Button"/></div>
+	<div class="carousel-clip-region">
+		<ul class="carousel-list">
+      <% 
+      count = 0
+      #for program in @programs 
+      for i in 0...(@programs.size)
+        program = @programs[i]
+      	count += 1
+				channel_id = ""
+				category_id = ""
+				category = Category.findByProgramId(program.program_id)
+				if category != nil
+					category_id = category.category_id
+					channel = Channel.findByCategoryId(category.category_id)
+					if channel != nil
+						channel_id = channel.channel_id
+					end
+				end
+							
+      %>
+				<%
+					nchars = 30
+					program_name = program.program_name_cn 
+					short_program_name = program.program_name_cn.chars[0, nchars]
+					
+					if program_name.chars.size > nchars
+						short_program_name += "..."
+					end
+				%>
+
+       	<% if i % 16 == 0 %>
+        <li id=<%='carousel-list-program-item-' << count.to_s %>>
+        	<table class="carousel-table" border="0" align="center" cellpadding="0" cellspacing="0">
+				<% end %>
+						<% if i % 4 == 0 %>
+        		<tr>
+        		<% end %>
+							<td class="col0" align="left" valign="top">
+							<table class="carousel-table-inner" cellpadding="0" cellspacing="0">
+								<tr>
+							  	<td class="col1" align="left" valign="top">
+        						<a href="javascript:window.location.hash='top'; content_onClick('<%=program.program_name_cn%>', '<%=channel_id%>', '<%=category_id%>', '<%=program.program_id%>', '<%=program.description%>', '<%=program.url%>', '<%=@note%>', '<%=program.external_id%>', '<%=$syndication_id%>', '<%=@list_type%>', '<%=@parent_category_id%>')">
+										<img class="thumbnail" id="program-<%=program.program_id%>" src="<%=make_path($path_program_icon, program.program_icon)%>" alt="<%=program_name%>" title="<%=program_name%>"></a>
+									</td>
+								</tr>
+								<tr>
+									<td class="col1" align="left" valign="top">
+				        		<p><a href="javascript:window.location.hash='top'; content_onClick('<%=program.program_name_cn%>', '<%=channel_id%>', '<%=category_id%>', '<%=program.program_id%>', '<%=program.description%>', '<%=program.url%>', '<%=@note%>', '<%=program.external_id%>', '<%=$syndication_id%>', '<%=@list_type%>', '<%=@parent_category_id%>')" title="<%=program_name%>"><%=short_program_name%></a></p>
+				      		</td>
+				      	</tr>
+				      </table>
+				     	</td>
+				    <% if i % 4 == 3 %>
+				    </tr>
+				    <% end %>
+				<% if i % 16 == 15 %>  
+	        </table>
+        </li>
+      	<% end %>
+      <% end %>
+      
+      <% if (count - 1) % 4 != 3 %>
+				</tr>
+      <% end %>
+      
+      <% if (count - 1) % 16 != 15 %>
+	      </table></li>
+      <% end %>
+		</ul>
+	</div>
+</div>
+
+</body>
+</html>

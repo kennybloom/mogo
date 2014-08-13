@@ -1,0 +1,138 @@
+<% form_tag( { :action => 'show_stats'}) do %>
+<table width=550 cellpadding="0" cellspacing="2">
+<tr>
+	<td>
+		<select name="year" id="year">
+			<option <%= "selected" unless @year != 2007 %>>2007</option>
+			<option <%= "selected" unless @year != 2008 %>>2008</option>
+			<option <%= "selected" unless @year != 2009 %>>2009</option>
+			<option <%= "selected" unless @year != 2010 %>>2010</option>
+			<option <%= "selected" unless @year != 2011 %>>2011</option>
+			<option <%= "selected" unless @year != 2012 %>>2012</option>
+			<option <%= "selected" unless @year != 2013 %>>2013</option>
+			<option <%= "selected" unless @year != 2014 %>>2014</option>
+			<option <%= "selected" unless @year != 2015 %>>2015</option>
+		</select>
+		<select name="month" id="month">
+			<option value="all">- all months -</option>
+			<option value="1"  <%= "selected" unless @month != 1 %>>January</option>
+			<option value="2"  <%= "selected" unless @month != 2 %>>February</option>
+			<option value="3"  <%= "selected" unless @month != 3 %>>March</option>
+			<option value="4"  <%= "selected" unless @month != 4 %>>April</option>
+			<option value="5"  <%= "selected" unless @month != 5 %>>May</option>
+			<option value="6"  <%= "selected" unless @month != 6 %>>June</option>
+			<option value="7"  <%= "selected" unless @month != 7 %>>July</option>
+			<option value="8"  <%= "selected" unless @month != 8 %>>August</option>
+			<option value="9"  <%= "selected" unless @month != 9 %>>September</option>
+			<option value="10" <%= "selected" unless @month != 10 %>>October</option>
+			<option value="11" <%= "selected" unless @month != 11 %>>November</option>
+			<option value="12" <%= "selected" unless @month != 12 %>>December</option>
+		</select>
+		<select name="day" id="day">
+			<option value="all">- all days -</option>
+			<option <%= "selected" unless @day != 1 %>>1</option>
+			<option <%= "selected" unless @day != 2 %>>2</option>
+			<option <%= "selected" unless @day != 3 %>>3</option>
+			<option <%= "selected" unless @day != 4 %>>4</option>
+			<option <%= "selected" unless @day != 5 %>>5</option>
+			<option <%= "selected" unless @day != 6 %>>6</option>
+			<option <%= "selected" unless @day != 7 %>>7</option>
+			<option <%= "selected" unless @day != 8 %>>8</option>
+			<option <%= "selected" unless @day != 9 %>>9</option>
+			<option <%= "selected" unless @day != 10 %>>10</option>
+			<option <%= "selected" unless @day != 11 %>>11</option>
+			<option <%= "selected" unless @day != 12 %>>12</option>
+			<option <%= "selected" unless @day != 13 %>>13</option>
+			<option <%= "selected" unless @day != 14 %>>14</option>
+			<option <%= "selected" unless @day != 15 %>>15</option>
+			<option <%= "selected" unless @day != 16 %>>16</option>
+			<option <%= "selected" unless @day != 17 %>>17</option>
+			<option <%= "selected" unless @day != 18 %>>18</option>
+			<option <%= "selected" unless @day != 19 %>>19</option>
+			<option <%= "selected" unless @day != 20 %>>20</option>
+			<option <%= "selected" unless @day != 21 %>>21</option>
+			<option <%= "selected" unless @day != 22 %>>22</option>
+			<option <%= "selected" unless @day != 23 %>>23</option>
+			<option <%= "selected" unless @day != 24 %>>24</option>
+			<option <%= "selected" unless @day != 25 %>>25</option>
+			<option <%= "selected" unless @day != 26 %>>26</option>
+			<option <%= "selected" unless @day != 27 %>>27</option>
+			<option <%= "selected" unless @day != 28 %>>28</option>
+			<option <%= "selected" unless @day != 29 %>>29</option>
+			<option <%= "selected" unless @day != 30 %>>30</option>
+			<option <%= "selected" unless @day != 31 %>>31</option>
+		</select>
+		<select name="nprogram" id="nprogram">
+			<option value="10"      <%= "selected" if @nprograms == 10 %>>list top 10 programs</option>
+			<option value="20"      <%= "selected" if @nprograms == 20 %>>list top 20 programs</option>
+			<option value="50"      <%= "selected" if @nprograms == 50 %>>list top 50 programs</option>
+			<option value="100"     <%= "selected" if @nprograms == 100 %>>list top 100 programs</option>
+			<option value="1000000" <%= "selected" if @nprograms == 1000000 %>>list all programs</option>
+		</select>
+	<%= submit_tag 'submit' %>
+	</td>
+</tr>
+</table>
+<% end%>
+
+<% if @graph_unit == "year" %>
+  <%= render :partial => 'show_stats_year' %>  
+<% elsif @graph_unit == "month" %>
+  <%= render :partial => 'show_stats_month' %>
+<% elsif @graph_unit == "day" %>
+  <%= render :partial => 'show_stats_day' %>
+<% else %>
+<p>No graphic data available for this period.</p>
+<% end %>
+<br>
+<hr>
+<br>
+<h1 style="color:#ff4444;">Top programs by views</h1>
+<table>
+  <tr>
+		<td width=150><label>Channel</label></td>
+		<td width=250><label>Category</label></td>
+		<td width=250><label>Program</label></td>
+		<td width=50><label>count</label></td>
+  </tr>
+
+<% if @sum_programs_by_count != nil %>
+	<% n = 0 %>
+	<% for sum_program in @sum_programs_by_count %>
+	  <tr>
+			<td width=150><font size=2><%=sum_program.channel_name%></font></td>
+			<td width=250><font size=2><%=sum_program.category_name%></font></td>
+			<td width=250><font size=2><%=sum_program.program_name%></font></td>
+			<td width=50 ><font size=2><%=sum_program.count%></font></td> 
+	  </tr>
+	  <% n += 1 %>
+	  <% break if n >= @nprograms%>
+	<% end %>
+<% end %>
+
+</table>
+<br>
+<h1 style="color:#ff4444;">Top programs by unique visits</h1>
+<table>
+  <tr>
+		<td width=150><label>Channel</label></td>
+		<td width=250><label>Category</label></td>
+		<td width=250><label>Program</label></td>
+		<td width=50><label>unique visits</label></td>
+  </tr>
+
+<% if @sum_programs_by_count != nil %>
+	<% n = 0 %>
+	<% for sum_program in @sum_programs_by_unique_users %>
+	  <tr>
+			<td width=150><font size=2><%=sum_program.channel_name%></font></td>
+			<td width=250><font size=2><%=sum_program.category_name%></font></td>
+			<td width=250><font size=2><%=sum_program.program_name%></font></td>
+			<td width=50 ><font size=2><%=sum_program.unique_users%></font></td> 
+	  </tr>
+	  <% n += 1 %>
+	  <% break if n >= @nprograms%>
+	<% end %>
+<% end %>
+
+</table>

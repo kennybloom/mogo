@@ -1,0 +1,16 @@
+<h1>Categories not linked to any channel</h1>
+<br>
+<table>
+<% count = 0 %>
+<% for category in @all_categorys %>
+  <tr>
+		<td><%=category.category_name_cn%> (<%=category.category_id%>)</td>
+    <td><%= link_to 'show',   {:action => 'show_category',    :id => category} %></td>
+    <td><%= link_to 'edit',   {:action => 'edit_category',    :id => category} %></td>
+    <td><%= link_to 'delete', {:action => 'destroy_category', :id => category}, :confirm => 'Are you sure?', :method => :post %></td>
+  </tr>
+  <% count += 1 %>
+<% end %>
+</table>
+<br>
+Total: <%=count%> categories found.

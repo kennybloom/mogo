@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<html>
+<head>
+<title>Mogo Statistics</title>
+<%= stylesheet_link_tag "xtree", "admin_style", :media => "all" %>
+<%= javascript_include_tag "admin_menubar" %>
+<%= javascript_include_tag "xtree" %>
+
+</head>
+
+<body 
+  text="#ffffff" vLink="#66cccc" aLink="#99cccc" link="#66cccc" bgColor="white"
+  leftMargin="0" background="/themes/lp/images/bk-stripe.jpg" topMargin="0"
+  marginheight="0" marginwidth="0">
+
+<script type="text/javascript">
+function content_onClick(action_path)
+{
+	parent.frames.frame_center.location.href = action_path;
+}
+</script>
+
+<%
+  	user_id = session[:user_id]
+    user = User.find(user_id)
+%>
+
+<!--
+===================================
+left panel
+===================================
+-->
+<div class=left-panel>
+	<div id=sidebar-left-top>
+		<IMG src="/images/mogo-logo-small.gif" border=0>
+	</div>
+
+	<div id=sidebar-left>
+		<!-- block ================================================== -->
+		<div class=block id="block-login">
+				<a id=block-title href="javascript:toggle('n-block-x')" >
+					<IMG id="n-block-ximage"
+					height=10 src="/images/arrow-rt.gif" width=10 border=0><%=user.user_name%></a>
+
+				<div class=block-content id="n-block-x" style="DISPLAY: none">
+					<ul>
+						<li><a href=# onClick="javascript:content_onClick('/stats/show_stats_all')">show stats</a></li>
+						<li><a href=# onClick="javascript:content_onClick('/stats/compare_synd')">compare syndications</a></li>
+						<li><a href=# onClick="javascript:content_onClick('/stats/list_logs_all')">search logs</a></li>
+						<li><a href=# onClick="javascript:parent.location.href='/stats_login/logout'">logout</a></li>
+					</ul>  
+				</div>
+		</div>
+
+	</div>
+
+	<div id=sidebar-left-bottom>
+	</div>
+</div>
+
+<!--
+===================================
+left panel end
+===================================
+-->
+
+<script language=JavaScript>
+<!--
+//open_all_nodes();
+open_node('n-block-x');
+-->
+</SCRIPT>
+
+
+</body>
+</html>

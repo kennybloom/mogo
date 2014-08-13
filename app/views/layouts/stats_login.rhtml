@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<html>
+<head>
+<title>Mogo Statistics</title>
+<%= stylesheet_link_tag "stats_style", :media => "all" %>
+
+</head>
+
+<body 
+  text="#ffffff" vLink="#66cccc" aLink="#99cccc" link="#66cccc" bgColor="black"
+  leftMargin="0" background="/themes/lp/images/bk-stripe.jpg" topMargin="0"
+  marginheight="0" marginwidth="0" >
+
+	<table cellSpacing="0" cellPadding="0" width="100%" border="0">
+		<tr>
+			<td><IMG src="/images/mogo-logo-small.gif" border=0></td>
+			<td bgcolor=black valign=top height=60 align=right><h1>Mogo Statics<h1></td>
+		</tr>
+		<tr>
+			<td colspan=2 valign=top align=center>
+				<% if flash[:notice] -%>
+				<div id="notice" ><%= flash[:notice] %></div>
+				<% end -%>
+				<%= yield :layout %>
+			</td>
+		</tr>
+	</table>	
+</body>
+</html>

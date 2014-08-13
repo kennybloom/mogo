@@ -1,0 +1,16 @@
+{
+    "result": [
+<% count = 0 %>
+<% for program in @programs_found %>
+    <% if count > 0 %>
+    ,
+    <% end %>
+        {
+            "name": "<%=program.program_name_cn%>",
+            "video": "http://www.mogo.com.cn<%=@base_url%><%=$path_video + "/" + program.program_path_stream%>",
+            "cover": "http://www.mogo.com.cn<%=@base_url%><%=$path_program_icon + "/" + program.program_icon%>" 
+        }
+    <% count += 1 %>
+<% end %>
+    ]
+}

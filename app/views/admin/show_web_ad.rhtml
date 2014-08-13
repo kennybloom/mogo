@@ -1,0 +1,27 @@
+<h1>Banner Ad</h1>
+
+<br>
+
+<table width=800 cellpadding="0" cellspacing="2" >
+<tr>
+	<td width=220 height=25 bgcolor="#333333"><label for="name">Banner ad name:</label></td>
+	<td width=300 height=25 bgcolor="#333333"><%= @web_ad.name  %></td>
+</tr>
+<tr>
+	<td width=220 height=25 bgcolor="#333333"><label for="path">Path:</label></td>
+	<td width=300 height=25 bgcolor="#333333"><img src="<%= make_path($path_ad_web, @web_ad.path) %>"><p><%= @web_ad.path %></p></td>
+</tr>
+<tr>
+	<td width=220 height=25 bgcolor="#333333"><label for="path">Url:</label></td>
+	<td width=300 height=25 bgcolor="#333333"><%= @web_ad.url %></td>
+</tr>
+<tr>
+	<td width=220 height=25 bgcolor="#333333"><label for="panel">Banner location:</label></td>
+	<td width=300 height=25 bgcolor="#333333"><%= @web_ad.panel %></td>
+</tr>
+</table>
+
+<br>
+
+<%= link_to 'Edit banner ad', :action => 'edit_web_ad', :id => @web_ad %>
+

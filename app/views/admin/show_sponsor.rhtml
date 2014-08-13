@@ -1,0 +1,23 @@
+<h1>Multimedia Ad</h1>
+
+<br>
+
+<table width=550 cellpadding="0" cellspacing="2" >
+<tr>
+	<td width=220 height=25 bgcolor="#333333"><label for="name">Ad name:</label></td>
+	<td width=300 height=25 bgcolor="#333333"><%= @sponsor.name  %></td>
+</tr>
+<tr>
+	<td width=220 height=25 bgcolor="#333333"><label for="logo">Logo:</label></td>
+	<td width=300 height=25 bgcolor="#333333"><img src="<%= make_path($path_sponsor_logo, @sponsor.logo) %>"><p><%= @sponsor.logo  %></p></td>
+</tr>
+<tr>
+	<td width=220 height=25 bgcolor="#333333"><label for="url">Url:</label></td>
+	<td width=300 height=25 bgcolor="#333333"><%= @sponsor.url %></td>
+</tr>
+</table>
+
+<br>
+
+<%= link_to 'Edit ad', :action => 'edit_sponsor', :id => @sponsor %>
+

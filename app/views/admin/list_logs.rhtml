@@ -1,0 +1,219 @@
+<!-- calendar stylesheet -->
+<link rel="stylesheet" type="text/css" media="all" href="/javascripts/jscalendar-1.0/calendar-win2k-cold-1.css" title="win2k-cold-1" />
+
+<!-- main calendar program -->
+<script type="text/javascript" src="/javascripts/jscalendar-1.0/calendar.js"></script>
+
+<!-- language for the calendar -->
+<script type="text/javascript" src="/javascripts/jscalendar-1.0/lang/calendar-en.js"></script>
+
+<!-- the following script defines the Calendar.setup helper function, which makes
+		 adding a calendar a matter of 1 or 2 lines of code. -->
+<script type="text/javascript" src="/javascripts/jscalendar-1.0/calendar-setup.js"></script>
+
+
+<h1>Video logs</h1>
+<br>
+<p>Please enter start date and end date in yyyy-mm-dd format</p>
+<% form_tag "/admin/list_logs" do %>
+	<table width="760">
+		<tr>
+			<td align="left" width="280">start date:&nbsp;<%=text_field_tag "start_date", @start_date%><img src="/javascripts/jscalendar-1.0/img.gif" id="start_date_img" style="cursor: pointer; border: 1px solid red;" title="Date selector" onmouseover="this.style.background='red';" onmouseout="this.style.background=''" /></td>
+			<td align="left" width="280">end date:&nbsp;<%=text_field_tag "end_date", @end_date%><img src="/javascripts/jscalendar-1.0/img.gif" id="end_date_img" style="cursor: pointer; border: 1px solid red;" title="Date selector" onmouseover="this.style.background='red';" onmouseout="this.style.background=''" /></td>
+			<td align="left" width="100">
+			<select name="query_type" id="query_type">
+				<option <%= "selected" if @query_type == "program" %> value="program">by program</option>
+				<option <%= "selected" if @query_type == "user" %> value="user">by user</option>
+				<option <%= "selected" if @query_type == "program-archive" %> value="program-archive">by program (archive)</option>
+				<option <%= "selected" if @query_type == "user-archive" %> value="user-archive">by user (archive)</option>
+			</select>
+			</td>
+			<td align="left" width="100"colspan=3 align=right><%=submit_tag "search"%></td>
+		</tr>
+	</table>
+<%end%>
+</br>
+
+<% if @logs != nil %>
+<table>
+  <tr>
+		<td width=150><label>Channel</label></td>
+		<td width=250><label>Category</label></td>
+		<td width=250><label>Program</label></td>
+		<td width=50>
+			<label>
+			<% if @query_type == "program" || @query_type == "program-archive"%> 
+				count
+			<% else %>
+				unique users
+			<% end %>
+			</label>
+		</td>
+  </tr>
+  
+<%sum = 0
+	nrow = 0
+	for log in @logs 
+		begin
+			channel = Channel.find(log.channel_id)
+		rescue ActiveRecord::RecordNotFound
+			channel_name = "unknown channel"
+		else
+			channel_name = channel.channel_name
+		end
+
+		begin
+			category = Category.find(log.category_id)
+		rescue ActiveRecord::RecordNotFound
+			category_name = "unknown category"
+		else
+			category_name = category.category_name_cn
+		end
+		
+		begin
+			program = Program.find(log.program_id)
+		rescue ActiveRecord::RecordNotFound
+			program_name = "unknown program"
+		else
+			program_name = program.program_name_cn
+		end
+		
+		if @query_type == "program" || @query_type == "program-archive"
+			sum += log.program_count.to_i
+		else
+			sum += log.user_count.to_i
+		end
+		nrow += 1
+%>		
+  <tr>
+		<td width=400><font size=2><%=channel_name%></font></td>
+		<td width=400><font size=2><%=category_name%></font></td>
+		<td width=400><font size=2><%=program_name%></font></td>
+		<td width=50 >
+			<font size=2>
+			<%= 
+				if @query_type == "program" || @query_type == "program-archive"
+					log.program_count.to_s 
+				else 
+					log.user_count.to_s 
+				end 
+			%>
+			</font>
+		</td>
+  </tr>
+<% end %>
+	<tr>
+		<td width=150></td>
+		<td width=250></td>
+		<td width=250><label>rows:</label><%=nrow%></td>
+		<td width=50><label>total:</label>
+			<%= 
+				if @query_type == "program" || @query_type == "program-archive"
+					sum
+				else
+					@unique_users
+				end
+			%>
+		</td>
+	</tr>
+	
+	<% if @query_type == "program" || @query_type == "program-archive"%>
+	<tr>
+		<td width=150><label>video viewed from</label></td>
+		<td width=250><label>channel/category listing: </label></td>
+		<td width=250><%=@count_tree%></td>
+		<td width=50></td>
+	</tr>
+	<tr>
+		<td width=150><label></label></td>
+		<td width=250><label>auto play: </label></td>
+		<td width=250><%=@count_auto%></td>
+		<td width=50></td>
+	</tr>
+	<tr>
+		<td width=150></td>
+		<td width=250><label>landing: </label></td>
+		<td width=250><%=@count_first%></td>
+		<td width=50></td>
+	</tr>
+	<tr>
+		<td width=150></td>
+		<td width=250><label>new programs: </label></td>
+		<td width=250><%=@count_new%></td>
+		<td width=50></td>
+	</tr>
+	<tr>
+		<td width=150></td>
+		<td width=250><label>popular programs: </label></td>
+		<td width=250><%=@count_popular%></td>
+		<td width=50></td>
+	</tr>
+	<tr>
+		<td width=150></td>
+		<td width=250><label>recommended programs: </label></td>
+		<td width=250><%=@count_recommend%></td>
+		<td width=50></td>
+	</tr>
+	<tr>
+		<td width=150></td>
+		<td width=250><label>search: </label></td>
+		<td width=250><%=@count_search%></td>
+		<td width=50></td>
+	</tr>
+	<tr>
+		<td width=150></td>
+		<td width=250><label>related video: </label></td>
+		<td width=250><%=@count_related%></td>
+		<td width=50></td>
+	</tr>
+	<tr>
+		<td width=150></td>
+		<td width=250><label>from url links: </label></td>
+		<td width=250><%=@count_friend%></td>
+		<td width=50></td>
+	</tr>
+	<tr>
+		<td width=150></td>
+		<td width=250><label>from embeded player: </label></td>
+		<td width=250><%=@count_embed%></td>
+		<td width=50></td>
+	</tr>
+	<tr>
+		<td width=150></td>
+		<td width=250><label>from search: </label></td>
+		<td width=250><%=@count_search%></td>
+		<td width=50></td>
+	</tr>
+	<tr>
+		<td width=150></td>
+		<td width=250><label>from other source (promotions): </label></td>
+		<td width=250><%=@count_null%></td>
+		<td width=50></td>
+	</tr>
+	<% end %>
+	
+</table>
+
+<%end%>
+
+<script type="text/javascript">
+    Calendar.setup(
+    {
+        inputField     :    "start_date",     // id of the input field
+        ifFormat       :    "%Y-%m-%d",      // format of the input field
+        button         :    "start_date_img",  // trigger for the calendar (button ID)
+        align          :    "Tl",           // alignment (defaults to "Bl")
+        singleClick    :    true
+    }
+    );
+    
+    Calendar.setup(
+    {
+				inputField     :    "end_date",     // id of the input field
+				ifFormat       :    "%Y-%m-%d",      // format of the input field
+				button         :    "end_date_img",  // trigger for the calendar (button ID)
+				align          :    "Tl",           // alignment (defaults to "Bl")
+				singleClick    :    true
+    }    
+    );
+</script>

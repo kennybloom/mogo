@@ -1,0 +1,287 @@
+<% role = session[:role] %>
+<%= stylesheet_link_tag "admin_style", :media => "all" %>
+
+<%= javascript_include_tag "jquery" %>
+
+<script type="text/javascript">
+jQuery.noConflict(); 
+
+function delete_program(programId) {
+	if (confirm("Are you sure you want to delete?")) {
+		jQuery.get('/admin/destroy_program', {id:programId},                  
+    	function(data) { 
+				jQuery('#program-' + data).remove();
+			}
+		);
+
+	}
+}
+  
+function view_program_brief(programId) {
+	jQuery('#view-program-brief-button-' + programId).addClass('active');
+	jQuery('#view-program-detail-button-' + programId).removeClass('active');
+	jQuery('#edit-program-button-' + programId).removeClass('active');
+	jQuery('#thumb-program-button-' + programId).removeClass('active');
+	jQuery('#play-program-button-' + programId).removeClass('active');
+	jQuery('#youku-program-button-' + programId).removeClass('active');
+	jQuery('#koobee-program-button-' + programId).removeClass('active');
+
+	jQuery('#program-brief-' + programId).show();
+	jQuery('#program-detail-' + programId).hide();
+	jQuery('#program-edit-' + programId).hide();	
+	jQuery('#program-thumb-' + programId).hide();	
+	jQuery('#program-play-' + programId).hide();	
+	jQuery('#program-youku-' + programId).hide();	
+	jQuery('#program-koobee-' + programId).hide();	
+}
+
+function view_program_detail(programId) {
+	jQuery('#view-program-brief-button-' + programId).removeClass('active');
+	jQuery('#view-program-detail-button-' + programId).addClass('active');
+	jQuery('#edit-program-button-' + programId).removeClass('active');
+	jQuery('#thumb-program-button-' + programId).removeClass('active');
+	jQuery('#play-program-button-' + programId).removeClass('active');
+	jQuery('#youku-program-button-' + programId).removeClass('active');
+	jQuery('#koobee-program-button-' + programId).removeClass('active');
+
+	jQuery('#program-brief-' + programId).hide();
+	jQuery('#program-detail-' + programId).show().load('/admin/show_program?id=' + programId);
+	jQuery('#program-edit-' + programId).hide();
+	jQuery('#program-thumb-' + programId).hide();	
+	jQuery('#program-play-' + programId).hide();	
+	jQuery('#program-youku-' + programId).hide();	
+	jQuery('#program-koobee-' + programId).hide();	
+}
+
+function edit_program(programId) {	
+	jQuery('#view-program-brief-button-' + programId).removeClass('active');
+	jQuery('#view-program-detail-button-' + programId).removeClass('active');
+	jQuery('#edit-program-button-' + programId).addClass('active');
+	jQuery('#thumb-program-button-' + programId).removeClass('active');
+	jQuery('#play-program-button-' + programId).removeClass('active');
+	jQuery('#youku-program-button-' + programId).removeClass('active');
+	jQuery('#koobee-program-button-' + programId).removeClass('active');
+
+	jQuery('#program-brief-' + programId).hide();
+	jQuery('#program-detail-' + programId).hide();
+	jQuery('#program-edit-' + programId).show()
+	.css({'height':'500px'})
+	.get(0).src = '/admin/edit_program?id=' + programId;
+	jQuery('#program-thumb-' + programId).hide();	
+	jQuery('#program-play-' + programId).hide();	
+	jQuery('#program-youku-' + programId).hide();	
+	jQuery('#program-koobee-' + programId).hide();	
+}
+
+function thumb_program(programId) {
+	jQuery('#view-program-brief-button-' + programId).removeClass('active');
+	jQuery('#view-program-detail-button-' + programId).removeClass('active');
+	jQuery('#edit-program-button-' + programId).removeClass('active');
+	jQuery('#thumb-program-button-' + programId).addClass('active');
+	jQuery('#play-program-button-' + programId).removeClass('active');
+	jQuery('#youku-program-button-' + programId).removeClass('active');
+	jQuery('#koobee-program-button-' + programId).removeClass('active');
+
+	jQuery('#program-brief-' + programId).hide();
+	jQuery('#program-detail-' + programId).hide();
+	jQuery('#program-edit-' + programId).hide();	
+	jQuery('#program-thumb-' + programId).show()
+	.css({'height':'750px', 'width':'500px'})
+	.get(0).src = '/admin/thumb_program?id=' + programId;
+	jQuery('#program-play-' + programId).hide();
+	jQuery('#program-youku-' + programId).hide();
+	jQuery('#program-koobee-' + programId).hide();	
+}
+
+function play_program(programId) {
+	jQuery('#view-program-brief-button-' + programId).removeClass('active');
+	jQuery('#view-program-detail-button-' + programId).removeClass('active');
+	jQuery('#edit-program-button-' + programId).removeClass('active');
+	jQuery('#thumb-program-button-' + programId).removeClass('active');
+	jQuery('#play-program-button-' + programId).addClass('active');
+	jQuery('#youku-program-button-' + programId).removeClass('active');
+	jQuery('#koobee-program-button-' + programId).removeClass('active');
+
+	jQuery('#program-brief-' + programId).hide();
+	jQuery('#program-detail-' + programId).hide();
+	jQuery('#program-edit-' + programId).hide();	
+	jQuery('#program-thumb-' + programId).hide();
+	jQuery('#program-play-' + programId).show()
+	.css({'height':'408px', 'width':'495px'})
+	.get(0).src = '/admin/play_program?id=' + programId + "&source=mogo";
+	jQuery('#program-youku-' + programId).hide();
+	jQuery('#program-koobee-' + programId).hide();	
+}
+
+function youku_program(programId) {
+	jQuery('#view-program-brief-button-' + programId).removeClass('active');
+	jQuery('#view-program-detail-button-' + programId).removeClass('active');
+	jQuery('#edit-program-button-' + programId).removeClass('active');
+	jQuery('#thumb-program-button-' + programId).removeClass('active');
+	jQuery('#play-program-button-' + programId).removeClass('active');
+	jQuery('#youku-program-button-' + programId).addClass('active');
+	jQuery('#koobee-program-button-' + programId).removeClass('active');
+
+	jQuery('#program-brief-' + programId).hide();
+	jQuery('#program-detail-' + programId).hide();
+	jQuery('#program-edit-' + programId).hide();	
+	jQuery('#program-thumb-' + programId).hide();	
+	jQuery('#program-play-' + programId).hide();	
+	jQuery('#program-youku-' + programId).show()
+	.css({'height':'408px', 'width':'495px'})
+	.get(0).src = '/admin/play_program?id=' + programId + "&source=youku";
+	jQuery('#program-koobee-' + programId).hide();	
+}
+
+function koobee_program(programId) {
+	jQuery('#view-program-brief-button-' + programId).removeClass('active');
+	jQuery('#view-program-detail-button-' + programId).removeClass('active');
+	jQuery('#edit-program-button-' + programId).removeClass('active');
+	jQuery('#thumb-program-button-' + programId).removeClass('active');
+	jQuery('#play-program-button-' + programId).removeClass('active');
+	jQuery('#youku-program-button-' + programId).removeClass('active');
+	jQuery('#koobee-program-button-' + programId).addClass('active');
+
+	jQuery('#program-brief-' + programId).hide();
+	jQuery('#program-detail-' + programId).hide();
+	jQuery('#program-edit-' + programId).hide();	
+	jQuery('#program-thumb-' + programId).hide();	
+	jQuery('#program-play-' + programId).hide();	
+	jQuery('#program-youku-' + programId).hide();	
+	jQuery('#program-koobee-' + programId).show()
+	.css({'height':'408px', 'width':'495px'})
+	.get(0).src = '/admin/play_program?id=' + programId + "&source=koobee";
+}
+
+jQuery(function() {
+	jQuery('ul.panel-title-ul')
+		.click(function(event) {
+      	if (jQuery(this).parent().children('.panel-content').is(':hidden')) {
+        	jQuery(this)
+           .children('li.panel-title-li').css({'list-style-image':'url(/images/arrow-dn.gif)'})
+           .parent().parent().children('.panel-content').slideDown();
+       	}
+        else {
+        	jQuery(this)
+           .children('li.panel-title-li').css({'list-style-image':'url(/images/arrow-rt.gif)'})
+           .parent().parent().children('.panel-content').slideUp()
+       	}
+        
+      return false;
+    });
+          
+  // *** open the categories panel
+	jQuery('.categories:has(.panel)').children('ul.panel-title-ul').trigger('click');
+	  
+  // *** open the programs panel
+	jQuery('.programs:has(.panel)').children('ul.panel-title-ul').trigger('click');
+});
+
+</script>
+<h1>List programs</h1>
+<br>
+
+<% form_tag( { :action => 'list_programs'}) do %>
+<table width=700 cellpadding="0" cellspacing="2">
+<tr>
+	<td>
+		<select name="channel_id" id="channel_id">
+			<option value="">- Select a channel -</option>
+			<option <%= "selected" if @channel_id == "all" %> value="all">- all programs -</option> 
+		<% for channel in @all_channels %>
+			<option <%= "selected" if @channel_id == channel.channel_id.to_s %> value="<%=channel.channel_id%>"><%=channel.channel_name%></option>
+		<% end %>
+		</select>
+		<select name="order_type" id="order_type">
+			<option <%= "selected" if @order_type == "by_date" %> value="by_date">order by date</option> 
+			<option <%= "selected" if @order_type == "by_name" %> value="by_name">order by name</option> 
+			<option <%= "selected" if @order_type == "by_new" %> value="by_new">order by new</option> 
+			<option <%= "selected" if @order_type == "by_new1" %> value="by_new1">order by new 最新音乐专题</option> 
+			<option <%= "selected" if @order_type == "by_new2" %> value="by_new2">order by new 最新音乐现场</option> 
+			<option <%= "selected" if @order_type == "by_new3" %> value="by_new3">order by new 最新艺术文化</option> 
+			<option <%= "selected" if @order_type == "by_new4" %> value="by_new4">order by new 最新潮流生活</option> 
+			<option <%= "selected" if @order_type == "by_viewed" %> value="by_viewed">order by viewed</option> 
+			<option <%= "selected" if @order_type == "by_top10" %> value="by_top10">order by top 10</option> 
+			<option <%= "selected" if @order_type == "by_include" %> value="by_include">order by include in top 10</option> 
+			<option <%= "selected" if @order_type == "by_exclude" %> value="by_exclude">order by excluded from top 10</option> 
+			<option <%= "selected" if @order_type == "by_recommend" %> value="by_recommend">order by recommend</option> 
+			<option <%= "selected" if @order_type == "by_unlinked" %> value="by_unlinked">order by unlinked</option> 
+			<option <%= "selected" if @order_type == "by_disabled" %> value="by_disabled">order by disabled</option> 
+			<option <%= "selected" if @order_type == "by_loaded_to_youku_not_checked" %> value="by_loaded_to_youku_not_checked">order by loaded to youku (not validated)</option> 
+			<option <%= "selected" if @order_type == "by_loaded_to_youku_checked" %> value="by_loaded_to_youku_checked">order by loaded to youku (validated)</option> 
+			<option <%= "selected" if @order_type == "by_not_loaded_to_youku" %> value="by_not_loaded_to_youku">order by not loaded to youku</option> 
+			<option <%= "selected" if @order_type == "by_loaded_to_koobee" %> value="by_loaded_to_koobee">order by loaded to koobee</option> 
+			<option <%= "selected" if @order_type == "by_not_loaded_to_koobee" %> value="by_not_loaded_to_koobee">order by not loaded to koobee</option> 
+		</select>
+		<select name="limit" id="limit">
+			<option <%= "selected" if @limit == "50" %> value="50">show 50</option> 
+			<option <%= "selected" if @limit == "100" %> value="100">show 100</option> 
+			<option <%= "selected" if @limit == "all" %> value="all">show all</option> 
+		</select>
+	</td>
+</tr>
+<tr>
+	<td>
+		<label>Seach:</label><input name="keyword" size="20" value="<%=@keyword if @keyword != nil%>"></input>
+	<%= submit_tag 'submit' %>
+	</td>
+</tr>
+</table>
+<% end%>
+<br>
+<% form_tag :action => 'update_program_list' do %>
+	<%= hidden_field_tag "channel_id", @channel_id%>
+	<%= hidden_field_tag "order_type", @order_type%>
+	<% if @all_programs != nil %>
+		<% for @program in @all_programs %>
+			<!-- ***** show one linked program start ***** -->
+			<div id="program-<%=@program.program_id%>" class="panel program" style="border: none;"><ul class="panel-title-ul"><li class="panel-title-li"><%=@program.program_name_cn%></li></ul>
+
+				<!-- ***** show one linked program content start ***** -->
+				<div class="panel-content program-content" style="DISPLAY: none">
+
+					<div class="tab-container">
+						<ul id="tabnav">
+							<li><a id="view-program-brief-button-<%=@program.program_id%>" href="javascript:view_program_brief(<%=@program.program_id%>);" class="view-program-brief-button active">brief</a></li>
+							<li><a id="view-program-detail-button-<%=@program.program_id%>" href="javascript:view_program_detail(<%=@program.program_id%>);" class="view-program-detail-button ">detail</a></li>
+							<li><a id="edit-program-button-<%=@program.program_id%>" href="javascript:edit_program(<%=@program.program_id%>);" class="edit-program-button ">edit</a></li>
+							<li><a id="thumb-program-button-<%=@program.program_id%>" href="javascript:thumb_program(<%=@program.program_id%>);" class="thumb-program-button ">thumbnails</a></li>
+							<li><a id="play-program-button-<%=@program.program_id%>" href="javascript:play_program(<%=@program.program_id%>);" class="play-program-button ">play</a></li>
+							<% if @program.youku_id != nil && @program.youku_id != '' %>
+							<li><a id="youku-program-button-<%=@program.program_id%>" href="javascript:youku_program(<%=@program.program_id%>);" class="youku-program-button ">youku</a></li>
+							<% end %>
+							<% if @program.koobee_uploaded_dt != nil && @program.koobee_uploaded_dt != '' %>
+							<li><a id="koobee-program-button-<%=@program.program_id%>" href="javascript:koobee_program(<%=@program.program_id%>);" class="koobee-program-button ">koobee</a></li>
+							<% end %>
+						</ul>
+					</div>
+			
+					<div id="program-brief-<%=@program.program_id%>">
+					</div>
+					<script type="text/javascript">
+						jQuery('#program-brief-<%=@program.program_id%>').load('/admin/show_program_brief?id=<%=@program.program_id%>');
+					</script>
+					<div id="program-detail-<%=@program.program_id%>">
+					</div>
+					<iframe id="program-edit-<%=@program.program_id%>" height="0" width="750" frameborder="0" scrolling="auto" class="autoHeight"></iframe>
+					<iframe id="program-thumb-<%=@program.program_id%>" height="0" width="750" frameborder="0" scrolling="auto" class="autoHeight"></iframe>
+					<iframe id="program-play-<%=@program.program_id%>" height="0" width="750" frameborder="0" scrolling="auto" class="autoHeight"></iframe>
+					<iframe id="program-youku-<%=@program.program_id%>" height="0" width="750" frameborder="0" scrolling="auto" class="autoHeight"></iframe>
+					<iframe id="program-koobee-<%=@program.program_id%>" height="0" width="750" frameborder="0" scrolling="auto" class="autoHeight"></iframe>
+<% if role == "admin" %>
+					<a href="javascript:delete_program('<%=@program.program_id%>');">delete</a>
+<% end %>
+				</div>
+				<!-- ***** show one linked program content end ***** -->
+
+			</div>
+			<!-- ***** show one linked program end ***** -->
+
+		<% end %>
+		<hr>
+		<p>Total: <%=@all_programs.size%> programs</p>
+<% if role == "admin" %>
+		<p><%= submit_tag 'Update programs' %></p>
+<% end %>
+	<% end %>
+<% end %>

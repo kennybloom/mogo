@@ -1,0 +1,75 @@
+#top-1 {
+    width: 100%;
+    height: 27px;
+    background-image:url('top-1.jpg');
+    background-repeat:repeat-x;
+}
+
+#top-2 {
+    width: 100%;
+    height: 350px;
+    background-image:url('top-2.jpg');
+    background-repeat:repeat-x;
+}
+
+#top-3 {
+    width: 100%;
+    height: 27px;
+    background-image:url('top-3.jpg');
+    background-repeat:repeat-x;
+}
+
+a, a:visited {
+    color: #055beb;
+    text-decoration: none;
+    font-size:10pt;
+}
+
+a img {
+    border-style: none;
+}
+
+body {
+    color: #055beb;
+}
+
+#left-title {
+    position: absolute;
+    top: 80px;
+    left:-20px;
+    width: 400px;
+    height: 200px;
+    background: transparent url(livesport.png) no-repeat 0 0;
+    z-index: 50;
+}
+
+#right-title {
+    position: absolute;
+    top: 80px;
+    right: -20px;
+    width: 400px;
+    height: 200px;
+    background: transparent url(livesport.png) no-repeat 0 0;
+    z-index: 50;
+}
+
+#watchit {
+    position: absolute;
+    top: 240px;
+    right: 105px;
+    width: 160px;
+    height: 39px;
+    z-index: 50;
+    background: transparent url(watchit.jpg) no-repeat 0 0;
+}
+
+#watchit-link {
+    position: absolute;
+    top: 240px;
+    right: 105px;
+    cursor: pointer;
+    width: 160px;
+    height: 39px;
+    z-index: 100;
+}
+

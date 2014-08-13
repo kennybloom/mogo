@@ -1,0 +1,59 @@
+<html>
+<head>
+<%= javascript_include_tag "jquery" %>
+<%= javascript_include_tag "mogo" %>
+<%= javascript_include_tag "swfobject" %>
+</head>
+<body leftmargin="0" topmargin="0" rightmargin="0" buttommargin="0" style="background-color:black">
+<div id="flvcontent"></div>
+<script type="text/javascript">
+	// *** create flash player ***
+	var source = '<%=@source%>';
+	var youku_id = '<%=@program.youku_id%>';
+
+	// *** youku player ***
+	if (source == 'youku') {
+   	var flashParams = {quality:"heigh",allowScriptAccess:"always"};
+    var flashVars = {playMovie:"true", isAutoPlay:"true"};
+    swfobject.embedSWF('http://player.youku.com/player.php/sid/' + youku_id + '/v.swf', "flvcontent", "480", "400", "9.0.0", null, flashVars, flashParams);
+	}
+	else 
+	if (source == 'koobee') {
+		var flashvars = {
+  	  file:"<%= "http://59.66.30.19/mogo/" + @program.program_path_stream %>",
+    	autostart:"true",
+    	skin:"/jwplayer/modieus/modieus.swf"
+  	}
+  	var params = {
+    	allowfullscreen:"true", 
+    	allowscriptaccess:"always"
+  	}
+  	var attributes = {
+    	id:"jwplayer",  
+    	name:"jwplayer"
+  	}
+  
+  	swfobject.embedSWF("/jwplayer/player.swf", "flvcontent", "480", "400", "9", false, flashvars, params, attributes);
+	}
+	else {
+		var flashvars = {
+  	  file:"<%=@base_url%><%=$path_video + "/" + @program.program_path_stream%>",
+    	autostart:"true",
+    	skin:"/jwplayer/modieus/modieus.swf"
+  	}
+  	var params = {
+    	allowfullscreen:"true", 
+    	allowscriptaccess:"always"
+  	}
+  	var attributes = {
+    	id:"jwplayer",  
+    	name:"jwplayer"
+  	}
+  
+  	swfobject.embedSWF("/jwplayer/player.swf", "flvcontent", "480", "400", "9", false, flashvars, params, attributes);
+  }
+
+</script>
+
+</body>
+</html>

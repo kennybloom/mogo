@@ -1,0 +1,16 @@
+<% all_partners = Partner.find(:all, :order => :weight) %>
+<table>
+	<tr>
+	<% count = 0 %>
+	<% for partner in all_partners %>
+		<% if count > 0 && count.modulo(4) == 0 %>
+		</tr>
+		<tr>
+		<% end %>
+		<td>
+		<div style="float:left"><a href="<%=partner.url%>" target="_new"><img src="<%=make_path($path_partner_logo, partner.logo)%>" width="120" height="100" border="0" style="cursor:hand;"></a></div>
+		</td>
+		<% count += 1 %>
+	<% end %>
+	</tr>
+</table>

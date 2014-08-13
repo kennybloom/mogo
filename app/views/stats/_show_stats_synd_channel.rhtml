@@ -1,0 +1,28 @@
+<table width="450" cellpadding="0" cellspacing="2" style="margin-left:20px;">
+<% syndications = Syndication.find(:all) %>
+<tr>
+	<td width="150" height=25 bgcolor="#333333">&nbsp;&nbsp;Syndication</label></td>
+	<td width="150" height=25 bgcolor="#333333">&nbsp;&nbsp;Views</td>
+	<td width="150" height=25 bgcolor="#333333">&nbsp;&nbsp;Percent</td>
+</tr>
+<% 
+	sql = "SELECT count(*) count FROM video_log " + @condition + " and channel_id=" + @channel.channel_id.to_s
+	result = VideoLogAll.find_by_sql(sql)
+	total = result[0].count
+
+	for synd in syndications 
+		sql = "SELECT count(*) count FROM video_log " + @condition + " and channel_id=" + @channel.channel_id.to_s + " and syndication_id=" + synd.id.to_s
+		result = VideoLogAll.find_by_sql(sql)
+		count = result[0].count
+		
+		pct = count.to_f*100/total.to_f
+		pct = (pct * 100).round.to_f / 100
+		
+%>
+<tr>
+	<td height=25 bgcolor="#333333">&nbsp;&nbsp;<%=synd.domain%></label></td>
+	<td height=25 bgcolor="#333333">&nbsp;&nbsp;<%=count%></td>
+	<td height=25 bgcolor="#333333">&nbsp;&nbsp;<%=pct%></label></td>
+</tr>
+<% end %>
+</table>

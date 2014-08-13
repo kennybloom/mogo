@@ -1,0 +1,192 @@
+<% role = session[:role] %>
+<%= error_messages_for 'program' %>
+<!-- calendar stylesheet -->
+<link rel="stylesheet" type="text/css" media="all" href="/javascripts/jscalendar-1.0/calendar-win2k-cold-1.css" title="win2k-cold-1" />
+
+<!-- main calendar program -->
+<script type="text/javascript" src="/javascripts/jscalendar-1.0/calendar.js"></script>
+
+<!-- language for the calendar -->
+<script type="text/javascript" src="/javascripts/jscalendar-1.0/lang/calendar-en.js"></script>
+
+<!-- the following script defines the Calendar.setup helper function, which makes
+		 adding a calendar a matter of 1 or 2 lines of code. -->
+<script type="text/javascript" src="/javascripts/jscalendar-1.0/calendar-setup.js"></script>
+
+
+<!--[form:program]-->
+<table width=550 cellpadding="0" cellspacing="2">
+<tr>
+	<td width=220 bgcolor="#333333"><label for="program_name_cn">&nbsp;Program name:</label></td>
+	<td width=300 bgcolor="#333333"><%= text_field 'program', 'program_name_cn'  %></td>
+</tr>
+<tr>
+	<td width=220 bgcolor="#333333"><label for="description">&nbsp;Description:</label></td>
+	<td width=300 bgcolor="#333333"><%= text_field 'program', 'description'  %></td>
+</tr>
+<tr>
+	<td width=220 bgcolor="#333333"><label for="url">&nbsp;Url:</label></td>
+	<td width=300 bgcolor="#333333"><%= text_field 'program', 'url'  %></td>
+</tr>
+<tr>
+	<td width=220 bgcolor="#333333"><label for="url_text">&nbsp;Url text:</label></td>
+	<td width=300 bgcolor="#333333"><%= text_field 'program', 'url_text', 'maxlength'=>30  %></td>
+</tr>
+<% if role == "admin" %>
+<tr>
+	<td width=220 bgcolor="#333333"><label for="program_path_stream">&nbsp;Video path:</label></td>
+	<td width=300 bgcolor="#333333">
+		<table cellpadding="0" cellspacing="0">
+			<tr>
+				<td colspan=2><%= text_field 'program', 'program_path_stream' , {'readonly'=>'true', 'style'=>'background-color:#fbc5f8'}%></td>
+			</tr>
+			<tr>
+				<td align=left>
+					<%= select_tag 'program_path_stream_dir_select', video_dir_select_options(["public" + $path_video], /.*/)%>
+				</td>
+				<td align=left>
+					<div id="program_path_stream_file_div">
+						<select id="program_path_stream_file_select" name="program_path_stream_file_select">
+							<option>-- select a file --</option>
+						</select>
+					</div>
+					<%= observe_field "program_path_stream_dir_select", :update => "program_path_stream_file_div",
+						:with => "dir", :url => { :action => "get_video_file_select_options"} %>					
+				</td>
+			</tr>
+		</table>
+	</td>
+</tr>
+<tr>
+	<td width=220 bgcolor="#333333"><label for="program_icon">&nbsp;Video thumbnail:</label></td>
+	<td width=300 bgcolor="#333333">
+		<table cellpadding="0" cellspacing="0">
+			<tr>
+				<td colspan=2><%= text_field 'program', 'program_icon' , {'readonly'=>'true', 'style'=>'background-color:#fbc5f8'}%></td>
+			</tr>
+			<tr>
+				<td align=left>
+					<%= select_tag 'program_icon_dir_select1', video_thumb_dir_select_options(["public" + $path_program_icon], /.*/)%>
+				</td>
+				<td align=left>
+					<div id="program_icon_dir_select2_div">
+						<select id="program_icon_dir_select2" name="program_icon_dir_select2">
+							<option>-- folder --</option>
+						</select>
+					</div>
+					<%= observe_field "program_icon_dir_select1", :update => "program_icon_dir_select2_div",
+						:with => "dir", :url => { :action => "get_video_thumb_dir_select2_options"} %>					
+				</td>
+			</tr>
+			<tr>
+				<td colspan=2 align=left>
+					<div id="program_icon_file_div">
+						<select id="program_icon_file_select" name="program_icon_file_select">
+							<option>-- select a file --</option>
+						</select>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</td>
+</tr>
+<tr>
+	<td width=220 bgcolor="#333333"><label for="new_yn">&nbsp;New program?</label></td>
+	<td width=300 bgcolor="#333333"><%= check_box 'program', 'new_yn', {}, 'y', 'n'  %></td>
+</tr>
+<tr>
+	<td width=220 bgcolor="#333333"><label for="new1_yn">&nbsp;MOGO 最新 音乐专题?</label></td>
+	<td width=300 bgcolor="#333333"><%= check_box 'program', 'new1_yn', {}, 'y', 'n'  %></td>
+</tr>
+<tr>
+	<td width=220 bgcolor="#333333"><label for="new2_yn">&nbsp;MOGO 最新 音乐现场?</label></td>
+	<td width=300 bgcolor="#333333"><%= check_box 'program', 'new2_yn', {}, 'y', 'n'  %></td>
+</tr>
+<tr>
+	<td width=220 bgcolor="#333333"><label for="new3_yn">&nbsp;MOGO 最新 艺术文化?</label></td>
+	<td width=300 bgcolor="#333333"><%= check_box 'program', 'new3_yn', {}, 'y', 'n'  %></td>
+</tr>
+<tr>
+	<td width=220 bgcolor="#333333"><label for="new4_yn">&nbsp;MOGO 最新 潮流生活?</label></td>
+	<td width=300 bgcolor="#333333"><%= check_box 'program', 'new4_yn', {}, 'y', 'n'  %></td>
+</tr>
+<tr>
+	<td width=220 bgcolor="#333333"><label for="enable_yn">&nbsp;Enabled?</label></td>
+	<td width=300 bgcolor="#333333"><%= check_box 'program', 'enable_yn', {}, 'y', 'n'  %></td>
+</tr>
+<tr>
+	<td width=220 bgcolor="#333333"><label for="enable_start_date">&nbsp;Enable start date:</label></td>
+	<td width=300 bgcolor="#333333">
+		<% enable_start_date = @program.enable_start_date.to_formatted_s(:my_date_format) unless @program.enable_start_date == nil %>
+		<%= text_field_tag 'program_enable_start_date', enable_start_date, {:id=>"enable_start_date"}  %><img src="/javascripts/jscalendar-1.0/img.gif" id="enable_start_date_img" style="cursor: pointer; border: 1px solid red;" title="Date selector"
+      onmouseover="this.style.background='red';" onmouseout="this.style.background=''" />
+	</td>
+</tr>
+<tr>
+	<td width=220 bgcolor="#333333"><label for="enable_end_date">&nbsp;Enable end date:</label></td>
+	<td width=300 bgcolor="#333333">
+		<% enable_end_date = @program.enable_end_date.to_formatted_s(:my_date_format) unless @program.enable_end_date == nil %>
+		<%= text_field_tag 'program_enable_end_date', enable_end_date, {:id=>"enable_end_date"} %><img src="/javascripts/jscalendar-1.0/img.gif" id="enable_end_date_img"    style="cursor: pointer; border: 1px solid red;" title="Date selector"
+      onmouseover="this.style.background='red';" onmouseout="this.style.background=''" />
+	</td>
+</tr>
+<tr>
+	<td width=220 bgcolor="#333333"><label for="enable_yn">&nbsp;Recommend?</label></td>
+	<td width=300 bgcolor="#333333"><%= check_box 'program', 'recommend_yn', {}, 'y', 'n'  %></td>
+</tr>
+<tr>
+	<td width=220 bgcolor="#333333"><label for="ipopular_yn">&nbsp;Include in top 10?</label></td>
+	<td width=300 bgcolor="#333333"><%= check_box 'program', 'ipopular_yn', {}, 'y', 'n'  %></td>
+</tr>
+<tr>
+	<td width=220 bgcolor="#333333"><label for="xpopular_yn">&nbsp;Exclude from top 10?</label></td>
+	<td width=300 bgcolor="#333333"><%= check_box 'program', 'xpopular_yn', {}, 'y', 'n'  %></td>
+</tr>
+<% end %>
+<tr>
+	<td width=220 bgcolor="#333333"><label for="program_tags">&nbsp;Tags:</label></td>
+	<td width=300 bgcolor="#333333"><%= text_field 'program', 'program_tags'  %></td>
+</tr>
+<tr>
+	<td width=220 bgcolor="#333333"><label for="keywords">&nbsp;Keywords:</label></td>
+	<td width=300 bgcolor="#333333"><%= text_field 'program', 'keywords'  %></td>
+</tr>
+<% if role == "admin" %>
+<tr>
+	<td width=220 bgcolor="#333333"><label for="external_id">&nbsp;External Id:</label></td>
+	<td width=300 bgcolor="#333333"><%= text_field 'program', 'external_id'  %></td>
+</tr>
+<tr>
+	<td width=220 bgcolor="#333333"><label for="youku_id">&nbsp;Youku Id:</label></td>
+	<td width=300 bgcolor="#333333"><%= text_field 'program', 'youku_id'  %></td>
+</tr>
+<tr>
+	<td width=220 bgcolor="#333333"><label for="youku_ok_yn">&nbsp;Youku validated?</label></td>
+	<td width=300 bgcolor="#333333"><%= check_box 'program', 'youku_ok_yn', {}, 'y', 'n'  %></td>
+</tr>
+<% end %>
+</table>
+<!--[eoform:program]-->
+<% if role == "admin" %>
+<script type="text/javascript">
+    Calendar.setup(
+    {
+        inputField     :    "enable_start_date",     // id of the input field
+        ifFormat       :    "%Y-%m-%d",      // format of the input field
+        button         :    "enable_start_date_img",  // trigger for the calendar (button ID)
+        align          :    "Tl",           // alignment (defaults to "Bl")
+        singleClick    :    true
+    }
+    );
+    
+    Calendar.setup(
+    {
+				inputField     :    "enable_end_date",     // id of the input field
+				ifFormat       :    "%Y-%m-%d",      // format of the input field
+				button         :    "enable_end_date_img",  // trigger for the calendar (button ID)
+				align          :    "Tl",           // alignment (defaults to "Bl")
+				singleClick    :    true
+    }    
+    );
+</script>
+<% end %>

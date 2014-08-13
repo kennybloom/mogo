@@ -1,0 +1,16 @@
+<% role = session[:role] %>
+<h1>All categories</h1>
+<br>
+<table>
+  
+<% for category in @all_categorys %>
+  <tr>
+		<td><%=category.category_name_cn%></td>
+    <td><%= link_to 'show',   {:action => 'show_category',    :id => category} %></td>
+<% if role == "admin" %>
+    <td><%= link_to 'edit',   {:action => 'edit_category',    :id => category} %></td>
+    <td><%= link_to 'delete', {:action => 'destroy_category', :id => category}, :confirm => 'Are you sure?', :method => :post %></td>
+<% end %>
+  </tr>
+<% end %>
+</table>

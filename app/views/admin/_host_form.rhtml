@@ -1,0 +1,15 @@
+<%= error_messages_for 'host' %>
+
+<table width=550 cellpadding="0" cellspacing="2">
+<tr>
+	<td width=220 bgcolor="#333333"><label for="host_name">Host name:</label></td>
+	<td width=300 bgcolor="#333333"><%= text_field 'host', 'host_name'  %></td>
+</tr>
+<tr>
+	<td width=220  bgcolor="#333333"><label for="host_image">Image:</label></td>
+	<td width=300 bgcolor="#333333">
+		<%= text_field 'host', 'host_image', {'readonly'=>'true', 'style'=>'background-color:#fbc5f8'} %>
+		<%= select_tag 'host_image_select', file_select_options(["public" + $path_host_icon], /.*/)%>
+	</td>
+</tr>
+</table>

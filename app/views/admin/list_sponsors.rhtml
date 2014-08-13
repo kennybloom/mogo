@@ -1,0 +1,21 @@
+<h1>All multimedia ads</h1>
+<br>
+	<% for sponsor in @all_sponsors %>
+		<table width=600 cellpadding="0" cellspacing="0">
+			<tr>
+				<td colspan=2 bgcolor="#333333"><%=sponsor.name%></td>
+			</tr>
+			<tr>
+				<td width=250><%=link_to(image_tag(make_path($path_sponsor_logo, sponsor.logo), :border => 0), {:action => "show_sponsor", :id => sponsor.id})%>
+				<td width=350 valign=top><%=sponsor.url%></td>
+			</tr>
+			<tr>
+				<td colspan=2>
+					<%= link_to "show",   {:action => "show_sponsor",    :id => sponsor.id}%> -
+					<%= link_to "edit",   {:action => "edit_sponsor",    :id => sponsor.id}%> - 
+					<%= link_to "delete", {:action => "destroy_sponsor", :id => sponsor.id}, :confirm => "Are you sure?", :method => :post%>
+				</td>
+			</tr>
+		</table>
+		</br>
+	<% end %>

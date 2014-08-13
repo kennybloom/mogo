@@ -1,0 +1,531 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Mogo -- 首页</title>
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Expires" CONTENT="-1">
+<meta HTTP-EQUIV="Content-Language" content="cn">
+<META name="description" content="">
+<META name="keywords" content="">
+<link rel="shortcut icon" type="image/ico" href="/favicon.ico" >
+<link rel=stylesheet type=text/css href=/stylesheets/mogo.css>
+<%= stylesheet_link_tag "carousel" , :media => "all" %>
+
+<script type="text/javascript" src="http://partner.googleadservices.com/gampad/google_service.js">
+</script>
+<script type="text/javascript">
+  GS_googleAddAdSenseService("ca-pub-4319899706835777");
+  GS_googleEnableAllServices();
+</script>
+<script type="text/javascript">
+  GA_googleAddSlot("ca-pub-4319899706835777", "converse-mag-button");
+  GA_googleAddSlot("ca-pub-4319899706835777", "blog-button");
+  GA_googleAddSlot("ca-pub-4319899706835777", "bbs-button");
+</script>
+<script type="text/javascript">
+  GA_googleFetchAds();
+</script>
+
+<script type="text/javascript">
+    var name = navigator.appName;
+    if (name == "Netscape"){
+        document.write( "<link rel=stylesheet type=text/css href=/stylesheets/mogo-firefox.css>");
+    }
+    else {
+        document.write( "<link rel=stylesheet type=text/css href=/stylesheets/mogo-ie.css>");
+    }
+</script>
+
+<%= javascript_include_tag "jquery" %>
+<%= javascript_include_tag "jquery.marquee" %>
+<% if $syndication_id == 96 %>
+<%= javascript_include_tag "mogo_koobee" %>
+<% else %>
+<%= javascript_include_tag "mogo" %>
+<% end %>
+
+<script type="text/javascript">
+function unset_special_category_highlite() {
+    $("ul.special-categories a").removeClass("highlite");
+}
+
+$(function() {
+  programframe.location.href = '/mogo/list_programs/new';
+
+    $('ul.special-categories li')
+        .click(function(event){
+            if (this == event.target) {
+        list_type = $(this).attr("list_type");
+        $('a.highlite').removeClass('highlite');
+            $(this).children('a').addClass('highlite');
+        programframe.location.href = '/mogo/list_programs/' + list_type;
+                channelframe.remove_highlite();
+      }
+      return false;
+    })
+    .children('a')
+        .click(function(event){
+            if (this == event.target) {
+                $(this).parent().trigger('click');
+            }
+            return false;
+    });          
+
+
+        var target_program_id = get_url_param('program_id');
+        if (target_program_id != null && target_program_id != '') {
+        jQuery.get(
+        '/mogo/target_video/' + target_program_id,
+        {
+        },
+        function(html_code) {
+                    jQuery("#cache").html(html_code);
+                    program_name = jQuery('#target-video').attr("program_name");
+                    channel_id = jQuery('#target-video').attr("channel_id");
+                    category_id = jQuery('#target-video').attr("category_id");
+                    program_desc = jQuery('#target-video').attr("program_desc");
+                    program_url = jQuery('#target-video').attr("program_url");
+
+                    home_content_onClick(program_name, channel_id, category_id, target_program_id, program_desc, program_url, 'friend', '', <%=$syndication_id%>, 'child_category', '')
+
+        },
+        'html');
+        
+        }
+        else {
+            var random_program = Math.floor(Math.random() * <%=@new_programs.length()%>)
+            switch(random_program) {
+<%      count = 0
+            for program in @new_programs 
+                channel_id = ""
+                category_id = ""
+                category = Category.findByProgramId(program.program_id)
+                if category != nil
+                    category_id = category.category_id
+                    channel = Channel.findByCategoryId(category.category_id)
+                    if channel != nil
+                        channel_id = channel.channel_id
+                    end
+                end
+%>
+                case <%=count%>:
+                    home_content_onClick('<%=program.program_name_cn%>', '<%=channel_id%>', '<%=category_id%>', '<%=program.program_id%>','<%=program.description%>', '<%=program.url + "|" + program.url_text%>', 'first', '<%=program.external_id%>', '<%=$syndication_id%>', 'new', '');
+                    break;
+<%          count += 1 %>               
+<%      end %>
+            }
+            
+        }
+
+        // Marquee stuff
+        //$('marquee').marquee();
+
+});
+</script>
+
+<script type="text/javascript">
+function doLoad(){
+}
+</script>
+</head>
+
+<body topmargin="0" bgcolor="white" onLoad="doLoad()">
+<% if $syndication_id != 96 %>
+<a name="top"></a>
+<% end %>
+
+<center>
+<!-- ********** Start: outer most table -->
+<table id="outer-most" cellpadding="0" cellspacing="0">
+<tr><td align="left" valign="top">
+
+<!-- ********** start: top banner -->
+<table id="top-banner" cellpadding="0" cellspacing="0">
+<tr>
+    <td align="left" valign="center" width="1005">
+        <iframe align="left" name="ad_frame_top_banner_728x90" id="ad_frame_top_banner_728x90" ALLOWTRANSPARENCY="true" vspace="0" scrolling="no" frameborder="0" hspace="0" src="/mogo/show_ad_top_banner_728x90/0"></iframe>
+    </td>
+    <td align="left" valign="center">
+        <iframe align="left" name="ad_frame_square_125x125_top_left" id="ad_frame_square_125x125_top_left" ALLOWTRANSPARENCY="true" vspace="0" scrolling="no" frameborder="0" hspace="0" src="/mogo/show_ad_square_125x125_top_right/0"></iframe>
+    </td>   
+</tr>
+</table>
+<!-- ********** end: top banner -->
+
+</td></tr>
+<tr><td align="left" valign="top">
+
+<!-- ********** start: content outer section-->
+<table id="content-outer-section" cellpadding="0" cellspacing="0">
+<tr><td align="left" valign="top">
+
+<!-- ********** start: content section (right below banner)-->
+<table id="content-section" cellpadding="0" cellspacing="0">
+<tr><td align="left" valign="top">
+
+<!-- ********** start: (content) top section -->
+<table id="top-section" cellpadding="0" cellspacing="0">
+    <tr>
+        <td align="left" valign="top">
+      <!-- ********** start: top section => left section (video display) -->
+        <table id="top-section-left-section" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td id="title_td" align="left" valign="top">&nbsp;
+                        <marquee behavior="scroll" direction="left" scrollamount="2" width="450"></marquee>
+                    </td>
+        </tr>
+        <tr>
+          <td align="left" valign="bottom">
+            <iframe align="left" name="videoframe" id="videoframe" ALLOWTRANSPARENCY="true" vspace="0" scrolling="no" frameborder="0" hspace="0" src="">
+            </iframe>
+                        <input id="videoloaded" name="videoloaded" type="hidden" value="">
+          </td>
+        </tr>
+        </table>
+      <!-- ********** end: top section => left section (video display) -->
+        </td>
+        <td align="right" valign="top">
+      <!-- ********** start: top section => right section -->
+      <table id="top-section-right-section" cellpadding="0" cellspacing="0">
+        <tr>
+            <td align="left" valign="top">
+                <!-- ********** start: top section => right section => top section -->
+                <table id="top-section-right-section-top-section" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td align="left" valign="top">
+                            <!-- ********** start: top section => right section => top section => left section -->
+                            <table id="top-section-right-section-top-section-left-section" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td align="left" valign="top">
+                                        <table cellpadding="0" cellspacing="0">
+                                            <tr>
+                                                <td colspan="2" align="left" valign="top"><div id="program-description"></div></td>
+                                            </tr>
+                                                    <tr>
+                                                        <td align="left" valign="top"><div id="program-go-channel"></div></td>
+                                                        <td align="left" valign="top"><div id="program-more"></div></td>
+                                                    </tr>
+                                                </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" valign="bottom">
+                                        <table id="top-section-right-section-top-section-left-section-buttons" cellpadding="0" cellspacing="0">
+                                                    <tr>
+                                                        <td id="button-1" colspan="2" align="left" valign="top">
+                                                            <div id="button-topics">
+                                                                <!--a href="http://www.mogo.com.cn/conversemag/mogo.html" target="_new"></a-->
+                                                                <script type="text/javascript">
+                                                            GA_googleFillSlot("converse-mag-button");
+                                                                </script>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td id="button-2" colspan="2" align="left" valign="top"><div id="button-embed"><a href="javascript:goEmbed()"></a></div></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td id="button-4a" align="left" valign="top">
+                                                          <div id="button-bbs">
+                                                          <script type="text/javascript">
+                                                          GA_googleFillSlot("bbs-button");
+                                                          </script>
+                                                          </div>
+                                                        </td>
+                                                        <td id="button-4b" align="right" valign="top">
+                                                          <div id="button-blog">
+                                                          <script type="text/javascript">
+                                                          GA_googleFillSlot("blog-button");
+                                                          </script>
+                                                          </div></td>
+                                                    </tr>
+                                                </table>
+                                    </td>
+                                </tr>
+                                    </table>
+                        </td>
+                        <td align="left" valign="top">
+                            <!-- ********** start: top section => right section => top section => right section -->
+                            <iframe align="right" name="ad_frame_rectangle_300x250" id="ad_frame_rectangle_300x250" ALLOWTRANSPARENCY="true" vspace="0" scrolling="no" frameborder="0" hspace="0" src="/mogo/show_ad_rectangle_300x250/0">
+                                    </iframe>
+                        </td>
+                    </tr>
+                </table>
+                <!-- ********** end: top section => right section => top section -->
+            </td>
+        </tr>
+        <tr>
+            <td align="left" valign="bottom">
+                <!-- ********** start: top section => right section => bottom section -->
+                <table id="top-section-right-section-bottom-section" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td align="left" valign="bottom">
+                        <iframe align="center" name="nextvideoframe" id="nextvideoframe" ALLOWTRANSPARENCY="true" vspace="0" scrolling="no" frameborder="0" hspace="0" src="/mogo/next_video/new">
+                        </iframe>
+                        </td>
+                    </tr>
+                </table>
+                <!-- ********** end: top section => right section => bottom section -->
+            </td>
+        </tr>
+      </table>
+      <!-- ********** end: top section => right section -->
+        </td>
+    </tr>
+</table>
+<!-- ********** end: (content) top section -->
+
+</td></tr>
+<tr><td align="left" valign="top">
+
+<!-- ********** start: (content) bottom section -->
+<a name="bottom"></a>
+<div id="bottom-section-outer">
+<table id="bottom-section" cellpadding="0" cellspacing="0">
+    <tr>
+        <td align="left" valign="top">
+            <!-- ********** start: bottom section => left section (channel title)-->
+            <table id="bottom-section-left-section-title" cellpadding="0" cellspacing="0">
+                <tr><td align="left" valign="center"><p>CHANNELS&nbsp;&nbsp;频道</p></td></tr>
+            </table>
+            <!-- ********** end: bottom section => left section (channel title)-->
+            <!-- ********** start: bottom section => left section (channel list)-->
+            <table id="bottom-section-left-section" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td align="left" valign="top" height="40">
+                        <ul class="special-categories">
+                            <li list_type="new"><a class="highlite" href="#">New 最新节目</a></li>
+                            <li list_type="new1"><a href="#">New 最新音乐专题</a></li>
+                            <li list_type="new2"><a href="#">New 最新音乐现场</a></li>
+                            <li list_type="new3"><a href="#">New 最新艺术文化</a></li>
+                            <li list_type="new4"><a href="#">New 最新潮流生活</a></li>
+                            <li list_type="popular"><a href="#">Hot 最热节目</a></li>
+                        </ul>
+                        </div>
+                        <hr id="category-divider"></hr>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" valign="top">
+                        <iframe frameborder="0" id="channelframe" name="channelframe" ALLOWTRANSPARENCY="true" scrolling="auto" vspace="0" hspace="0" src="/mogo/list_channel_category"></iframe>
+                    </td>
+                </tr>
+            </table>
+            <!-- ********** end: bottom section => left section (channel list)-->       
+        </td>
+        <td align="left" valign="top">
+            <!-- ********** start: bottom section => right section (program thumb)-->
+            <table id="bottom-section-right-section-program-thumb" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td align="left" valign="top">
+                        <iframe frameborder="0" id="programframe" name="programframe" ALLOWTRANSPARENCY="true" scrolling="no" vspace="0" hspace="0" ></iframe>
+                    </td>
+                </tr>
+            </table>
+            <!-- ********** end: bottom section => right section (program thumb)-->     
+        </td>
+    </tr>
+</table>
+</div>
+<!-- ********** end: (content) bottom section -->
+
+</td>
+</tr>
+</table>
+<!-- ********** end: content section (right below banner) -->
+
+</td>
+<td align="center" valign="top">
+    <!-- ********** start: right ad panel --> 
+    <table border="0" cellpadding="0" cellspacing="0">
+        <tr>
+            <td align="left" valign="top">
+                <iframe align="center" id="ad_frame_skyscraper_top_right_120x600" name="ad_frame_skyscraper_top_right_120x600" ALLOWTRANSPARENCY="true" bgcolor="white" height="600" width="120" vspace="0" scrolling="no" frameborder="0" hspace="0" src="/mogo/show_ad_skyscraper_top_right_120x600/0">
+                </iframe>
+            </td>
+        </tr>
+        <tr><td height="38"></td></tr>
+        <tr>            
+            <td align="left" valign="top">
+                <iframe align="center" id="ad_frame_skyscraper_bottom_right_120x600" ALLOWTRANSPARENCY="true" bgcolor="white" height="600" width="120" vspace="0" scrolling="no" frameborder="0" hspace="0" src="/mogo/show_ad_skyscraper_bottom_right_120x600/0">
+                </iframe>
+            </td>
+        </tr>       
+    </table>
+    <!-- ********** end: right ad panel --> 
+</td>
+</tr>
+</table>
+<!-- ********** end: content outer section -->
+
+</td></tr>
+<tr>
+    <td>
+    <!-- ********** start: bottom ad section --> 
+        <div id="bottom-ad-section-outer">
+        <table id="bottom-ad-section" cellpadding="0" cellspacing="0">
+            <tr>
+                <td align="left" valign="top">
+                    <table cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td align="left" valign="top"><iframe align="left" id="ad_frame_rectangle_234x60_1" ALLOWTRANSPARENCY="true" vspace="0" scrolling="no" frameborder="0" hspace="0" src="/mogo/show_ad_rectangle_234x60_1/0"></iframe></td>
+                        </tr>
+                        <tr>
+                            <td align="left" valign="top"><iframe align="left" id="ad_frame_rectangle_234x60_2" ALLOWTRANSPARENCY="true" vspace="0" scrolling="no" frameborder="0" hspace="0" src="/mogo/show_ad_rectangle_234x60_2/0"></iframe></td>
+                        </tr>
+                        <tr>
+                            <td align="left" valign="top"><iframe align="left" id="ad_frame_rectangle_234x60_3" ALLOWTRANSPARENCY="true" vspace="0" scrolling="no" frameborder="0" hspace="0" src="/mogo/show_ad_rectangle_234x60_3/0"></iframe></td>
+                        </tr>
+                        <tr>
+                            <td align="left" valign="top"><iframe align="left" id="ad_frame_rectangle_234x60_4" ALLOWTRANSPARENCY="true" vspace="0" scrolling="no" frameborder="0" hspace="0" src="/mogo/show_ad_rectangle_234x60_4/0"></iframe></td>
+                        </tr>
+                    </table>
+                </td>
+                <td align="left" valign="top">
+                    <table cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td align="left" valign="top">
+                                <table cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td align="left" valign="top"><iframe align="left" id="ad_frame_square_125x125_bottom_left" ALLOWTRANSPARENCY="true" vspace="0" scrolling="no" frameborder="0" hspace="0" src="/mogo/show_ad_square_125x125_bottom_left/0"></iframe></td>
+                                        <td align="left" valign="top"><iframe align="left" id="ad_frame_square_125x125_bottom_right" ALLOWTRANSPARENCY="true" vspace="0" scrolling="no" frameborder="0" hspace="0" src="/mogo/show_ad_square_125x125_bottom_right/0"></iframe></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        <tr>
+                            <td align="left" valign="top"><iframe align="left" id="ad_frame_rectangle_300x100_bottom" ALLOWTRANSPARENCY="true" vspace="0" scrolling="no" frameborder="0" hspace="0" src="/mogo/show_ad_rectangle_300x100_bottom/0"></iframe></td>
+                        </tr>
+                    </table>
+                </td>
+                <td align="left" valign="top"><iframe align="left" id="ad_frame_rectangle_300x250_bottom" ALLOWTRANSPARENCY="true" vspace="0" scrolling="no" frameborder="0" hspace="0" src="/mogo/show_ad_rectangle_300x250_bottom/0"></iframe></td>
+                <td align="left" valign="top"><iframe align="left" id="ad_frame_rectangle_120x240_bottom" ALLOWTRANSPARENCY="true" vspace="0" scrolling="no" frameborder="0" hspace="0" src="/mogo/show_ad_rectangle_120x240_bottom/0"></iframe></td>
+            </tr>
+        </table>
+        </div>
+    <!-- ********** end: bottom ad section --> 
+    </td>
+</tr>
+<tr>
+<% if $syndication_id == 96 %>
+<style>
+#footer {
+    clear:both;
+    padding-top:15px;
+    padding-bottom:15px;
+    /* border-top:1px solid #EBEBEB; */
+    margin-top:15px;
+    color: #bac0a8;
+    background-color: #5a5a5a;
+}
+#footer .footer_menu {
+/*  float:center; */
+    margin: 0 auto;
+    width: 670px;
+    font: 11px/170% Verdana, sans-serif;
+}
+#footer .footer_menu ul {
+    margin:0px;
+    padding:0px;
+}
+#footer .footer_menu ul li{
+    float:left;
+    margin:0px;
+    padding:0px 3px 11px;
+    list-style:none;
+}
+
+#footer .footer_menu ul li a, #footer .footer_menu ul li a:visited {
+    color: #bac0a8;
+}
+
+#footer .footer_menu ul li a:hover {
+    color: #bac0a8;
+    text-decoration: underline;
+}
+
+#footer .copyright {
+    clear:both;
+    /*text-align:left; */
+    font: 11px/170% Verdana, sans-serif;
+    padding-top:2px;
+}
+</style>
+    <td align="center">
+        <div id="footer">
+            <div class="footer_menu">
+                <ul>
+                    <li><a title="酷比网首页" href="/">主页</a>&nbsp;|</li><li><a href="/zh-hans/user/register">注册！</a>&nbsp;|</li><li><a href="/zh-hans/channel">频道</a>&nbsp;|</li>
+
+                <li><a href="/zh-hans/blog">博客</a>&nbsp;|</li>
+                <li><a href="/zh-hans/forum">论坛</a>&nbsp;|</li>
+                <li><a href="/zh-hans/tracker">社区</a>&nbsp;|</li>
+                <li><a href="/zh-hans/contact">联系方式</a>&nbsp;|</li>
+                <li><a href="/zh-hans/about">关于Koobee </a>&nbsp;|</li>
+
+                <li><a href="/zh-hans/friendlink">友情链接</a>&nbsp;|</li>
+                <li><a href="/zh-hans/disclaimer#user">使用协议</a>&nbsp;|</li>
+                <li><a href="/zh-hans/disclaimer#privacy">政策条款</a>&nbsp;|</li>
+                <li><a href="/zh-hans/disclaimer#copyright">版权声明</a></li>
+                </ul>
+            </div>
+            <div class="copyright">中青互动文化传媒（北京）有限公司 网络信息传播视听节目许可证 0105108 ; 京ICP证 070249<br/><br>如有任何问题，请联系我们：info@koobee.com.cn</div>
+            </div>
+        </div>
+    </td>
+<% else %>
+    <td>
+        <table id="bottom-about-section" cellpadding="0" cellspacing="0">
+            <tr>
+                <td height="50" align="center" valign="bottom"><a href="mailto:contact@mogo.tv">联系我们</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:goPartners()">我们的朋友们</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="mailto:sales@mogo.tv">广告服务</a><!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/mogo/job" target="_new">工作机会</a>--></td>
+            </tr>
+            <tr>
+                <td align="center"><a href="http://www.uitv.com/" target="_blank"><img src="/images/mogo/mogo-icp.jpg"></a></td>
+            </tr>
+        </table>
+    </td>
+<% end %>
+</tr>
+</table>
+<!-- ********** end: outer most table -->
+
+<input id="curr_video_channel_id" name="curr_video_channel_id" type="hidden" value="">
+<input id="curr_video_category_id" name="curr_video_category_id" type="hidden" value="">
+<input id="curr_video_program_id" name="curr_video_program_id" type="hidden" value="">
+<input id="next_video_program_name" name="next_video_program_name" type="hidden" value="">
+<input id="next_video_program_id" name="next_video_program_id" type="hidden" value="">
+<input id="next_video_channel_id" name="next_video_channel_id" type="hidden" value="">
+<input id="next_video_category_id" name="next_video_category_id" type="hidden" value="">
+<input id="next_video_description" name="next_video_description" type="hidden" value="">
+<input id="next_video_url" name="next_video_url" type="hidden" value="">
+<input id="next_video_external_id" name="next_video_external_id" type="hidden" value="">
+<input id="next_video_syndication_id" name="next_video_syndication_id" type="hidden" value="">
+<input id="next_video_list_type" name="next_video_list_type" type="hidden" value="">
+<input id="next_video_parent_category_id" name="next_video_parent_category_id" type="hidden" value="">
+</center>
+<iframe frameborder="0" height="1" width="1" id="helperframe" name="helperframe" bgcolor="white" ALLOWTRANSPARENCY="true" scrolling="auto" vspace="0" hspace="0" src=""></iframe>      
+<div id="cache"></div>
+<% if $syndication_id == 96 %>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-7984033-1");
+pageTracker._trackPageview();
+} catch(err) {}
+</script>
+<% else %>
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "<%=$google_analytics_acct%>";
+urchinTracker();
+</script>
+<% end %>
+</body>
+<HEAD>
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Expires" CONTENT="-1">
+</HEAD>
+</html>

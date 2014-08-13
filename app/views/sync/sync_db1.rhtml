@@ -1,0 +1,18 @@
+<h1>Database synchronized with the master</h1>
+
+<%
+  	slave2_channels = Slave2Channel.find :all
+
+  	slave2_categorys = Slave2Category.find :all
+
+  	slave2_programs = Slave2Program.find :all
+  	
+%>
+
+<%  for slave2_channel in slave2_channels 
+			channel = Channel.find(slave2_channel.id)
+			channel.update_attributes(:channel_desc=>slave2_channel.channel_desc)
+%>			
+			<p><%=channel.channel_name%></p>			
+<% 	end %>
+

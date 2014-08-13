@@ -1,0 +1,19 @@
+<body style="height:100%;">
+<input type="button" value="Disable" onClick="disablePage()"><div id="cover" style="background-color:#CCCCCC;filter:alpha(opacity=50);"></div>
+<script>
+function disablePage(){
+document.getElementById("cover").style.position="absolute";
+document.getElementById("cover").style.top=0;
+document.getElementById("cover").style.left=0;
+document.getElementById("cover").style.width=window.screen.width-21;
+document.getElementById("cover").style.height=document.body.clientHeight+document.body.scrollHeight;
+document.getElementById("cover").style.zIndex=100;
+document.getElementById("cover").style.display = '';
+setTimeout('recover()', 3000);
+}
+
+function recover(){
+	document.getElementById("cover").style.display = 'none';
+}
+</script>
+</body>

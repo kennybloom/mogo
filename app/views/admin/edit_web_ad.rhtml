@@ -1,0 +1,8 @@
+<h1>Editing banner ad</h1>
+
+<% form_tag( { :action => 'update_web_ad', :id => @web_ad}, :multipart => true ) do %>
+  <%= render :partial => 'web_ad_form' %>
+  <%= submit_tag 'Update' %>
+<% end %>
+
+<%= link_to 'Show banner ad', :action => 'show_web_ad', :id => @web_ad %>

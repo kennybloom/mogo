@@ -1,0 +1,24 @@
+<table width="450" cellpadding="0" cellspacing="2" style="margin-left:70px;">
+<% sum_channels = VideoLogSummaryChannel.find(:all, :conditions=>"parent_id=" + @parent_id.to_s, :order=>"count desc") %>
+<tr>
+	<td width="150" height=25 bgcolor="#333333">&nbsp;&nbsp;Channel</label></td>
+	<td width="150" height=25 bgcolor="#333333">&nbsp;&nbsp;Views</td>
+	<td width="150" height=25 bgcolor="#333333">&nbsp;&nbsp;Unique visits</td>
+</tr>
+<% sum_count = 0 %>
+<% sum_unique_users = 0 %>
+<% for sum_channel in sum_channels %>
+	<% sum_count += sum_channel.count %>
+	<% sum_unique_users += sum_channel.unique_users %>
+<tr>
+	<td height=25 bgcolor="#333333">&nbsp;&nbsp;<%=sum_channel.channel_name%></label></td>
+	<td height=25 bgcolor="#333333">&nbsp;&nbsp;<font color="#ff444"><%=sum_channel.count %></font></td>
+	<td height=25 bgcolor="#333333">&nbsp;&nbsp;<font color="#048cff"><%=sum_channel.unique_users %></font></td>
+</tr>
+<% end %>
+<tr>
+	<td height=25 bgcolor="#333333">&nbsp;&nbsp;Total:</label></td>
+	<td height=25 bgcolor="#333333">&nbsp;&nbsp;<font color="#ff444"><%=sum_count %></font></td>
+	<td height=25 bgcolor="#333333">&nbsp;&nbsp;<font color="#048cff"><%=sum_unique_users %></font></td>
+</tr>
+</table>

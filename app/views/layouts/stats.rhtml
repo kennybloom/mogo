@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<html>
+<head>
+<title>Mogo Statistics</title>
+<%= stylesheet_link_tag "stats_style", :media => "all" %>
+<%= javascript_include_tag :defaults %>
+</head>
+
+<body 
+  text="#ffffff" vLink="#66cccc" aLink="#99cccc" link="#66cccc" bgColor="b"
+  leftMargin="0" background="/themes/lp/images/bk-stripe.jpg" topMargin="0"
+  marginheight="0" marginwidth="0" >
+
+	<table cellSpacing="0" cellPadding="0" width="100%" border="0">
+		<tr>
+			<td bgcolor=black valign=top colspan=2 height=60 align=center>
+			<h1>Mogo Statistics<h1>
+			</td>
+		</tr>
+		<tr>
+			<td bgcolor=#666666 valign=top>
+				<!--
+				===================================
+				main panel
+				===================================
+				-->
+				<div class=main-panel>
+				<div id=main>
+				<!-- start main content -->
+				<% if flash[:notice] -%>
+				<div id="notice" ><%= flash[:notice] %></div>
+				<% end -%>
+				<%= yield :layout %>
+				<!-- end main content -->
+				</div>
+				</div>
+
+				<!--
+				===================================
+				main panel end
+				===================================
+				-->
+			</td>
+			<td bgcolor=#333333>
+				<!--
+				===================================
+				right panel
+				===================================
+				-->
+				<div class=right-panel>
+				<div id=sidebar-right>
+				</div>
+				</div>
+
+				<!--
+				===================================
+				right panel end
+				===================================
+				-->
+			</td>
+		</tr>
+	</table>	
+</body>
+</html>

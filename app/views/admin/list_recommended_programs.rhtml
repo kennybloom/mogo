@@ -1,0 +1,11 @@
+<h1>MOGO Hot 最热推荐</h1>
+<br>
+
+<% form_tag :action => 'update_program_list' do %>
+	<% count = 0 %>
+	<% for @program in @all_recommend_programs %>
+		<%= render :partial => 'list_programs' %>
+		<% count += 1 %>
+	<% end %>
+  <%= submit_tag 'Update all ' + count.to_s + ' programs' %>
+<% end %>

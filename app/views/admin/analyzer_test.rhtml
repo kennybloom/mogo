@@ -1,0 +1,11 @@
+<h1>Analyzer test</h1>
+
+<% form_tag( :action => 'analyzer_test' ) do %>
+<label>Enter text: </label><%= text_field_tag 'testfield' %>
+	<%= submit_tag 'Submit' %>
+	
+<br>
+<label>output: </label><%=@words%><br>
+<% end %>
+
+

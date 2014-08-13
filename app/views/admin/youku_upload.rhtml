@@ -1,0 +1,14 @@
+<h5>Upload File(s) In Folder <%= @folder_name%><h5>
+
+<form ENCTYPE="multipart/form-data" action="http://api.youku.com/upload/uploadPackage" method="post">
+<!--form ENCTYPE="multipart/form-data" action="http://localhost:3000/sync/foo_receive" method="post"-->
+  <p>Title:       <input type="text" name="title" value = "Mogo test"></p>
+  <p>Tags:        <input type="text" name="tags" value = "mogo"></p>
+  <p>Category Id: <input type="text" name="catIds" value = "95"></p>
+  <p>Public Type: <input type="text" name="publicType" value = "0"></p>
+  <p>User Name:   <input type="text" name="username" value = "MOGO没够音乐"></p>
+  <p>Password:    <input type="text" name="password" value = "mo1go2world3"></p>
+  <p>Partner Id:  <input type="text" name="partnerid" value = "XOTMy"></p>
+  <p>File: <input type="file" name="Filedata"/></p>
+  <p><input type="submit" value="Send"/></p>
+</form>

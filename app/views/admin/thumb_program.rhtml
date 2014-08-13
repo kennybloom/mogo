@@ -1,0 +1,75 @@
+<html>
+<head>
+<%= stylesheet_link_tag "admin_style", :media => "all" %>
+<%= javascript_include_tag :defaults %>
+
+<style type="text/css">
+body {
+	margin: 0;
+	padding: 0;
+	text: white;
+	background: #666666;
+}
+</style>
+
+<script type="text/javascript">
+function set_thumb_path(basename)
+{
+    document.getElementById('program_thumb').value = basename;   
+    document.getElementById('program_thumb_src').value = basename;   
+}
+</script>
+
+</head>
+<body>
+<% if flash[:notice] %>
+	<div id="notice"><%=flash[:notice]%></div>
+<% end %>
+<br>
+<p style="color:white;">Step 1: Click on the "Generate thumbnails" button</p>
+<% form_tag( { :action => 'generate_program_thumbnails', :id => @program} ) do %>
+    <%= submit_tag 'Generate thumbnails' %>
+    <br>
+<table width="450" cellpadding="0" cellspacing="2">
+<% for i in 1..9 do %>
+
+<%      basename = File.basename(@program.program_path_stream)
+        basename.sub!(/\.flv/, '')
+        thumb_path = make_path($path_program_icon, "tmp/" + basename + "_thumb" + i.to_s + ".jpg")
+%>
+<% if i== 1 %>
+    <tr>
+        <td><a href="javascript:set_thumb_path('<%=File.basename(thumb_path)%>')"><img src="<%=thumb_path%>"></a>
+<% elsif i==4 || i==7 %>
+    <td>
+    </tr>
+    <tr>
+        <td><a href="javascript:set_thumb_path('<%=File.basename(thumb_path)%>')"><img src="<%=thumb_path%>"></a>
+<% else %>
+        <a href="javascript:set_thumb_path('<%=File.basename(thumb_path)%>')"><img src="<%=thumb_path%>"></a>
+<% end %>
+<% end %>
+        </td>
+    </tr>
+</table>
+<% end %>
+<br>
+<% form_tag( { :action => 'update_program_thumbnail', :id => @program} ) do %>
+    <%= hidden_field_tag 'program_thumb_src' %>
+    <table cellpadding="0" cellspacing="0">
+        <tr>
+            <td align=left>
+                <br>
+                <p style="color:white;">Step 2: Click on one of the above thumbnails</p>
+                <%= text_field_tag 'program_thumb', '-- click on a thumbnail --', :size => 60
+ %>
+            </td>
+        </tr>
+    </table>
+    <br>
+    <p style="color:white;">Step 3: Click on the "Update thumbnail" button</p>
+    <%= submit_tag 'Update thumbnail' %>
+<% end %>
+
+</body>
+</html>

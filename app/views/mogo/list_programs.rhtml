@@ -1,0 +1,181 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<META HTTP-EQUIV="Expires" CONTENT="-1">
+		<title>Show programs</title>
+
+<%= stylesheet_link_tag "mogo" , :media => "all" %>
+<link rel="stylesheet" type="text/css" href="/javascripts/jcarousel/lib/jquery.jcarousel.css" />
+<link rel="stylesheet" type="text/css" href="/javascripts/jcarousel/skins/mogo/skin.css" />
+
+<% if $syndication_id == 96 %>
+<%= javascript_include_tag "mogo_koobee" %>
+<% else %>
+<%= javascript_include_tag "mogo" %>
+<% end %>
+<%= javascript_include_tag "jcarousel/lib/jquery-1.2.3.pack.js" %>
+<%= javascript_include_tag "jcarousel/lib/jquery.jcarousel.pack.js" %>
+
+
+<script type="text/javascript">
+function mycarousel_initCallback(carousel, state)
+{
+}
+
+function mycarousel_itemLoadCallback(carousel, state)
+{
+    // Check if the requested items already exist
+    //if (carousel.has(carousel.first, carousel.last)) {
+    //    return;
+    //}
+    // Check if the requested items already exist
+    if (carousel.has(carousel.first, carousel.last)) {
+        return;
+    }
+    
+ 		//alert('/mogo/list_programs_xml/<%=@list_type + "-" + @channel_id + "-" + @category_id%>-' + carousel.first + '-' + carousel.last);   
+    jQuery.get(
+        encodeURI('/mogo/list_programs_xml/<%=@list_type + "-" + @channel_id + "-" + @category_id%>-' + carousel.first + '-' + carousel.last),
+//        '/mogo/list_programs_xml/<%=@list_type + "-" + @channel_id + "-" + @category_id%>-' + carousel.first + '-' + carousel.last,
+        {
+        },
+        function(html_code) {
+            mycarousel_itemAddCallback(carousel, carousel.first, carousel.last, html_code);
+        },
+        'html');
+};
+
+function mycarousel_itemAddCallback(carousel, first, last, html_code)
+{
+	jQuery("#cache").html(html_code);
+	carousel_size = parseInt(jQuery('#total-frames').attr("total"));
+
+  // Set the size of the carousel
+  carousel.size(carousel_size);
+
+	//alert('x3 itemAddCallback: first:' + first + ' last:' + last + " size:" + carousel_size);
+
+  carousel.add(first, html_code);
+      
+  after_itemload();
+
+};
+
+
+jQuery(document).ready(function() {
+    jQuery('#mycarousel').jcarousel({
+        // Uncomment the following option if you want items
+        // which are outside the visible range to be removed
+        // from the DOM.
+        // Useful for carousels with MANY items.
+
+        // itemVisibleOutCallback: {onAfterAnimation: function(carousel, item, i, state, evt) { carousel.remove(i); }},
+        initCallback: mycarousel_initCallback,
+        itemLoadCallback: mycarousel_itemLoadCallback,
+        scroll: 1,
+        visible: 1
+    });
+});
+
+</script>
+
+<script type="text/javascript">
+
+function set_image_highlite(program_id) {
+	$("img.playing").removeClass("playing");
+	$("#program-" + program_id).addClass("playing");
+}
+
+function image_over_listner(event) {
+	$(this).children('img.thumbnail').addClass('highlite');
+}
+
+function image_out_listner(event) {
+	$(this).children('img.thumbnail').removeClass('highlite');
+}
+
+function after_itemload() {
+	curr_video_obj = parent.document.getElementById('curr_video_program_id');
+	
+	if (curr_video_obj != null) {
+		program_id = parent.document.getElementById('curr_video_program_id').value;
+		if (program_id != null && program_id != '') {
+			set_image_highlite(program_id);
+		}     
+	}
+	
+	$('a:has(img.thumbnail)').hover(image_over_listner, image_out_listner);	
+};
+
+
+
+</script>
+
+<%
+case @list_type
+	when "new"
+		context_name = "你在［New 最新节目］"
+
+	when "new1"
+		context_name = "你在［New 最新音乐专题］"
+
+	when "new2"
+		context_name = "你在［New 最新音乐现场］"
+
+	when "new3"
+		context_name = "你在［New 最新艺术文化］"
+
+	when "new4"
+		context_name = "你在［New 最新潮流生活］"
+
+	when "popular"
+		context_name = "你在［Hot 最热节目］"
+	
+	when "recommend"
+		context_name = "你在［Recommended 推荐］"
+		
+	when "channel"
+		context_name = "你在 " + @container_channel.channel_name
+		
+	when "parent_category"
+		if @container_channel != nil
+			context_name = "你在 " + @container_channel.channel_name + " > " + @container_category.category_name_cn
+		else
+			context_name = "你在 " + @container_category.category_name_cn
+		end	
+	when "child_category"
+		if @container_channel != nil
+			context_name = "你在 " + @container_channel.channel_name + " > " + @container_category.category_name_cn
+		else
+			context_name = "你在 " + @container_category.category_name_cn
+		end
+	when "search"
+		context_name = "你在［搜索结果］"
+	when "related"
+		context_name = "你在［相關視頻］"
+	else
+		context_name = ""	
+end
+%>
+</head>
+
+<body>
+<!-- <%= "/mogo/list_programs_xml/" + @list_type + "-" + @channel_id + "-" + @category_id + "-1-1" %> -->
+<div id="carousel-list-program" class="carousel-component">
+	<table id="search-section" cellpadding="0" cellspacing="0" border="0">
+		<tr>
+			<td width="383"><span id="program-context"><%=context_name%></span></td>
+			<td width="230" valign="middle" align="right"><span id="search-title">搜索</span>&nbsp;<input id="searchkey" name="query" type="text" size="20" value="<%=@keyword%>" ></td>
+			<td valign="middle" align="left"><span id="search-button"><a href="javascript:goSearch()"><img src="/images/search-arrow-right.jpg" border="0" size=0></a></span></td>
+		</tr>
+	</table>
+	<div id="wrap">
+  	<ul id="mycarousel" class="jcarousel-skin-mogo">
+		</ul>
+	</div>
+</div>
+
+<div id="cache" style="DISPLAY: none"></div>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+	codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" 
+	WIDTH="600" 
+	HEIGHT="400" 
+	id="charts" 
+	ALIGN="">
+<PARAM NAME=movie VALUE="/charts.swf?library_path=/charts_library&xml_source=/admin/show_stats_year_xml?year=<%=@year%>">
+<PARAM NAME=quality VALUE=high>
+<PARAM NAME=bgcolor VALUE=#666666>
+
+<EMBED src="/charts.swf?library_path=/charts_library&xml_source=/admin/show_stats_year_xml?year=<%=@year%>"
+       quality=high 
+       bgcolor=#666666  
+       WIDTH="600" 
+       HEIGHT="400" 
+       NAME="charts" 
+       ALIGN="" 
+       swLiveConnect="true" 
+       TYPE="application/x-shockwave-flash" 
+       PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer">
+</EMBED>
+</OBJECT>
+<br>
+<table width="450" cellpadding="0" cellspacing="2" style="margin-left:70px;">
+<% sum_months = VideoLogSummaryMonth.find(:all, :conditions=>"year=" + @year.to_s, :order=>"year, month") %>
+<tr>
+	<td width="150" height=25 bgcolor="#333333">&nbsp;&nbsp;Month</label></td>
+	<td width="150" height=25 bgcolor="#333333">&nbsp;&nbsp;Views</td>
+	<td width="150" height=25 bgcolor="#333333">&nbsp;&nbsp;Unique visits</td>
+</tr>
+<% sum_count = 0 %>
+<% sum_unique_users = 0 %>
+<% for sum_month in sum_months %>
+	<% sum_count += sum_month.count %>
+	<% sum_unique_users += sum_month.unique_users %>
+<tr>
+	<td height=25 bgcolor="#333333">&nbsp;&nbsp;<%=sum_month.month%></label></td>
+	<td height=25 bgcolor="#333333">&nbsp;&nbsp;<font color="#ff444"><%=sum_month.count %></font></td>
+	<td height=25 bgcolor="#333333">&nbsp;&nbsp;<font color="#048cff"><%=sum_month.unique_users %></font></td>
+</tr>
+<% end %>
+<tr>
+	<td height=25 bgcolor="#333333">&nbsp;&nbsp;Total:</label></td>
+	<td height=25 bgcolor="#333333">&nbsp;&nbsp;<font color="#ff444"><%=sum_count %></font></td>
+	<td height=25 bgcolor="#333333">&nbsp;&nbsp;<font color="#048cff"><%=sum_unique_users %></font></td>
+</tr>
+</table>
+<br>
+<hr>
+<br>
+<OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+	codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" 
+	WIDTH="600" 
+	HEIGHT="450" 
+	id="charts" 
+	ALIGN="">
+<PARAM NAME=movie VALUE="/charts.swf?library_path=/charts_library&xml_source=/admin/show_stats_channel_xml?parent_id=<%=@parent_id%>">
+<PARAM NAME=quality VALUE=high>
+<PARAM NAME=bgcolor VALUE=#666666>
+
+<EMBED src="/charts.swf?library_path=/charts_library&xml_source=/admin/show_stats_channel_xml?parent_id=<%=@parent_id%>"
+       quality=high 
+       bgcolor=#666666  
+       WIDTH="600" 
+       HEIGHT="450" 
+       NAME="charts" 
+       ALIGN="" 
+       swLiveConnect="true" 
+       TYPE="application/x-shockwave-flash" 
+       PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer">
+</EMBED>
+</OBJECT>
+<br>
+  <%= render :partial => 'show_stats_list_channel' %>  
+<br>
+<hr>
+<br>
+<OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+	codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" 
+	WIDTH="600" 
+	HEIGHT="450" 
+	id="charts" 
+	ALIGN="">
+<PARAM NAME=movie VALUE="/charts.swf?library_path=/charts_library&xml_source=/admin/show_stats_location_xml?parent_id=<%=@parent_id%>">
+<PARAM NAME=quality VALUE=high>
+<PARAM NAME=bgcolor VALUE=#666666>
+
+<EMBED src="/charts.swf?library_path=/charts_library&xml_source=/admin/show_stats_location_xml?parent_id=<%=@parent_id%>"
+       quality=high 
+       bgcolor=#666666  
+       WIDTH="600" 
+       HEIGHT="450" 
+       NAME="charts" 
+       ALIGN="" 
+       swLiveConnect="true" 
+       TYPE="application/x-shockwave-flash" 
+       PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer">
+</EMBED>
+</OBJECT>
+<br>
+  <%= render :partial => 'show_stats_list_location' %>  

@@ -1,0 +1,87 @@
+<!-- calendar stylesheet -->
+<link rel="stylesheet" type="text/css" media="all" href="/javascripts/jscalendar-1.0/calendar-win2k-cold-1.css" title="win2k-cold-1" />
+
+<!-- main calendar program -->
+<script type="text/javascript" src="/javascripts/jscalendar-1.0/calendar.js"></script>
+
+<!-- language for the calendar -->
+<script type="text/javascript" src="/javascripts/jscalendar-1.0/lang/calendar-en.js"></script>
+
+<!-- the following script defines the Calendar.setup helper function, which makes
+		 adding a calendar a matter of 1 or 2 lines of code. -->
+<script type="text/javascript" src="/javascripts/jscalendar-1.0/calendar-setup.js"></script>
+
+
+<h1>Email recommendations</h1>
+<br>
+<p>Please enter start date and end date in yyyy-mm-dd format</p>
+<% form_tag "/admin/list_video_recommendations" do %>
+	<table width="760">
+		<tr>
+			<td align="left" width="280">start date:&nbsp;<%=text_field_tag "start_date", @start_date%><img src="/javascripts/jscalendar-1.0/img.gif" id="start_date_img" style="cursor: pointer; border: 1px solid red;" title="Date selector" onmouseover="this.style.background='red';" onmouseout="this.style.background=''" /></td>
+			<td align="left" width="280">end date:&nbsp;<%=text_field_tag "end_date", @end_date%><img src="/javascripts/jscalendar-1.0/img.gif" id="end_date_img" style="cursor: pointer; border: 1px solid red;" title="Date selector" onmouseover="this.style.background='red';" onmouseout="this.style.background=''" /></td>
+			<td align="left" width="100"><%= select_tag 'query_type', ["<option value='all'>all</option>", "<option value='unsent_email'>unsent email</option>", "<option value='sent_email'>sent email</option>"]%></td>
+			<td align="left" width="100"colspan=3 align=right><%=submit_tag "search"%></td>
+		</tr>
+	</table>
+<%end%>
+<br>
+<br>
+<% if @program_recommends != nil %>
+<table width="800">
+  <tr>
+		<td width=150><label>Date</label></td>
+		<td width=150><label>Sender name</label></td>
+		<td width=400><label>Sender email</label></td>
+		<td width=100><label>Status</label></td>
+		<td width=100>&nbsp;</td>
+  </tr>
+  
+<%
+	nrow = 0
+	for recommend in @program_recommends 
+		nrow += 1
+		
+		status = "sent"
+		status = "unsent" unless recommend.sent_yn == "y"
+%>		
+  <tr>
+		<td valign="top" width=150><font size=2><%=recommend.created.to_s%></font></td>
+		<td valign="top" width=150><font size=2><%=recommend.user_name%></font></td>
+		<td valign="top" width=400><font size=2><%=recommend.user_email%></font></td>
+		<td valign="top" width=100><font size=2><%=status%></font></td>
+		<td width=100><font size=2><%= link_to "delete", {:action => "destroy_video_recommendation", :id => recommend.id}, :confirm => "Are you sure?", :method => :post%></font></td>
+  </tr>
+	<tr>
+		<td colspan="5"><font size=2><bold>comments:</bold> <%=recommend.comment%></font></td>
+	</tr>
+	<tr>
+		<td colspan="5"><hr></td>
+	</tr>
+<% end %>
+	
+</table>
+
+<%end%>
+
+<script type="text/javascript">
+    Calendar.setup(
+    {
+        inputField     :    "start_date",     // id of the input field
+        ifFormat       :    "%Y-%m-%d",      // format of the input field
+        button         :    "start_date_img",  // trigger for the calendar (button ID)
+        align          :    "Tl",           // alignment (defaults to "Bl")
+        singleClick    :    true
+    }
+    );
+    
+    Calendar.setup(
+    {
+				inputField     :    "end_date",     // id of the input field
+				ifFormat       :    "%Y-%m-%d",      // format of the input field
+				button         :    "end_date_img",  // trigger for the calendar (button ID)
+				align          :    "Tl",           // alignment (defaults to "Bl")
+				singleClick    :    true
+    }    
+    );
+</script>

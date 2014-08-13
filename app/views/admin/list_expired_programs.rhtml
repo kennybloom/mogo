@@ -1,0 +1,9 @@
+<h1>All expired programs </h1>
+<br>
+
+<% form_tag :action => 'update_program_list' do %>
+	<% for @program in @all_expired_programs %>
+		<%= render :partial => 'list_programs' %>
+	<% end %>
+  <%= submit_tag 'Update programs' %>
+<% end %>

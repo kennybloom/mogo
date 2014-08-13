@@ -1,0 +1,23 @@
+<%= error_messages_for 'partner' %>
+
+<table width=550 cellpadding="0" cellspacing="2">
+<tr>
+	<td width=220 bgcolor="#333333"><label for="name">Partner name:</label></td>
+	<td width=300 bgcolor="#333333"><%= text_field 'partner', 'name'  %></td>
+</tr>
+<tr>
+	<td width=220  bgcolor="#333333"><label for="logo">Logo (120x100):</label></td>
+	<td width=300 bgcolor="#333333">
+		<%= text_field 'partner', 'logo', {'readonly'=>'true', 'style'=>'background-color:#fbc5f8'} %>
+		<%= select_tag 'partner_logo_select', file_select_options(["public" + $path_partner_logo], /.*/)%>
+	</td>
+</tr>
+<tr>
+	<td width=220  bgcolor="#333333"><label for="url">Partner site url:</label></td>
+	<td width=300 bgcolor="#333333"><%= text_field 'partner', 'url'  %></td>
+</tr>
+<tr>
+	<td width=220  bgcolor="#333333"><label for="weight">weight:</label></td>
+	<td width=300 bgcolor="#333333"><%= select 'partner', 'weight', list_weights %></td>
+</tr>
+</table>

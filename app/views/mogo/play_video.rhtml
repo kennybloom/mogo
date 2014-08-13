@@ -1,0 +1,157 @@
+<html>
+<head>
+<script type="text/javascript">
+</script>
+<%= javascript_include_tag "jquery" %>
+<%= javascript_include_tag "mogo" %>
+<%= javascript_include_tag "swfobject" %>
+
+<script type="text/javascript" src="http://partner.googleadservices.com/gampad/google_service.js">
+</script>
+<script type="text/javascript">
+  GS_googleAddAdSenseService("ca-pub-4319899706835777");
+  GS_googleEnableAllServices();
+</script>
+<script type="text/javascript">
+  GA_googleAddSlot("ca-pub-4319899706835777", "video");
+</script>
+<script type="text/javascript">
+	<% if @channel_id == nil %>
+   GA_googleAddAttr("channels", "nil");
+	<% elsif @video_note == 'first' || @video_note == 'new' || @video_note == 'new1' || @video_note == 'new2' || @video_note == 'new3' || @video_note == 'new4' || @video_note == 'popular' || @video_note == 'recommend' %>
+   GA_googleAddAttr("channels", "<%=@video_note%>");
+	<% else %>
+   GA_googleAddAttr("channels", "<%=@channel_id%>");
+	<% end %>
+   GA_googleFetchAds();
+</script>
+<script type="text/javascript">
+var player = null;
+
+function playerReady(thePlayer) {
+	player = document.getElementById(thePlayer.id);
+	addListeners();	
+}
+
+function addListeners() {
+	if (player) { 
+		player.addModelListener("STATE", "stateListener");
+	} else {
+		setTimeout("addListeners()",100);
+	}
+}
+
+function stateListener(obj) { //IDLE, BUFFERING, PLAYING, PAUSED, COMPLETED
+	currentState = obj.newstate; 
+	previousState = obj.oldstate; 
+
+	if ((currentState == "COMPLETED")&&(previousState == "PLAYING")) {
+//		if (player.getConfig().item == 1) {
+        // Changed to 0 for no ad play
+		if (player.getConfig().item == 0) {
+			next_video();
+		}
+	}
+
+}
+
+// *** youku player call back functions
+function onPlayerStart(videoid,title){
+}
+
+function onPlayerComplete(cdnid,isFullScreen){
+	next_video();
+}
+
+// *** play next video ***
+function next_video() {
+	program_name = parent.document.getElementById('next_video_program_name').value;
+	program_id = parent.document.getElementById('next_video_program_id').value;
+	channel_id = parent.document.getElementById('next_video_channel_id').value;
+	category_id = parent.document.getElementById('next_video_category_id').value;			
+	description = parent.document.getElementById('next_video_description').value;
+	url = parent.document.getElementById('next_video_url').value;
+	external_id = parent.document.getElementById('next_video_external_id').value;
+	syndication_id = parent.document.getElementById('next_video_syndication_id').value;
+	list_type = parent.document.getElementById('next_video_list_type').value;
+	parent_category_id = parent.document.getElementById('next_video_parent_category_id').value;
+			
+	content_onClick(program_name, channel_id, category_id, program_id, description, url, 'auto', external_id, syndication_id, list_type, parent_category_id);
+}
+</script>
+
+</head>
+<body leftmargin="0" topmargin="0" rightmargin="0" buttommargin="0" style="background-color:black">
+      <% if @program_id != nil %>
+					<div id="ad_id" name="ad_id" style="display:none;">
+					<script type="text/javascript">GA_googleFillSlot("video");</script>
+					</div>
+					<div id="flvcontent"></div>
+<script type="text/javascript">
+	// *** get Ad id ***
+	var node = document.getElementById('ad_id');
+	var ad_id = node.innerHTML;
+	var pos1 = ad_id.indexOf("<id>");
+	if (pos1 == -1) pos1 = ad_id.indexOf("<ID>");
+
+	var pos2 = ad_id.indexOf("</id>");
+	if (pos2 == -1) pos2 = ad_id.indexOf("</ID>");
+
+	ad_id = ad_id.substring(pos1+4, pos2);	
+
+	var syndication_id = <%=$syndication_id%>;
+	var youku_id = '<%=@program.youku_id%>';
+
+	// *** youku player ***
+	if (syndication_id == 94 && youku_id != '') {
+   	var flashParams = {quality:"heigh",allowScriptAccess:"always"};
+    var flashVars = {playMovie:"true", isAutoPlay:"true"};
+    swfobject.embedSWF('http://player.youku.com/player.php/sid/' + youku_id + '/v.swf', "flvcontent", "640", "380", "9.0.0", null, flashVars, flashParams);
+	}
+	else {
+		var flashvars = {
+  	  file:"/mogo/video_config&programId%3D<%=@program_id%>%26channelId%3D<%=@channel_id%>%26categoryId%3D<%=@category_id%>%26videoNote%3D<%=@video_note%>%26mode%3Dlocal%26ad%3D" +ad_id,  	  file:"/mogo/video_config%3FprogramId%3D<%=@program_id%>%26channelId%3D<%=@channel_id%>%26categoryId%3D<%=@category_id%>%26videoNote%3D<%=@video_note%>%26mode%3Dlocal%26ad%3D" +ad_id,
+			repeat:"list",
+    	autostart:"true",
+    	overstretch:"true",
+    	wmode:"opaque"
+    	//skin:"/jwplayer/modieus/modieus.swf"
+  	}
+  	var params = {
+    	allowfullscreen:"true", 
+    	allowscriptaccess:"always"
+  	}
+  	var attributes = {
+    	id:"jwplayer",  
+    	name:"jwplayer"
+  	}
+  
+  	swfobject.embedSWF("/jwplayer/player.swf", "flvcontent", "640", "380", "9", false, flashvars, params, attributes);
+  }
+
+//alert("/mogo/video_config%3FprogramId%3D<%=@program_id%>%26channelId%3D<%=@channel_id%>%26categoryId%3D<%=@category_id%>%26videoNote%3D<%=@video_note%>%26mode%3Dlocal%26ad%3D" +ad_id);
+</script>
+      <%end%>
+      <!-- ********** end: video player -->
+<% if $syndication_id == 96 %>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-7984033-1");
+pageTracker._trackPageview();
+} catch(err) {}
+</script>
+<% else %>
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "<%=$google_analytics_acct%>";
+urchinTracker();
+</script>
+<% end %>
+
+</body>
+</html>

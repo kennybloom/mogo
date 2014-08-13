@@ -1,0 +1,19 @@
+<h1>Ad</h1>
+
+<br>
+
+<table width=550 cellpadding="0" cellspacing="2" >
+<tr>
+	<td width=220 height=25 bgcolor="#333333"><label for="name">Ad name:</label></td>
+	<td width=300 height=25 bgcolor="#333333"><%= @ad.ad_name  %></td>
+</tr>
+<tr>
+	<td width=220 height=25 bgcolor="#333333"><label for="ad_flv_video">video path:</label></td>
+	<td width=300 height=25 bgcolor="#333333"><%= @ad.ad_flv_video  %></td>
+</tr>
+</table>
+
+<br>
+
+<%= link_to 'Edit ad', :action => 'edit_ad', :id => @ad %>
+

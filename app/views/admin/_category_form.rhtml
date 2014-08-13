@@ -1,0 +1,8 @@
+<%= error_messages_for 'category' %>
+
+<table width=485 cellpadding="0" cellspacing="2">
+<tr>
+	<td width=100 bgcolor="#333333"><label for="category_name_cn"><%if @message != nil && @message != ""%><font color="red">*</font> <% end %>Name:</label></td>
+	<td width=400 bgcolor="#333333"><div class="data"><%= text_field 'category', 'category_name_cn'  %></div></td>
+</tr>	
+</table>

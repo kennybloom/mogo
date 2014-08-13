@@ -1,0 +1,16 @@
+<h1>All syndications</h1>
+<br>
+<% for syndication in @all_syndications %>
+	<table width=800 cellpadding="0" cellspacing="0">
+		<tr>
+			<td width=300><%=syndication.name%></td>
+			<td width=200>portal id: <%=syndication.portal_id%></td>
+			<td align=left>
+				<%= link_to "show",   {:action => "show_syndication",    :id => syndication.id}%> -
+				<%= link_to "edit",   {:action => "edit_syndication",    :id => syndication.id}%> - 
+				<%= link_to "delete", {:action => "destroy_syndication", :id => syndication.id}, :confirm => "Are you sure?", :method => :post%>
+			</td>
+		</tr>
+	</table>
+	</br>
+<% end %>

@@ -1,0 +1,76 @@
+<h1>Video logs</h1>
+<br>
+<p>Please enter start date and end date in yyyy-mm-dd format</p>
+<% form_tag "/admin/list_logs" do %>
+	<table>
+		<tr>
+			<td><label>start date:</label></td>
+			<td><%=text_field_tag "start_date", @start_date%></td>
+		</tr>	
+		<tr>
+			<td><label>end date:</label></td>
+			<td><%=text_field_tag "end_date", @end_date%></td>
+		</tr>
+		<tr>
+			<td colspan=2 align=right><%=submit_tag "search"%></td>
+		</tr>
+	</table>
+<%end%>
+</br>
+
+<% if @logs != nil %>
+<table>
+  <tr>
+		<td width=150><label>Channel</label></td>
+		<td width=250><label>Category</label></td>
+		<td width=250><label>Program</label></td>
+		<td width=50><label>Count</label></td>
+  </tr>
+  
+<%sum = 0
+	nrow = 0
+	for log in @logs 
+		begin
+			channel = Channel.find(log.logger_channel_id)
+		rescue ActiveRecord::RecordNotFound
+			channel_name = "unknown channel"
+		else
+			channel_name = channel.channel_name
+		end
+
+		begin
+			category = Category.find(log.logger_category_id)
+		rescue ActiveRecord::RecordNotFound
+			category_name = "unknown category"
+		else
+			category_name = category.category_name
+		end
+		
+		begin
+			program = Program.find(log.logger_program_id)
+		rescue ActiveRecord::RecordNotFound
+			program_name = "unknown program"
+		else
+			program_name = program.program_name
+		end
+		
+		sum += log.program_count.to_i
+		nrow += 1
+%>		
+  <tr>
+		<td width=150><font size=2><%=channel_name%></font></td>
+		<td width=250><font size=2><%=category_name%></font></td>
+		<td width=250><font size=2><%=program_name%></font></td>
+		<td width=50 ><font size=2><%=log.program_count.to_s%></font></td>
+  </tr>
+<% end %>
+	<tr>
+		<td width=150></td>
+		<td width=250></td>
+		<td width=250><label>rows:</label><%=nrow%></td>
+		<td width=50><label>total:</label><%=sum%></td>
+	</tr>
+</table>
+
+<%end%>
+

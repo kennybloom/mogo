@@ -1,0 +1,20 @@
+<h1>All banner ads</h1>
+<br>
+	<% for web_ad in @all_web_ads %>
+		<table width=600 cellpadding="0" cellspacing="0">
+			<tr>
+				<td bgcolor="#333333"><%=web_ad.name%></td>
+			</tr>
+			<tr>
+				<td width=600 bgcolor="#333333"><img src="<%= make_path($path_ad_web, web_ad.path) %>"><p><%= web_ad.path %></p></td>
+			</tr>
+			<tr>
+				<td>
+					<%= link_to "show",   {:action => "show_web_ad",    :id => web_ad.id}%> -
+					<%= link_to "edit",   {:action => "edit_web_ad",    :id => web_ad.id}%> - 
+					<%= link_to "delete", {:action => "destroy_web_ad", :id => web_ad.id}, :confirm => "Are you sure?", :method => :post%>
+				</td>
+			</tr>
+		</table>
+		</br>
+	<% end %>

@@ -1,0 +1,8 @@
+<h1>Editing default multimedia ad</h1>
+
+<% form_tag( { :action => 'update_billboard', :id => @billboard}, :multipart => true ) do %>
+  <%= render :partial => 'billboard_form' %>
+  <%= submit_tag 'Update' %>
+<% end %>
+
+<%= link_to 'Show ad', :action => 'show_billboard', :id => @billboard %>

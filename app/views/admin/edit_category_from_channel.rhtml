@@ -1,0 +1,25 @@
+<html>
+<head>
+<%= stylesheet_link_tag "admin_style", :media => "all" %>
+
+<style type="text/css">
+body {
+	text: white;
+	background: #666666;
+}
+</style>
+</head>
+<body>
+<% 
+if flash[:notice] 
+	@message = flash[:notice]
+else
+	@message = ""
+end
+%>
+<% form_tag :action => 'update_category_from_channel', :channel_id => @channel, :category_id => @category do %>
+  <%= render :partial => 'category_form' %>
+  <%= submit_tag 'Update' %>
+<% end %>
+</body>
+</html>

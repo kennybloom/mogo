@@ -1,0 +1,132 @@
+<html>
+<head>
+<title>Ajax Demo</title>
+<link href="/css/carousel.css" rel="stylesheet" type="text/css">
+<link href="/css/mogo.css" rel="stylesheet" type="text/css">
+<link href="/css/mogo-carousel-programs.css" rel="stylesheet" type="text/css">
+
+<%= javascript_include_tag "prototype" %>
+<%= javascript_include_tag "utilities_2_1_1" %>
+<%= javascript_include_tag "container_core_2_1_1" %>
+<%= javascript_include_tag "carousel" %>
+
+<script type="text/javascript">
+/**
+ * Custom button state handler for enabling/disabling button state. 
+ * Called when the carousel has determined that the previous button
+ * state should be changed.
+ * Specified to the carousel as the configuration
+ * parameter: prevButtonStateHandler
+ **/
+var handlePrevButtonStatePrograms = function(type, args) {
+
+	var enabling = args[0];
+	var leftImage = args[1];
+	if(enabling) {
+		leftImage.src = "/images/up-arrow-enabled.gif";	
+	} else {
+		leftImage.src = "/images/up-arrow-disabled.gif";	
+	}
+};
+
+/**
+ * Custom button state handler for enabling/disabling button state. 
+ * Called when the carousel has determined that the next button
+ * state should be changed.
+ * Specified to the carousel as the configuration
+ * parameter: nextButtonStateHandler
+ **/
+var handleNextButtonStatePrograms = function(type, args) {
+
+	var enabling = args[0];
+	var rightImage = args[1];
+	
+	if(enabling) {
+		rightImage.src = "/images/down-arrow-enabled.gif";
+	} else {
+		rightImage.src = "/images/down-arrow-disabled.gif";
+	}
+};
+
+/**
+ * You must create the carousel after the page is loaded since it is
+ * dependent on an HTML element (in this case 'mycarousel'.) See the
+ * HTML code below.
+ **/
+var carouselAllPrograms;
+var pageLoadAllPrograms = function() 
+{
+	carouselAllPrograms = new YAHOO.extension.Carousel("carousel-program", 
+		{
+			numVisible:        20,
+			animationSpeed:    .25,
+			scrollInc:         10,
+			navMargin:         0,
+			orientation:		   "vertical",
+			navMargin:         0,
+			prevElement:       "up-arrow-programs",
+			nextElement:       "down-arrow-programs",
+			size:              100,
+			prevButtonStateHandler:   handlePrevButtonStatePrograms,
+			nextButtonStateHandler:   handleNextButtonStatePrograms
+		}
+		
+	);
+
+};
+
+function DisplayProgram(id){
+		if(id){
+			
+				var node = parent.document.getElementById('allshow');
+				node.src = 'images/allshows_cn.jpg';
+				//parent.allshow.src = 'images/allshows_cn.jpg';
+				node = parent.document.getElementById('today');
+				node.src = 'images/today_cn.jpg';
+				//parent.today.src = 'images/today_cn.jpg';
+		    parent.frames.contentframe.src='show_program/'+id;
+				parent.frames.contentframe.location.href=parent.frames.contentframe.src;
+		}
+}
+
+function afterload(){
+			var a = document.getElementById('load');
+			var b = document.getElementById('main');
+			a.style.display = 'none';
+			b.style.display = '';
+}
+
+/* *********************** */
+
+function toggle(idStr)
+{
+    var element = document.getElementById(idStr)
+    var imgStr = new String(idStr + 'image')
+    var image = document.getElementById(imgStr)
+
+    if(element.style.display=="none") {
+        element.style.display="";
+        //image.src="/themes/lp/images/arrow-dn.gif";
+    }
+    else {
+        element.style.display="none";
+        //image.src="/themes/lp/images/arrow-rt.gif";
+    }
+}
+
+</script>
+
+
+<body>
+<%= link_to_remote('show',
+	:update => "test_div",
+	:url =>{ :action => :show_channel, :id => 1 },
+	:complete => "pageLoadAllPrograms();"
+	) %>
+
+<div id="test_div">
+
+</div>
+
+</body>
+</html>

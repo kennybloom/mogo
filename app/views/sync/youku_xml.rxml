@@ -1,0 +1,37 @@
+xml.instruct!   # <?xml version="1.0" encoding="UTF-8"?>
+xml.data do
+
+	xml.videos "version"=>"1.0"do
+
+		for program in @all_programs
+		
+			if program.program_tags != nil
+				tags = program.program_tags.gsub(" ", ",")
+			else
+				tags = ""
+			end
+
+			if program.keywords != nil
+				keywords = program.keywords.gsub(" ", ",")
+			else
+				keywords = ""
+			end
+						
+			xml.video do
+				xml.partnerVideoID program.program_id
+				xml.title program.program_name_cn
+				xml.description program.description
+				xml.uid @uid
+				xml.tags tags
+				xml.quality "high2"
+				xml.category @category
+				xml.subcatagory ""
+				xml.affect_search_keywords keywords
+				xml.filename $base_url + $path_video + "/" + program.program_path_stream
+			end
+		
+		end
+
+	end
+
+end

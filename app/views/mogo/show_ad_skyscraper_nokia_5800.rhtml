@@ -1,0 +1,35 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title></title>
+
+<!-- Google Ad Manager -->
+<script type="text/javascript" src="http://partner.googleadservices.com/gampad/google_service.js">
+</script>
+<script type="text/javascript">
+  GS_googleAddAdSenseService("ca-pub-4319899706835777");
+  GS_googleEnableAllServices();
+</script>
+<script type="text/javascript">
+  GA_googleAddSlot("ca-pub-4319899706835777", "nokia-5800-skyscraper-1-of-3");
+  GA_googleAddSlot("ca-pub-4319899706835777", "nokia-5800-skyscraper-2-of-3");
+  GA_googleAddSlot("ca-pub-4319899706835777", "nokia-5800-skyscraper-3-of-3");
+</script>
+<script type="text/javascript">
+	<% if @channel_id == nil %>
+   //GA_googleAddAttr("channels", "nil");
+	<% else %>
+   //GA_googleAddAttr("channels", "<%=@channel_id%>");
+	<% end %>
+   GA_googleFetchAds();
+</script>
+<!-- end Google Ad Manager -->
+</head>
+<body leftmargin="0" topmargin="0">
+<script type="text/javascript">
+  GA_googleFillSlot("nokia-5800-skyscraper-1-of-3");
+  GA_googleFillSlot("nokia-5800-skyscraper-2-of-3");
+  GA_googleFillSlot("nokia-5800-skyscraper-3-of-3");
+</script>                            
+</body>
+</html>

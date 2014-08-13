@@ -1,0 +1,148 @@
+<html>
+<head>
+<%= stylesheet_link_tag "admin_style", :media => "all" %>
+
+<style type="text/css">
+body {
+	margin: 0;
+	padding: 0;
+	text: white;
+	background: #666666;
+}
+</style>
+
+</script>
+
+<%
+	if @program.youku_uploaded_dt != nil
+		youku_uploaded_dt = @program.youku_uploaded_dt.to_formatted_s(:my_date_format)
+	else
+		youku_uploaded_dt = ""
+	end
+%>
+</head>
+<body onload="parent.sizeProgram(<%=@program.program_id%>);">
+<table width=700 cellpadding="0" cellspacing="2">
+<tr>
+	<td width=300 height=25 bgcolor="#333333" valign="top"><label for="program id">Id: </label></td>
+	<td width=400 height=25 bgcolor="#333333"><div class="data"><%=@program.program_id%>&nbsp;&nbsp;(youku id: <%=@program.youku_id%>)</div></td>
+</tr>
+<tr>
+	<td width=300 height=25 bgcolor="#333333"><label for="program_name_cn">Program name:</label></td>
+	<td width=400 height=25 bgcolor="#333333"><div class="data"><%= @program.program_name_cn %></div></td>
+</tr>
+<tr>
+	<td width=300 height=25 bgcolor="#333333"><label for="description">Description:</label></td>
+	<td width=400 height=25 bgcolor="#333333"><div class="data"><%= @program.description %></div></td>
+</tr>
+<tr>
+	<td width=300 height=25 bgcolor="#333333"><label for="url">Url:</label></td>
+	<td width=400 height=25 bgcolor="#333333"><div class="data"><%= @program.url %></div></td>
+</tr>
+<tr>
+	<td width=300 height=25 bgcolor="#333333"><label for="url_text">Url text:</label></td>
+	<td width=400 height=25 bgcolor="#333333"><div class="data"><%= @program.url_text %></div></td>
+</tr>
+<tr>
+	<td width=300 height=25 bgcolor="#333333"><label for="program_path_stream">Video path:</label></td>
+	<td width=400 height=25 bgcolor="#333333"><div class="data"><%= @program.program_path_stream %></div></td>
+</tr>
+<tr>
+	<td width=300 height=25 bgcolor="#333333"><label for="program_icon">Video thumbnail:</label></td>
+	<td width=400 height=25 bgcolor="#333333"><div class="data"><img src="<%= make_path($path_program_icon, @program.program_icon) %>"></div></td>
+</tr>
+<tr>
+	<td width=300 height=25 bgcolor="#333333"><label for="created">Created:</label></td>
+	<td width=400 height=25 bgcolor="#333333"><div class="data"><%= @program.created %></div></td>
+</tr>
+<tr>
+	<td width=300 height=25 bgcolor="#333333"><label for="new_yn">New program?</label></td>
+	<td width=400 height=25 bgcolor="#333333"><div class="data"><%= @program.new_yn %></div></td>
+</tr>
+<tr>
+	<td width=300 height=25 bgcolor="#333333"><label for="new1_yn">MOGO 最新 音乐专题?</label></td>
+	<td width=400 height=25 bgcolor="#333333"><div class="data"><%= @program.new1_yn %></div></td>
+</tr>
+<tr>
+	<td width=300 height=25 bgcolor="#333333"><label for="new2_yn">MOGO 最新 音乐现场?</label></td>
+	<td width=400 height=25 bgcolor="#333333"><div class="data"><%= @program.new2_yn %></div></td>
+</tr>
+<tr>
+	<td width=300 height=25 bgcolor="#333333"><label for="new3_yn">MOGO 最新 艺术文化?</label></td>
+	<td width=400 height=25 bgcolor="#333333"><div class="data"><%= @program.new3_yn %></div></td>
+</tr>
+<tr>
+	<td width=300 height=25 bgcolor="#333333"><label for="new4_yn">MOGO 最新 潮流生活?</label></td>
+	<td width=400 height=25 bgcolor="#333333"><div class="data"><%= @program.new4_yn %></div></td>
+</tr>
+<tr>
+	<td width=300 height=25 bgcolor="#333333"><label for="enable_yn">Enabled?</label></td>
+	<td width=400 height=25 bgcolor="#333333"><div class="data"><%= @program.enable_yn %></div></td>
+</tr>
+<tr>
+	<td width=300 height=25 bgcolor="#333333"><label for="enable_start_date">Enable start date:</label></td>
+	<td width=400 height=25 bgcolor="#333333"><div class="data"><%= @program.enable_start_date.to_formatted_s(:my_date_format) unless @program.enable_start_date == nil %></div></td>
+</tr>
+<tr>
+	<td width=300 height=25 bgcolor="#333333"><label for="enable_end_date">Enable end date:</label></td>
+	<td width=400 height=25 bgcolor="#333333"><div class="data"><%= @program.enable_end_date.to_formatted_s(:my_date_format)  unless @program.enable_end_date == nil %></div></td>
+</tr>
+<tr>
+	<td width=300 height=25 bgcolor="#333333"><label for="viewed">Viewed:</label></td>
+	<td width=400 height=25 bgcolor="#333333"><div class="data"><%= @program.viewed %></div></td>
+</tr>
+<tr>
+	<td width=300 height=25 bgcolor="#333333"><label for="recommend_yn">Recommend:</label></td>
+	<td width=400 height=25 bgcolor="#333333"><div class="data"><%= @program.recommend_yn %></div></td>
+</tr>
+<tr>
+	<td width=300 height=25 bgcolor="#333333"><label for="ipopular_yn">Include in top 10:</label></td>
+	<td width=400 height=25 bgcolor="#333333"><div class="data"><%= @program.ipopular_yn %></div></td>
+</tr>
+<tr>
+	<td width=300 height=25 bgcolor="#333333"><label for="xpopular_yn">Exclude from top 10:</label></td>
+	<td width=400 height=25 bgcolor="#333333"><div class="data"><%= @program.xpopular_yn %></div></td>
+</tr>
+<tr>
+	<td width=300 height=25 bgcolor="#333333"><label for="program_tags">Tags:</label></td>
+	<td width=400 height=25 bgcolor="#333333"><div class="data"><%= @program.program_tags %></div></td>
+</tr>
+<tr>
+	<td width=300 height=25 bgcolor="#333333"><label for="keywords">Keywords:</label></td>
+	<td width=400 height=25 bgcolor="#333333"><div class="data"><%= @program.keywords %></div></td>
+</tr>
+<tr>
+	<td width=300 height=25 bgcolor="#333333"><label for="keywords">Auto keywords 1:</label></td>
+	<td width=400 height=25 bgcolor="#333333"><div class="data"><%= @program.auto_keywords_1 %></div></td>
+</tr>
+<tr>
+	<td width=300 height=25 bgcolor="#333333"><label for="keywords">Auto keywords 2:</label></td>
+	<td width=400 height=25 bgcolor="#333333"><div class="data"><%= @program.auto_keywords_2 %></div></td>
+</tr>
+<tr>
+	<td width=300 height=25 bgcolor="#333333"><label for="keywords">Auto keywords 3:</label></td>
+	<td width=400 height=25 bgcolor="#333333"><div class="data"><%= @program.auto_keywords_3 %></div></td>
+</tr>
+<tr>
+	<td width=300 height=25 bgcolor="#333333"><label for="keywords">Auto keywords 4:</label></td>
+	<td width=400 height=25 bgcolor="#333333"><div class="data"><%= @program.auto_keywords_4 %></div></td>
+</tr>
+<tr>
+	<td width=300 height=25 bgcolor="#333333"><label for="keywords">Auto keywords 5:</label></td>
+	<td width=400 height=25 bgcolor="#333333"><div class="data"><%= @program.auto_keywords_5 %></div></td>
+</tr>
+<tr>
+	<td width=300 height=25 bgcolor="#333333"><label for="youku_id">Youku id:</label></td>
+	<td width=400 height=25 bgcolor="#333333"><div class="data"><%= @program.youku_id %></div></td>
+</tr>
+<tr>
+	<td width=300 height=25 bgcolor="#333333"><label for="youku_id">Youku upload date:</label></td>
+	<td width=400 height=25 bgcolor="#333333"><div class="data"><%= youku_uploaded_dt %></div></td>
+</tr>
+<tr>
+	<td width=300 height=25 bgcolor="#333333"><label for="youku_id">Youku validated:</label></td>
+	<td width=400 height=25 bgcolor="#333333"><div class="data"><%= @program.youku_ok_yn %></div></td>
+</tr>
+</table>
+</body>
+</html>

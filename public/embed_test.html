@@ -1,0 +1,103 @@
+<html>
+<head>
+<style type="text/css">
+<!--
+#share{ width:450px; margin:0 auto; border:1px solid #CC0; background:#F4FAED; padding:5px 10px 3px}
+#share a{
+text-decoration:none;
+background:transparent url(http://image.dili360.com/www/img/sharelogo.png) no-repeat scroll 0 0; line-height:1.8;
+color:#333;
+margin:0 0 0 10px;
+padding:3px 0 3px 18px;}
+#share a#kaixin{ background-position:0 1px}
+#share a#xiaonei{ background-position:0 -19px}
+#share a#douban{ background-position:0 -39px}
+#share a#bsh{ background-position:0 -59px}
+#share a#copy{ background-position:0 -82px}
+-->
+</style>
+<div id="share">分享本文到：
+<a href="#" target="_blank" id="kaixin">开心网</a>
+<a href="#" target="_blank" id="xiaonei">校内</a>
+<a href="#" target="_blank" id="douban" >豆瓣</a>
+<a href="#" target="_blank" id="bsh" >白社会</a>
+<a href="#" id="copy" onclick="CopyURL(); return false;" >复制链接</a>
+</div>
+<div class="blank10"></div>
+<script type="text/javascript">
+function CopyURL() {
+var txt = document.title;
+       txt += window.location.toString();
+if(window.clipboardData) {
+       window.clipboardData.clearData();
+       window.clipboardData.setData("Text",txt);
+}else if(navigator.userAgent.indexOf("Opera") != -1) {
+       window.location = txt;
+} else if (window.netscape) {
+       try {
+         netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+       } catch (e) {
+         alert("被浏览器拒绝！n请在浏览器地址栏输入'about:config'并回车n然后将'signed.applets.codebase_principal_support'设置为'true'");
+       }
+       var clip = Components.classes['@mozilla.org/widget/clipboard;1'].createInstance(Components.interfaces.nsIClipboard);
+       if (!clip)
+         return;
+       var trans = Components.classes['@mozilla.org/widget/transferable;1'].createInstance(Components.interfaces.nsITransferable);
+       if (!trans)
+         return;
+       trans.addDataFlavor('text/unicode');
+       var str = new Object();
+       var len = new Object();
+       var str = Components.classes["@mozilla.org/supports-string;1"].createInstance(Components.interfaces.nsISupportsString);
+       var copytext = txt;
+       str.data = copytext;
+       trans.setTransferData("text/unicode",str,copytext.length*2);
+       var clipid = Components.interfaces.nsIClipboard;
+       if (!clip)
+         return false;
+       clip.setData(trans,null,clipid.kGlobalClipboard);
+}
+alert("你已经成功复制，请直接粘贴推荐给你的朋友!");
+}
+var title= document.title;
+var title=encodeURI(title);
+var url=document.URL;
+var url=encodeURI(url);
+if(document.getElementById("artibody").innerText)
+{
+var content=document.getElementById("artibody").innerText
+}
+else{
+         var content=document.getElementById("artibody").textContent
+       }
+var content=content.slice(1,100);
+var content=encodeURI(content)
+document.getElementById("kaixin").setAttribute("href","http://www.kaixin001.com/repaste/share.php?rtitle="+title+"&rurl="+url+"&rcontent="+content);
+document.getElementById("douban").setAttribute("href","http://www.douban.com/recommend/?url="+url);
+document.getElementById("bsh").setAttribute("href","http://bai.sohu.com/share/blank/add.do?link="+url);
+document.getElementById("xiaonei").setAttribute("href","http://share.renren.com/share/buttonshare.do?link="+url);
+</script> 
+</head>
+<body>
+<a href="http://www.jiathis.com/share.html" class="jiathis"><img src="http://www.jiathis.com/code/images/jiathis.gif" width="125" height="21" border="0" id="jiathis_a"/></a>
+<script type="text/javascript" src="http://www.jiathis.com/code/jia.js" charset=utf-8></script>
+
+
+<hr><hr>
+<a href="javascript:void(window.open('http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url='+encodeURIComponent(document.location.href)));" ><img src="static/image/fx/qzone_logo.png"  align="texttop"alt="QQ空间" /> QQ空间</a>
+<a href="javascript:void(0);" onclick="window.open('http://v.t.qq.com/share/share.php?title='+encodeURIComponent(document.title.substring(0,76))+'&url='+encodeURIComponent(location.href)+'&rcontent=','_blank','scrollbars=no,width=600,height=450,left=75,top=20,status=no,resizable=yes');  rel="nofollow" ><IMG alt=腾讯微博 src="static/image/fx/tqq.png" align="texttop"> 腾讯微博</a>
+<a title="新浪|微博" style="cursor:pointer;" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://v.t.sina.com.cn/share/share.php?',u=d.location.href,p=['url=',e(u),'&title=',e(d.title),'&appkey=1226626340'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"><img alt="新浪微博" border="0" width="16" height="16" src="static/image/fx/v_t_sina.gif" align="texttop"/> 新浪微博</a>
+<a href="javascript:var u=location.href;var t=document.title;t=t.substr(0,80)+'by:Addthis.org.cn';var c=''+(window.getSelection?window.getSelection():document.getSelection?document.getSelection():document.selection.createRange().text);c=c.substr(0,280);var e=encodeURIComponent;var url='http://t.sohu.com/third/post.jsp?&url='+e(u)+'& title='+e(t)+'&content=utf-8&pic='; window.open(url,'addthis.org.cn','toolbar=0,resizable=1,scrollbars=yes,status=1,width=600,height=450'); void(0)"><img alt="搜狐微博" src="static/image/fx/152.png" align="texttop" border="0" width="16px" /> 搜狐微博</a>
+
+
+<a href="javascript:var u=location.href;var t=document.title;t=t.substr(0,80)+'by:Addthis.org.cn';var c=''+(window.getSelection?window.getSelection():document.getSelection?document.getSelection():document.selection.createRange().text);c=c.substr(0,280);var e=encodeURIComponent;var url='http://apps.hi.baidu.com/share/?url='+e(u)+'&title='+e(t)+''; window.open(url,'addthis.org.cn','toolbar=0,resizable=1,scrollbars=yes,status=1,width=600,height=450'); void(0)"><img alt="百度|Hi空间" border="0" width="16px" height="16px" src="static/image/fx/baidu_hi.gif"align="texttop" /> 百度空间</a>
+
+
+<a  href="javascript:d=document;t=d.selection?(d.selection.type!='None'?d.selection.createRange().text:''):(d.getSelection?d.getSelection():'');void(kaixin=window.open('http://www.kaixin001.com/~repaste/repaste.php?&rurl='+escape(d.location.href)+'&rtitle='+escape(d.title)+'&rcontent='+escape(d.title),'kaixin'));kaixin.focus();"><img alt="开心网" border="0" height="16" width="16" src="static/image/fx/kaixin001.gif" align="texttop"> 开心网</a>
+<a href="javascript:void((function(s,d,e){if(/xiaonei\.com/.test(d.location))return;var%20f='http://share.xiaonei.com/share/buttonshare.do?link=',u=d.location,l=d.title,p=[e(u),'&title=',e(l)].join('');function%20a(){if(!window.open([f,p].join(''),'xnshare',['toolbar=0,status=0,resizable=1,width=626,height=436,left=',(s.width-626)/2,',top=',(s.height-436)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else%20a();})(screen,document,encodeURIComponent));"><img alt="校内|人人网" border="0" height="16" width="16" src="static/image/fx/renren.gif" align="texttop"/> 人人网</a>
+<a rel="nofollow" class="fav_douban" href="javascript:void(function(){var d=document,e=encodeURIComponent,s1=window.getSelection,s2=d.getSelection,s3=d.selection,s=s1?s1():s2?s2():s3?s3.createRange().text:'',r='http://www.douban.com/recommend/?url='+e(d.location.href)+'&title='+e(d.title)+'&sel='+e(s)+'&v=1',x=function(){if(!window.open(r,'douban','toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330'))location.href=r+'&r=1'};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})()"><img alt="豆瓣网" border="0" width="16" height="16" src="static/image/fx/douban.gif" align="texttop" /> 豆瓣网</a>
+<a name="fb_share" type="icon_link" href="http://www.facebook.com/sharer.php">Facebook</a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+
+<a href="http://twitter.com/home?status=Leyendo <?php the_permalink(); ?> en <?php bloginfo('name'); ?>" title="Add to Twitter" class="wptwitter"><img alt="" border="0" height="16" width="16"src="static/image/fx/twitter.png" align="texttop"> Twitter</a>
+</body>
+</html>

@@ -1,0 +1,7 @@
+<h1>Editing multimedia ad</h1>
+
+<% form_tag( { :action => 'update_sponsor', :id => @sponsor}, :multipart => true ) do %>
+  <%= render :partial => 'sponsor_form' %>
+  <%= submit_tag 'Update' %>
+<% end %>
+<%= link_to 'Show ad', :action => 'show_sponsor', :id => @sponsor %>

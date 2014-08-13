@@ -1,0 +1,19 @@
+<%= error_messages_for 'sponsor' %>
+
+<table width=550 cellpadding="0" cellspacing="2">
+<tr>
+	<td width=220 bgcolor="#333333"><label for="sponsor_name">Ad name:</label></td>
+	<td width=300 bgcolor="#333333"><%= text_field 'sponsor', 'name'  %></td>
+</tr>
+<tr>
+	<td width=220 bgcolor="#333333"><label for="logo">Ad:</label></td>
+	<td width=300 bgcolor="#333333">
+		<%= text_field 'sponsor', 'logo', {'readonly'=>'true', 'style'=>'background-color:#fbc5f8'} %>
+		<%= select_tag 'logo_select', file_select_options(["public" + $path_sponsor_logo], /.*/)%>
+	</td>
+</tr>
+<tr>
+	<td width=220  bgcolor="#333333"><label for="url">Url:</label></td>
+	<td width=300 bgcolor="#333333"><%= text_field 'sponsor', 'url'  %></td>
+</tr>
+</table>

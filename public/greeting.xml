@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+	<SETTINGS>
+		<PLAYER_SETTINGS Name="SelectedSkin" Value="http://www.mogo.com.cn/flvplayer/skin/new_skin.swf"/>
+		<PLAYER_SETTINGS Name="SelectedLoader" Value="http://www.mogo.com.cn/flvplayer/skin/loading.swf"/>
+		<PLAYER_SETTINGS Name="Protocol" Type="http" Value="" />
+		<PLAYER_SETTINGS Name="FLVPath" Value="http://www.mogo.com.cn/video/Public/NewYearCard02.flv" />
+		<PLAYER_SETTINGS Name="Themes" Value="http://www.mogo.com.cn/flvplayer/xthemes.xml"/>
+		<PLAYER_SETTINGS Name="LockAllControls" Value="false"/>
+
+		<PLAYER_SETTINGS Name="ShowShareButton" Value="false"/>
+		<PLAYER_SETTINGS Name="ShowReplyButton" Value="false"/>
+		<PLAYER_SETTINGS Name="InitVolume" Value="100"/>
+		<PLAYER_SETTINGS Name="AutoPlay" Value="true"/>
+		<PLAYER_SETTINGS Name="FirstFrameAs" Value="video" FrameAt="0" Url="http://www.mogo.com.cn/images/vImage.jpg" Align="stretch"/>
+		<PLAYER_SETTINGS Name="FirstVidSize" Value="max" KeepAspectRatio="true"/>
+		<PLAYER_SETTINGS Name="FullScreenControls" Value="true"/>
+		<PLAYER_SETTINGS Name="ShowMiniShareButton" Value="false"/>
+		<PLAYER_SETTINGS Name="ShowMiniLogo" Value="false" Url="http://www.mogo.com.cn/images/minilogo.swf"/>
+
+		<PLAYER_SETTINGS Name="TooltipEnabled" Value="true"/>
+		<PLAYER_SETTINGS Name="ShareVidzLink" Value="http://www.mogo.com.cn/mogo/recommend_video" args="programId=981"/>
+		<!-- args will passed separately with & symbol to the given php file -->
+		<PLAYER_SETTINGS Name="FullScreenLink" Function="" args="sample1.html"/>
+		<!-- If the 'Function' value is empty, the defauly fullscreen function will be fired -->
+		<PLAYER_SETTINGS Name="BufferTime" Value="5"/>
+		<PLAYER_SETTINGS Name="Logo" Value="false" Url="mylogo.png" Transparency="50"  RollOverTransparency="100" LogoPosition="RB" hspace="10" vspace="10" TargetUrl="http://www.agriya.com" Target="_blank" InnerScripts="no"/>		
+		<PLAYER_SETTINGS Name="External" Value="no" Url="http://agriya.com"  Target="_blank" />
+	</SETTINGS>
+	<LABELS>
+		<TEXT Name="Header" Value="Click here to join with these cool guys... and ger more fun here........." Enable="false" ShowAlways="false" Url="http://www.agriya.com" TargetWindow="" HeaderScroll="true" ScrollSpeed="10"/>
+		<TEXT Name="Share" Value="共享"/>
+		<TEXT Name="Reply" Value="重播放"/>
+		<TEXT Name="Buffer" Value="Buffering..."/>
+		<TEXT Name="Loading" Value="下载....."/>
+		<TEXT Name="NextText" Value=">>下个" Enable="false"/>
+		<TEXT Name="ListAlign" Value="RTL" Enable="false"/>
+
+	</LABELS>
+	<TOOLTIP>
+		<TOOL Name="PlayButton" Value="播放"/>
+		<TOOL Name="PauseButton" Value="暂停"/>
+		<TOOL Name="VolumeButton" Value="音量"/>
+		<TOOL Name="ShareVidz" Value="共享"/>
+		<TOOL Name="ReplyVideo" Value="重播放"/>
+		<TOOL Name="RewindButton" Value="Rewind"/>
+		<TOOL Name="MuteButton" Value="无声"/>
+
+		<TOOL Name="FullScreen" Value="全屏"/>
+		<TOOL Name="UnMuteButton" Value="声音开"/>
+		<TOOL Name="VideoSize" Value="视频大小"/>
+	</TOOLTIP>
+	<MSG>
+		<ERROR Name="SelectedSkin" Value=" is not available...swf "/>
+		<ERROR Name="PlayList" Value="The playlist xml not found ! "/>
+		<ERROR Name="FlvPath" Value="The FLV Paths is not valid or missing !"/>
+		<ERROR Name="FlvPathFile" Value="File not Found "/>
+
+	</MSG>
+</CONFIG>

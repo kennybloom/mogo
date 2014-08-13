@@ -1,0 +1,240 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>视频分享</title>
+<style type="text/css">
+body {
+    margin: 0;
+    padding: 0;
+    color: white;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+table#top-section {
+    margin: 3px 3px 0px 3px;
+    padding: 0;
+    width: 445px;
+}
+
+table#bottom-section {
+    margin: 10px 6px 0px 6px;
+    padding: 0;
+    width: 441px;
+}
+
+a {
+    text-decoration: none;
+}
+
+a img {
+    border: none;
+}
+</style>
+
+<%
+@video_note='embed'
+@mode='remote'
+
+#	object_tag = "<embed id='flvplayer' width='409' height='358' " +
+#	"flashvars='autoplay=false&config=" + $base_url + 
+#	"/mogo/video_config?id=" + @channel_id + "-" + @category_id + "-" + @program.program_id.to_s + "-" + @video_note + "-" + @mode + 
+#   "' allowsciptaccess='always' allowfullscreen='true' quality='high' name='flvplayer' " +
+#	"src='" + $base_url + "/flvplayer.swf' type='application/x-shockwave-flash'>"
+
+#	object_tag_auto = "<embed id='flvplayer' width='409' height='358' " +
+#	"flashvars='autoplay=true&config=" + $base_url + 
+#	"/mogo/video_config?id=" + @channel_id + "-" + @category_id + "-" + @program.program_id.to_s + "-" + @video_note + "-" + @mode + 
+#   "' allowsciptaccess='always' allowfullscreen='true' quality='high' name='flvplayer' " +
+#	"src='" + $base_url + "/flvplayer.swf' type='application/x-shockwave-flash'/>"
+
+	swf_code = $base_url + "/jwplayer/player.swf?repeat=list&skin=/jwplayer/stijl.swf&file=" + $base_url + "/mogo/video_config%3fid%3d" + @channel_id + "-" + @category_id + "-" + @program.program_id.to_s + "-" + @video_note + "-" + @mode
+
+	embed_tag = "<embed src='" + $base_url + "/jwplayer/player.swf' height='400' width='480' " +
+	"flashvars='repeat=list&autostart=false&amp;file=" + $base_url + "/mogo/video_config?id=" + @channel_id + "-" + @category_id + "-" + @program.program_id.to_s + "-" + @video_note + "-" + @mode + "' allowScriptAccess='always' allowFullscreen='true' quality='high'> </embed>" 
+	
+	object_tag = "<object width='480' height='400' name='jwplayer' type='application/x-shockwave-flash' data='" + $base_url + "/jwplayer/player.swf'> " +
+	"<param name='flashvars' value='repeat=list&autostart=false&file=" + $base_url + 
+	"/mogo/video_config?id=" + @channel_id + "-" + @category_id + "-" + @program.program_id.to_s + "-" + @video_note + "-" + @mode + "'></param> "+
+	"<param name='allowScriptAccess' value='always'></param> " +
+	"<param name='allowFullscreen' value='true'></param> " +
+	"<param name='quality' value='high'></param> " +
+	"<param name='movie' value='" + $base_url + "/jwplayer/player.swf'></param>" + embed_tag + "</object>"
+
+	iframe_code = $base_url + "/mogo/play_video/" + @channel_id + "-" + @category_id + "-" + @program.program_id.to_s + "-" + @video_note
+
+    link_mogo = $base_url + $index_action + "/?program_id=" + @program.program_id.to_s
+    link_sina = "http://service.t.sina.com.cn/share/share.php?url=" + CGI.escape(link_mogo) + "&title=" + @program.program_name_cn + "&source=mogo.com.cn&sourceUrl=http://mogo.com.cn&pic=" + $base_url + CGI.escape("/video/Graphics/Program Thumbs/" + @program.program_icon) + "&retcode=0"
+    link_renren = "http://share.renren.com/share/buttonshare.do?link=" + CGI.escape(link_mogo) + "&title=" + @program.program_name_cn + "&pic=" + $base_url + CGI.escape("/video/Graphics/Program Thumbs/" + @program.program_icon)
+    link_kaixin = "http://www.kaixin001.com/repaste/share.php?rtitle=" + @program.program_name_cn + "&rurl=" + CGI.escape(link_mogo) + "&pic=" + $base_url + CGI.escape("/video/Graphics/Program Thumbs/" + @program.program_icon)
+    link_qqsns = "http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=" + CGI.escape(link_mogo) + "&title=" + @program.program_name_cn  + "&pic=" + $base_url + CGI.escape("/video/Graphics/Program Thumbs/" + @program.program_icon)
+    link_qqweibo = "http://v.t.qq.com/share/share.php?title=" + CGI.escape(@program.program_name_cn) + "&url=" + CGI.escape(link_mogo) + "&pic=" + $base_url + CGI.escape("/video/Graphics/Program Thumbs/" + @program.program_icon)
+    link_douban = "http://www.douban.com/recommend/?url=" + CGI.escape(link_mogo) + "&title=" + CGI.escape(@program.program_name_cn)  + "&pic=" + $base_url + CGI.escape("/video/Graphics/Program Thumbs/" + @program.program_icon)
+    link_sohu = "http://t.sohu.com/third/post.jsp?&url=" + CGI.escape(link_mogo) + "&title=" + @program.program_name_cn + "&pic=" + $base_url + CGI.escape("/video/Graphics/Program Thumbs/" + @program.program_icon)
+    link_wangyi = "http://t.163.com/article/user/checkLogin.do?info=" + CGI.escape(link_mogo) + "&source=" + CGI.escape(@program.program_name_cn) + "&pic=" + $base_url + CGI.escape("/video/Graphics/Program Thumbs/" + @program.program_icon)
+%>
+
+	<script>
+	<!--
+		function closewindow(){
+			if(confirm('确定要关闭窗口么?')){
+				window.close();
+			}
+		}
+			
+		function ClipBoard()
+		{
+			//holdtext.innerText = copytext.innerText;
+			var t = document.getElementById('holdtext')
+			Copied = t.createTextRange();
+			Copied.execCommand("Copy");
+			alert('已复制，使用Ctrl+V粘贴出来'); 
+		}			
+			
+		function ClipBoard_swf_code()
+		{
+			//holdtext.innerText = copytext.innerText;
+			var t = document.getElementById('swf_code_text')
+			Copied = t.createTextRange();
+			Copied.execCommand("Copy");
+			alert('已复制，使用Ctrl+V粘贴出来'); 
+		}		
+
+		function ClipBoard_object_tag()
+		{
+			//holdtext.innerText = copytext.innerText;
+			var t = document.getElementById('object_tag_text')
+			Copied = t.createTextRange();
+			Copied.execCommand("Copy");
+			alert('已复制，使用Ctrl+V粘贴出来'); 
+		}		
+		
+		function ClipBoard_embed_tag()
+		{
+			//holdtext.innerText = copytext.innerText;
+			var t = document.getElementById('embed_tag_text')
+			Copied = t.createTextRange();
+			Copied.execCommand("Copy");
+			alert('已复制，使用Ctrl+V粘贴出来'); 
+		}		
+
+		function ClipBoard_iframe_tag()
+		{
+			//holdtext.innerText = copytext.innerText;
+			var t = document.getElementById('iframe_tag_text')
+			Copied = t.createTextRange();
+			Copied.execCommand("Copy");
+			alert('已复制，使用Ctrl+V粘贴出来'); 
+		}		
+
+		function ClipBoard_ubb_tag()
+		{
+			//holdtext.innerText = copytext.innerText;
+			var t = document.getElementById('ubb_tag_text')
+			Copied = t.createTextRange();
+			Copied.execCommand("Copy");
+			alert('已复制，使用Ctrl+V粘贴出来'); 
+		}		
+				
+		-->
+		</script>
+
+</head>
+
+<body bgcolor="#ffffff">
+<table id="top-section" align="center" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+    <tr>
+        <td align="left" width="392"><img src="/images/mogo-logo-small.gif" width="150"/></td>
+        <td align="left" valign="top">
+            <img src="/images/close.jpg" width="57" height="26" border="0" usemap="#Map">
+                <map name="Map">  
+                    <area shape="rect" coords="1,1,56,26" href="javascript:closewindow()"> 
+                </map>
+        </td>
+    </tr>
+</table>
+
+<table id="bottom-section" bgcolor="#000000">
+    <tr>
+        <td width="50"></td>
+        <td ><a href="<%=link_renren%>" target="_blank"><img src="/images/sns-renren.jpg"></a></td>
+        <td><a href="<%=link_kaixin%>" target="_blank"><img src="/images/sns-kaixin.jpg"></a></td>
+        <td><a href="<%=link_qqsns%>" target="_blank"><img src="/images/sns-qq.jpg"></a></td>
+        <td><a href="<%=link_sina%>" target="_blank"><img src="/images/sns-sina.jpg"></a></td>
+        <td width="50"></td>
+    </tr>
+    <form name="form_embed">
+    <tr>
+        <td width="50"></td>
+        <td align="left" width="85"><a href="<%=link_qqweibo%>" target="_blank"><img src="/images/sns-tencent.jpg"></a></td>
+        <td align="left" width="85"><a href="<%=link_douban%>" target="_blank"><img src="/images/sns-douban.jpg"></a></td>
+        <td align="left" width="85"><a href="<%=link_sohu%>" target="_blank"><img src="/images/sns-sohu.jpg"></a></td>
+        <td align="left" width="85"><a href="<%=link_wangyi%>" target="_blank"><img src="/images/sns-wangyi.jpg"></a></td>
+        <td width="50"></td>
+    </tr>
+    <tr><td height="10" colspan="6"></td></tr>
+<%= hidden_field "program_recommend", "program_id", "value"=>@program.program_id%>
+<%= hidden_field "program_recommend", "user_ip", "value"=>request.remote_ip().to_s%>
+    <tr>
+        <td width="50"></td>
+        <td align="left" colspan="4">视频网址: </td>
+        <td width="50"></td>
+    </tr>
+    <tr>
+        <td width="50"></td>
+        <td align="left" colspan="4">
+            <input id="holdtext" value="<%= $base_url + $index_action + "/?program_id=" + @program.program_id.to_s %>" style="width:250px;"/>&nbsp;<input type="button" onClick="ClipBoard();" value="复制"> 
+        </td>
+        <td width="50"></td>
+    </tr>
+    <tr>
+        <td width="50"></td>
+        <td align="left" colspan="4">视频嵌入: </td>
+        <td width="50"></td>
+    </tr>
+    <tr>
+        <td width="50"></td>
+        <td align="left" colspan="4">
+            <input id="object_tag_text" name="object_tag_text" style="width:250px;" value="<%=object_tag%>"/>&nbsp;<input type="button" onClick="ClipBoard_object_tag();" value="复制">
+        </td>
+        <td width="50"></td>
+    </tr>
+    <tr>
+        <td colspan="3" height="10"></td>
+    </tr>
+    </form>
+</table>
+
+<!-- 
+					<%= hidden_field "program_recommend", "program_id", "value"=>@program.program_id%>
+					<%= hidden_field "program_recommend", "user_ip", "value"=>request.remote_ip().to_s%>
+						<table width="400">
+						<tr><td colspan=2 height="50" valign="middle">您要嵌入的影片为: <%=@program.program_name_cn%></td></tr>
+						<form name="form_embed">
+						<tr><td width=70>影片网址: </td><td><input id="holdtext" value="<%= $base_url + $index_action + "/?program_id=" + @program.program_id.to_s %>" style="width:250px;"/>&nbsp;<input type="button" onClick="ClipBoard();" value="复制"></td></tr>
+						<tr><td width=70>&nbsp;</td><td>通过E-mail / MSN / QQ 告诉你的好友</td></tr>
+						<tr><td width=70>源文件网址: </td><td><input id="swf_code_text" style="width:250px;"/>&nbsp;<input type="button" onClick="ClipBoard_swf_code();" value="复制"></td></tr>						
+						<tr><td width=70>&nbsp;</td><td>用于到个人空间或 Blog</td></tr>
+						<tr><td width=70>播放代码1: </td><td><input id="object_tag_text" style="width:250px;"/>&nbsp;<input type="button" onClick="ClipBoard_object_tag();" value="复制"></td></tr>						
+						<tr><td width=70>&nbsp;</td><td>用于支持html编辑的网页或Blog</td></tr>
+						<tr><td width=70>播放代码2: </td><td><input id="embed_tag_text" style="width:250px;"/>&nbsp;<input type="button" onClick="ClipBoard_embed_tag();" value="复制"></td></tr>
+						<tr><td width=70>&nbsp;</td><td>用于支持SOHU博客或其他Blog</td></tr>
+						<tr><td width=70>论坛代码1: </td><td><input id="iframe_tag_text" style="width:250px;"/>&nbsp;<input type="button" onClick="ClipBoard_iframe_tag();" value="复制"></td></tr>
+						<tr><td width=70>&nbsp;</td><td>用于支持Iframe镶入的论坛</td></tr>
+						<tr><td width=70>论坛代码2: </td><td><input id="ubb_tag_text" style="width:250px;"/>&nbsp;<input type="button" onClick="ClipBoard_ubb_tag();" value="复制"></td></tr>
+						<tr><td width=70>&nbsp;</td><td>用于支持UBB镶入的论坛</td></tr>
+						</form>
+						</table>					
+ -->
+<script>
+<!--
+//		window.document.form_embed.swf_code_text.value = "<%=swf_code%>";
+//		window.document.form_embed.object_tag_text.value = "<%=object_tag%>";
+//		window.document.form_embed.embed_tag_text.value = "<%=embed_tag%>";
+//		window.document.form_embed.iframe_tag_text.value = "[iframe]<%=iframe_code%>[/iframe]";
+//		window.document.form_embed.ubb_tag_text.value = "[flash]<%=swf_code%>[/flash]";
+-->
+</script>
+
+</body>
+</html>

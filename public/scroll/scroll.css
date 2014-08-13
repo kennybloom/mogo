@@ -1,0 +1,126 @@
+DIV.dtk-carousel {
+	MARGIN-TOP: 0px; MARGIN-BOTTOM: -1px; MARGIN-LEFT: 1px
+}
+.dtk-carousel {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 10px 0px; WIDTH: 655px; PADDING-TOP: 0px; POSITION: relative; BACKGROUND-COLOR: #f6f6f6
+}
+.dtk-carousel H2 {
+	FONT-SIZE: 114%; MARGIN: 10px 10px 0px; COLOR: #009dd9
+}
+.dtk-carousel H2 A:link {
+	COLOR: #009dd9
+}
+.dtk-carousel H2 A:visited {
+	COLOR: #009dd9
+}
+.dtk-carousel A.prev SPAN {
+	DISPLAY: none
+}
+.dtk-carousel A.next SPAN {
+	DISPLAY: none
+}
+.dtk-carousel A.prev {
+	PADDING-RIGHT: 0px; DISPLAY: inline; PADDING-LEFT: 0px; RIGHT: 40px; BACKGROUND: url(http://us.i1.yimg.com/us.yimg.com/i/us/tv/v3/common/tv-coll-nav.gif) no-repeat; PADDING-BOTTOM: 0px; OVERFLOW: hidden; WIDTH: 31px; CURSOR: pointer; PADDING-TOP: 0px; POSITION: absolute; TOP: 10px; HEIGHT: 22px
+}
+.dtk-carousel A.next {
+	PADDING-RIGHT: 0px; DISPLAY: inline; PADDING-LEFT: 0px; RIGHT: 40px; BACKGROUND: url(http://us.i1.yimg.com/us.yimg.com/i/us/tv/v3/common/tv-coll-nav.gif) no-repeat; PADDING-BOTTOM: 0px; OVERFLOW: hidden; WIDTH: 31px; CURSOR: pointer; PADDING-TOP: 0px; POSITION: absolute; TOP: 10px; HEIGHT: 22px
+}
+.dtk-carousel A.prev:visited {
+	PADDING-RIGHT: 0px; DISPLAY: inline; PADDING-LEFT: 0px; RIGHT: 40px; BACKGROUND: url(http://us.i1.yimg.com/us.yimg.com/i/us/tv/v3/common/tv-coll-nav.gif) no-repeat; PADDING-BOTTOM: 0px; OVERFLOW: hidden; WIDTH: 31px; CURSOR: pointer; PADDING-TOP: 0px; POSITION: absolute; TOP: 10px; HEIGHT: 22px
+}
+.dtk-carousel A.next:visited {
+	PADDING-RIGHT: 0px; DISPLAY: inline; PADDING-LEFT: 0px; RIGHT: 40px; BACKGROUND: url(http://us.i1.yimg.com/us.yimg.com/i/us/tv/v3/common/tv-coll-nav.gif) no-repeat; PADDING-BOTTOM: 0px; OVERFLOW: hidden; WIDTH: 31px; CURSOR: pointer; PADDING-TOP: 0px; POSITION: absolute; TOP: 10px; HEIGHT: 22px
+}
+.dtk-carousel A.next {
+	BACKGROUND-POSITION: -30px 0px; RIGHT: 10px; WIDTH: 30px
+}
+.dtk-carousel A.next:visited {
+	BACKGROUND-POSITION: -30px 0px; RIGHT: 10px; WIDTH: 30px
+}
+.dtk-carousel .scrollnav {
+	RIGHT: 85px; LIST-STYLE-TYPE: none; POSITION: absolute; TOP: 12px
+}
+.dtk-carousel .scrollnav A {
+	PADDING-RIGHT: 0px; DISPLAY: block; PADDING-LEFT: 0px; BACKGROUND: url(http://us.i1.yimg.com/us.yimg.com/i/us/tv/v3/common/tv-coll-nav.gif) no-repeat -11px -23px; FLOAT: left; PADDING-BOTTOM: 0px; MARGIN: 0px 1px; OVERFLOW: hidden; WIDTH: 9px; TEXT-INDENT: -100px; PADDING-TOP: 0px; HEIGHT: 9px
+}
+.dtk-carousel .scrollnav A.current {
+	BACKGROUND-POSITION: 0px -23px; CURSOR: default
+}
+.dtk-carousel .ft A {
+	PADDING-RIGHT: 5px; DISPLAY: block; PADDING-LEFT: 5px; FLOAT: right; PADDING-BOTTOM: 5px; FONT: bold 85% arial; COLOR: #009dd9; PADDING-TOP: 5px; BACKGROUND-COLOR: #eaeaea; TEXT-DECORATION: none
+}
+.dtk-carousel DIV.scrollbody {
+	DISPLAY: inline; FLOAT: left; MARGIN: 10px 0px 0px 5px; OVERFLOW: hidden; WIDTH: 634px; HEIGHT: 140px
+}
+.dtk-carousel DIV.scrollpages {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; WIDTH: 9999em; PADDING-TOP: 0px; LIST-STYLE-TYPE: none
+}
+UL.dtk-list {
+	DISPLAY: inline; FLOAT: left; WIDTH: 650px
+}
+UL.dtk-list LI.dtk-item {
+	DISPLAY: inline; FLOAT: left; WIDTH: 160px
+}
+UL.dtk-list LI.dtk-item DIV {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; MARGIN-LEFT: 0px; PADDING-TOP: 5px
+}
+UL.dtk-list LI.dtk-item H3 {
+	FONT-SIZE: 13px; FONT-FAMILY: gotham, verdana, arial
+}
+UL.dtk-list LI.dtk-item P {
+	FONT-SIZE: 12px; PADDING-BOTTOM: 5px; COLOR: #666
+}
+UL.dtk-list LI.dtk-item A {
+	BORDER-RIGHT: #b4b4b4 1px solid; BORDER-TOP: #b4b4b4 1px solid; BORDER-LEFT: #b4b4b4 1px solid; BORDER-BOTTOM: #b4b4b4 1px solid; POSITION: static
+}
+UL.dtk-list LI.dtk-item A IMG {
+	BORDER-RIGHT: #b4b4b4 1px; BORDER-TOP: #b4b4b4 1px; BORDER-LEFT: #b4b4b4 1px; BORDER-BOTTOM: #b4b4b4 1px
+}
+UL.dtk-list LI.dtk-item A:hover IMG {
+	BORDER-RIGHT: #f60 2px; BORDER-TOP: #f60 2px; BORDER-LEFT: #f60 2px; BORDER-BOTTOM: #f60 2px
+}
+UL.dtk-list LI.dtk-item A:hover {
+	BORDER-RIGHT: #f60 2px solid; BORDER-TOP: #f60 2px solid; BORDER-LEFT: #f60 2px solid; BORDER-BOTTOM: #f60 2px solid
+}
+UL.dtk-list LI.dtk-item A.selected IMG {
+	BORDER-RIGHT: #009dd9 2px; BORDER-TOP: #009dd9 2px; BORDER-LEFT: #009dd9 2px; BORDER-BOTTOM: #009dd9 2px
+}
+UL.dtk-list LI.dtk-item A.selected {
+	BORDER-RIGHT: #009dd9 2px solid; BORDER-TOP: #009dd9 2px solid; BORDER-LEFT: #009dd9 2px solid; BORDER-BOTTOM: #009dd9 2px solid
+}
+UL.dtk-list LI.dtk-item A.cta {
+	FONT-WEIGHT: bold; COLOR: #f60; BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none
+}
+UL.dtk-list LI.dtk-item A.cta:hover {
+	BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none
+}
+.dtk-carousel:unknown {
+	CLEAR: both; DISPLAY: block; VISIBILITY: hidden; HEIGHT: 0px; content: "."
+}
+.dtk-carousel .scrollpages:unknown {
+	CLEAR: both; DISPLAY: block; VISIBILITY: hidden; HEIGHT: 0px; content: "."
+}
+.dtk-carousel H2:unknown {
+	CLEAR: both; DISPLAY: block; VISIBILITY: hidden; HEIGHT: 0px; content: "."
+}
+.dtk-carousel UL.scrollnav:unknown {
+	CLEAR: both; DISPLAY: block; VISIBILITY: hidden; HEIGHT: 0px; content: "."
+}
+.dtk-carousel {
+	ZOOM: 1
+}
+.dtk-carousel .scrollpages {
+	ZOOM: 1
+}
+.dtk-carousel H2 {
+	ZOOM: 1
+}
+.dtk-carousel UL.scrollnav {
+	ZOOM: 1
+}
+DIV.dtk-carousel DIV.bd DIV.showMore {
+	LEFT: 0px; TOP: 5px
+}
+.dtk-carousel H2 {
+	FONT-SIZE: 122%; MARGIN: 0px 10px; TEXT-TRANSFORM: uppercase
+}

@@ -1,0 +1,100 @@
+<html>
+<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<META HTTP-EQUIV="Expires" CONTENT="-1">
+<style type="text/css">
+body {
+	margin: 0;
+	padding: 0 0 0 10px;
+	color: #545358;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
+p#nextup {
+	margin: 6px 0 5px 0;
+	padding: 0;
+	font-size: 12px;
+	font-weight: bold;	
+}
+
+table#nextvideo {
+	padding: 0;
+}
+
+table#nextvideo tr td {
+	padding:0 5px 0 0; 
+	width: 135px;
+}
+
+table#nextvideo a {
+	color: #545358;
+	border: none;
+	text-decoration: none;
+}
+
+table#nextvideo img {
+/*
+	width: 128px;
+	height: 96px;
+*/
+	width: 90px;
+	height: 75px;
+	border: none;
+}
+
+table#nextvideo p {
+	width:140px; 
+	margin:5px 0 0 0; padding:0;
+	font-size: 11px;
+}
+
+
+</style>
+<%= javascript_include_tag "jquery" %>
+<% if $syndication_id == 96 %>
+<%= javascript_include_tag "mogo_koobee" %>
+<% else %>
+<%= javascript_include_tag "mogo" %>
+<% end %>
+
+<script type="text/javascript">
+function save_next_video_info() {
+	parent.document.getElementById('next_video_program_name').value = "<%=@programs[0].program_name_cn%>";
+	parent.document.getElementById('next_video_program_id').value = "<%=@programs[0].program_id%>";
+	parent.document.getElementById('next_video_channel_id').value = "<%=@channel_ids[0]%>";
+	parent.document.getElementById('next_video_category_id').value = "<%=@category_ids[0]%>";
+	parent.document.getElementById('next_video_description').value = "<%=@programs[0].description%>";
+	parent.document.getElementById('next_video_url').value = "<%=@programs[0].url + "|" + @programs[0].url_text%>";
+	parent.document.getElementById('next_video_external_id').value = "<%=@programs[0].external_id%>";
+	parent.document.getElementById('next_video_syndication_id').value = "<%=$syndication_id%>";
+	parent.document.getElementById('next_video_list_type').value = "<%=@list_type%>";
+	parent.document.getElementById('next_video_parent_category_id').value = "<%=@parent_category_id%>";
+}
+</script>
+
+</head>
+<body onload="save_next_video_info();">
+	<p id="nextup">Next Up 下一个</p>
+	<table id="nextvideo" cellpadding="0" cellspacing="0">
+		<tr>
+			<% for i in 0...@nthumbnails %>
+				<%
+					nchars = 10
+					program_name = @programs[i].program_name_cn 
+					short_program_name = @programs[i].program_name_cn.mb_chars[0, nchars]
+					
+					if program_name.mb_chars.size > nchars
+						short_program_name += "..."
+					end
+				%>			
+				<td align="left" valign="top">	
+				<a href="javascript:window.location.hash='top'; content_onClick('<%=@programs[i].program_name_cn%>', '<%=@channel_ids[i]%>', '<%=@category_ids[i]%>', '<%=@programs[i].program_id%>', '<%=@programs[i].description%>', '<%=@programs[i].url + "|" + @programs[i].url_text%>', 'next', '<%=@programs[i].external_id%>', '<%=$syndication_id%>', '<%=@list_type%>', '<%=@parent_category_id%>')"><image src="<%=$path_program_icon + "/" + @programs[i].program_icon%>" alt="<%=program_name%>" title="<%=program_name%>"/></a>
+				<!--<a href="javascript:window.location.hash='top'; content_onClick('<%=@programs[i].program_name_cn%>', '<%=@channel_ids[i]%>', '<%=@category_ids[i]%>', '<%=@programs[i].program_id%>', '<%=@programs[i].description%>', '<%=@programs[i].url + "|" + @programs[i].url_text%>', 'next', '<%=@programs[i].external_id%>', '<%=$syndication_id%>', '<%=@list_type%>', '<%=@parent_category_id%>')" title="<%=program_name%>"><p><%=short_program_name %></p></a>-->
+				</td>
+			<% end %>
+		</tr>
+	</table>
+</body>
+</html>

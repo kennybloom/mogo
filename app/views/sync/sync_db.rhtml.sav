@@ -1,0 +1,156 @@
+<h1>Database synchronized with the master</h1>
+
+<table>
+<tr><td width=300><label>Tables</label></td><td width=200>synced records</td></tr>
+<%  
+# ***** channel *****
+  	master_records = MasterChannel.find :all
+  	Slave1Channel.delete_all
+  	
+		count = 0
+		for master_record in master_records 
+			slave_record = Slave1Channel.new(master_record.attributes)
+			slave_record.save
+			count += 1
+		end
+%>
+<tr><td><label>channel:</label></td><td><%=count%> records</td></tr>
+
+<%  
+# ***** channel category *****
+  	master_records = MasterChannelCategory.find :all
+  	Slave1ChannelCategory.delete_all
+  	
+		count = 0
+		for master_record in master_records 
+			slave_record = Slave1ChannelCategory.new(master_record.attributes)
+			slave_record.save
+			count += 1
+		end
+%>
+<tr><td><label>channel_category:</label></td><td><%=count%> records</td></tr>
+
+<%  
+# ***** category *****
+  	master_records = MasterCategory.find :all
+  	Slave1Category.delete_all
+  	
+		count = 0
+		for master_record in master_records 
+			slave_record = Slave1Category.new(master_record.attributes)
+			slave_record.save
+			count += 1
+		end
+%>
+<tr><td><label>category:</label></td><td><%=count%> records</td></tr>
+
+<%  
+# ***** category category *****
+  	master_records = MasterCategoryCategory.find :all
+  	Slave1CategoryCategory.delete_all
+  	
+		count = 0
+		for master_record in master_records 
+			slave_record = Slave1CategoryCategory.new(master_record.attributes)
+			slave_record.save
+			count += 1
+		end
+%>
+<tr><td><label>category_category:</label></td><td><%=count%> records</td></tr>
+
+<%  
+# ***** category program *****
+  	master_records = MasterCategoryProgram.find :all
+  	Slave1CategoryProgram.delete_all
+  	
+		count = 0
+		for master_record in master_records 
+			slave_record = Slave1CategoryProgram.new(master_record.attributes)
+			slave_record.save
+			count += 1
+		end
+%>
+<tr><td><label>category_program:</label></td><td><%=count%> records</td></tr>
+
+<%  
+# ***** program *****
+  	master_records = MasterProgram.find :all
+  	Slave1Program.delete_all
+  	
+		count = 0
+		for master_record in master_records 
+			attributes = {}
+			attributes["program_id"] = master_record.attributes["program_id"]
+			attributes["program_name"] = master_record.attributes["program_name"]
+			attributes["program_name_cn"] = master_record.attributes["program_name_cn"]
+			attributes["program_path_stream"] = master_record.attributes["program_path_stream"]
+			attributes["new_yn"] = master_record.attributes["new_yn"]
+			attributes["enable_yn"] = master_record.attributes["enable_yn"]
+			attributes["enable_start_date"] = master_record.attributes["enable_start_date"]
+			attributes["enable_end_date"] = master_record.attributes["enable_end_date"]
+			attributes["new_yn_weight"] = master_record.attributes["new_yn_weight"]
+			attributes["auto_tags"] = master_record.attributes["auto_tags"]
+
+			slave_record = Slave1Program.new(attributes)
+			slave_record.save
+			count += 1
+		end
+%>
+<tr><td><label>program:</label></td><td><%=count%> records</td></tr>
+
+<%  
+# ***** ad *****
+  	master_records = MasterAd.find :all
+  	Slave1Ad.delete_all
+  	
+		count = 0
+		for master_record in master_records 
+			slave_record = Slave1Ad.new(master_record.attributes)
+			slave_record.save
+			count += 1
+		end
+%>
+<tr><td><label>ad:</label></td><td><%=count%> records</td></tr>
+
+<%  
+# ***** host *****
+  	master_records = MasterHost.find :all
+  	Slave1Host.delete_all
+  	
+		count = 0
+		for master_record in master_records 
+			slave_record = Slave1Host.new(master_record.attributes)
+			slave_record.save
+			count += 1
+		end
+%>
+<tr><td><label>host:</label></td><td><%=count%> records</td></tr>
+
+<%  
+# ***** partner *****
+  	master_records = MasterPartner.find :all
+  	Slave1Partner.delete_all
+  	
+		count = 0
+		for master_record in master_records 
+			slave_record = Slave1Partner.new(master_record.attributes)
+			slave_record.save
+			count += 1
+		end
+%>
+<tr><td><label>Partner:</label></td><td><%=count%> records</td></tr>
+
+<%  
+# ***** promotion *****
+  	master_records = MasterPromotion.find :all
+  	Slave1Promotion.delete_all
+  	
+		count = 0
+		for master_record in master_records 
+			slave_record = Slave1Promotion.new(master_record.attributes)
+			slave_record.save
+			count += 1
+		end
+%>
+<tr><td><label>Promotion:</label></td><td><%=count%> records</td></tr>
+</table>

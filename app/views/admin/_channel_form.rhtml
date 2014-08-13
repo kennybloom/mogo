@@ -1,0 +1,16 @@
+<%= error_messages_for 'channel' %>
+
+<table width=485 cellpadding="0" cellspacing="2">
+<tr>
+	<td width=100 bgcolor="#333333"><label for="channel_name">Name:</label></td>
+	<td width=400 bgcolor="#333333"><%= text_field 'channel', 'channel_name'  %></td>
+</tr>
+<tr>
+	<td width=100  bgcolor="#333333"><label for="channel_desc_cn">Description:</label></td>
+	<td width=400 bgcolor="#333333"><%= text_field 'channel', 'channel_desc_cn'  %></td>
+</tr>
+<tr>
+	<td width=100  bgcolor="#333333"><label for="weight">Weight:</label></td>
+	<td width=400 bgcolor="#333333"><%= select 'channel', 'weight', list_weights %></td>
+</tr>	
+</table>

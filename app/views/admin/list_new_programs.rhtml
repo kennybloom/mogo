@@ -1,0 +1,11 @@
+<h1>All programs marked as new</h1>
+<br>
+
+<% form_tag :action => 'update_program_list' do %>
+	<% count = 0 %>
+	<% for @program in @all_new_programs %>
+		<%= render :partial => 'list_programs' %>
+		<% count += 1 %>
+	<% end %>
+  <%= submit_tag 'Update all ' + count.to_s + ' programs' %>
+<% end %>

@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<html>
+<head>
+<title>Mogo Content Management System</title>
+<%= stylesheet_link_tag "admin_style", :media => "all" %>
+
+</head>
+
+<body 
+  text="#ffffff" vLink="#66cccc" aLink="#99cccc" link="#66cccc" bgColor="white"
+  leftMargin="0" background="/themes/lp/images/bk-stripe.jpg" topMargin="0"
+  marginheight="0" marginwidth="0" >
+
+	<table cellSpacing="0" cellPadding="0" width="100%" border="0">
+		<tr>
+			<td><IMG src="/images/mogo-logo-small.gif" border=0></td>
+			<td bgcolor=black valign=top height=60 align=right><h1>Mogo Content Management System<h1></td>
+		</tr>
+		<tr>
+			<td colspan=2 valign=top align=center>
+				<% if flash[:notice] -%>
+				<div id="notice" ><%= flash[:notice] %></div>
+				<% end -%>
+				<br>
+				<table>
+					<tr>
+						<td>
+							<fieldset>
+							<legend>Please Log In</legend>
+							<% form_tag do %>
+								<table>
+									<tr>
+										<td><label for="name" >Name:</label></td>
+										<td><%= text_field_tag :name, params[:name] %></td>
+									</tr>
+									<tr>
+										<td><label for="password" >Password:</label></td>
+										<td><%= password_field_tag :password, params[:password] %></td>
+									</tr>
+									<tr>
+										<td colspan=2 align=right><%= submit_tag "Login" %></td>
+									</tr>
+								</table>	
+							<% end %>
+							</fieldset>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>	
+</body>
+</html>
+
+
+
+

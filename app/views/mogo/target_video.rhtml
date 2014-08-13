@@ -1,0 +1,14 @@
+<% 
+		program = Program.find(@target_program_id)
+		channel_id = ""
+		category_id = ""
+		category = Category.findByProgramId(program.program_id)
+		if category != nil
+			category_id = category.category_id
+			channel = Channel.findByCategoryId(category.category_id)
+			if channel != nil
+				channel_id = channel.channel_id
+			end
+		end
+%>
+<div id="target-video" program_name="<%=program.program_name_cn%>" channel_id="<%=channel_id%>" category_id="<%=category_id%>" program_desc="<%=program.description%>" program_url="<%=program.url%>"></div>

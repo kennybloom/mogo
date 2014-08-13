@@ -1,0 +1,67 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>没够音乐 - 视频 直播 电视 酷比网</title>
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Expires" CONTENT="-1">
+<meta HTTP-EQUIV="Content-Language" content="cn">
+<META name="description" content="">
+<META name="keywords" content="">
+<script type="text/javascript" src="http://www.koobee.com.cn/misc/jquery.js"></script>
+<script type="text/javascript" src="http://www.koobee.com.cn/misc/drupal.js"></script>
+<script type="text/javascript" src="http://www.koobee.com.cn/sites/all/modules/fpss/engines/jquery-comp.js"></script>
+<script type="text/javascript" src="http://www.koobee.com.cn/sites/all/modules/fpss/engines/jquery-fpss-comp.js"></script>
+<script type="text/javascript">var speed_delay = 4000;var slide_speed = 500;var fpssLoaderDelay = 500;var CTRrotateAction = 'click';</script>
+<style type="text/css" media="all">@import "http://www.koobee.com.cn/sites/all/modules/fpss/templates/koobee/template_css.php?w=430&h=300&sw=130";</style>
+
+<!--[if gt IE 6]><style type="text/css" media="all">@import "/sites/all/themes/koobee/ie7.css";</style><![endif]-->
+<LINK REL="SHORTCUT ICON" HREF="http://www.koobee.com.cn/sites/all/themes/koobee/favicon.ico" />
+<script type="text/javascript" src="http://www.koobee.com.cn/misc/kb.js"></script>
+<style type="text/css">
+<!--
+body {
+	background:url(/images/mogo_koobee_bg1.jpg) top center no-repeat; background-attachment:fixed;
+	background-color: #cccdcf;
+}
+-->
+</style>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-7984033-1");
+pageTracker._trackPageview();
+} catch(err) {}
+</script>
+
+</head>
+<body>
+<a name="top"></a>
+<%= javascript_include_tag "mogo" %>
+<script type="text/javascript">
+$(function() {
+		var target_program_id = get_url_param('program_id');
+		if (target_program_id != null && target_program_id != '') {
+			mogo_frame.location.href = "/mogo/index/?program_id=" + target_program_id;
+		}
+		else {
+			mogo_frame.location.href = "/mogo/index";
+		}
+
+});
+</script>
+<center>
+<div id="header"  style="width:1181px;">
+<iframe src="http://img.koobee.com.cn/head_block.html" align="left" name="koobee_frame" id="koobee_frame" ALLOWTRANSPARENCY="true" vspace="0" scrolling="no" frameborder="0" hspace="0" width="1180" height="150"></iframe>
+</div>
+<div id="container"  style="width:1181px;">
+<!-- ************************************************* -->
+<iframe align="left" name="mogo_frame" id="mogo_frame" ALLOWTRANSPARENCY="true" vspace="0" scrolling="no" frameborder="0" hspace="0" src="" width="1180" height="2000"></iframe>
+<!-- ************************************************* -->
+</div>
+</center>
+</body>
+</html>

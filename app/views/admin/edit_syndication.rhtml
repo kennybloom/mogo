@@ -1,0 +1,8 @@
+<h1>Editing syndication</h1>
+
+<% form_tag( { :action => 'update_syndication', :id => @syndication}, :multipart => true ) do %>
+  <%= render :partial => 'syndication_form' %>
+  <%= submit_tag 'Update' %>
+<% end %>
+
+<%= link_to 'Show syndication', :action => 'show_syndication', :id => @syndication %>

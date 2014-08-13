@@ -1,0 +1,6 @@
+<select id="program_icon_file_select" name="program_icon_file_select">
+<option value="">-- select a file --</option>
+<% for file in @files %>
+	<option value='<%= file %>'><%= file %></option>
+<% end %>
+</select>

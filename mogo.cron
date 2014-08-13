@@ -1,0 +1,4 @@
+*/10 * * * * rsync -vzrtp --progress --password-file=/home/cloud/rsyn.scrt beijing@61.172.249.2::dbsync /home/cloud/applications/mogo/db/sync
+*/30 * * * * rsync -vzrtp --progress --delete --password-file=/home/cloud/rsyn.scrt beijing@61.172.249.2::mch1 /data/video
+*/10 * * * * /home/cloud/applications/mogo/sync_db.sh
+

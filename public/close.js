@@ -1,0 +1,2 @@
+alert("close");
+window.close();

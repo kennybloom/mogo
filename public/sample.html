@@ -1,0 +1,27 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Flash Video Player embeded by Javascript</title>
+<script type="text/javascript" src="swfobject.js">
+</script>
+</head>
+<body>
+<br />
+ </strong></em><br /><br />
+	<div id="flashcontent2"></div>
+	<script type="text/javascript">
+		var so1 = new SWFObject("flvplayer.swf", "flvplayer", "638", "458", "7",  null, true);
+		so1.addParam("allowFullScreen", "true");
+		so1.addParam("allowSciptAccess", "always");
+		so1.addVariable("autoplay", "true");
+		so1. addVariable ("config", "/config.xml");
+		so1. addVariable ("playList", "/flvplayer2/playlist.xml");
+		so1. addVariable ("themes", "/flvplayer2/themes.xml");
+		//so1. addVariable ("flv", "http://localhost/flvplayer/video/ad.flv");
+		so1.write("flashcontent2");
+	</script>
+<BR>
+<BR>
+</body>
+</html>
+

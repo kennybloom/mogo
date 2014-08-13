@@ -1,0 +1,12 @@
+<a href="http://www.mogo.com.cn" target="_new" style="border: 0;"><img src="http://www.mogo.com.cn/images/mogo-logo-white.jpg"></a><br><br>
+
+您的朋友<%= @name %>推荐了一个精彩的MOGO视频节目。<br><br>
+
+节目: <a href="<%=$base_url + $index_action%>?program_id=<%= @program_id %>" target="_new"><%= @program_name%></a><br>
+连接: <a href="<%=$base_url + $index_action%>?program_id=<%= @program_id %>" target="_new"><%=$base_url + $index_action%>?program_id=<%= @program_id %></a>
+<br>
+<br>
+<hr>
+<br>
+<br>
+<%= @comment %>

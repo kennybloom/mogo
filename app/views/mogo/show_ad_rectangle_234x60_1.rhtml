@@ -1,0 +1,32 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title></title>
+
+<!-- Google Ad Manager -->
+<script type="text/javascript" src="http://partner.googleadservices.com/gampad/google_service.js">
+</script>
+<script type="text/javascript">
+  GS_googleAddAdSenseService("ca-pub-4319899706835777");
+  GS_googleEnableAllServices();
+</script>
+<script type="text/javascript">
+  GA_googleAddSlot("ca-pub-4319899706835777", "rectangle-234x60-1");
+</script>
+<script type="text/javascript">
+	<% if @channel_id == nil %>
+   //GA_googleAddAttr("channels", "nil");
+	<% else %>
+   //GA_googleAddAttr("channels", "<%=@channel_id%>");
+	<% end %>
+   GA_googleFetchAds();
+</script>
+
+<!-- end Google Ad Manager -->
+</head>
+<body leftmargin="0" topmargin="0">
+<script type="text/javascript">
+	GA_googleFillSlot("rectangle-234x60-1");
+</script>                            
+</body>
+</html>

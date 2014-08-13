@@ -1,0 +1,23 @@
+<%= error_messages_for 'ad' %>
+
+<table width=550 cellpadding="0" cellspacing="2">
+<tr>
+	<td width=220 bgcolor="#333333"><label for="name">Banner ad name:</label></td>
+	<td width=300 bgcolor="#333333"><%= text_field 'web_ad', 'name'  %></td>
+</tr>
+<tr>
+	<td width=220 bgcolor="#333333"><label for="path">Banner ad path:</label></td>
+	<td width=300 bgcolor="#333333">
+		<%= text_field 'web_ad', 'path', {'readonly'=>'true', 'style'=>'background-color:#fbc5f8'} %>
+		<%= select_tag 'web_ad_select', file_select_options(["public" + $path_ad_web], /.*/)%>
+	</td>
+</tr>
+<tr>
+	<td width=220 bgcolor="#333333"><label for="url">Url:</label></td>
+	<td width=300 bgcolor="#333333"><%= text_field 'web_ad', 'url'  %></td>
+</tr>
+<tr>
+	<td width=220  bgcolor="#333333"><label for="panel">Banner location:</label></td>
+	<td width=300 bgcolor="#333333"><%= select 'web_ad', 'panel', list_web_ad_panels %></td>
+</tr>	
+</table>

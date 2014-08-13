@@ -1,0 +1,155 @@
+<%
+if @programs.size % 16 == 0
+	@nframes = @programs.size / 16
+else
+	@nframes = @programs.size / 16 + 1
+end
+%>	
+<div id="total-frames" total="<%=@nframes%>"></div>
+<%
+	for i in (@first-1)...@last 
+		html = "<table class=\"carousel-table\" cellpadding=\"0\" cellspacing=\"0\">"
+		
+		row_open = false
+		
+		for j in 0...16
+			pos = j + (i * 16)
+			
+			if pos < @programs.size 
+				program = @programs[pos]
+
+				# get channel_id and category_id
+				category = Category.findByProgramId(program.program_id)
+				if category != nil
+					category_id = category.category_id.to_s
+					channel = Channel.findByCategoryId(category.category_id)
+					if channel != nil
+						channel_id = channel.channel_id.to_s
+					end
+				end
+
+				channel_id = "" if channel_id == nil
+				category_id = "" if category_id == nil
+				
+				# short program name
+				nchars = 30
+				program_name = program.program_name_cn 
+				short_program_name = program.program_name_cn.mb_chars[0, nchars]
+					
+				if program_name.mb_chars.size > nchars
+					short_program_name += "..."
+				end
+
+				if program.description === nil
+					description = ""
+				else
+					description = program.description
+				end
+
+				if program.url == nil
+					url = ""
+				else
+					url = program.url + "|" + program.url_text
+				end
+				
+				if program.external_id == nil
+					external_id = ""
+				else
+					external_id = program.external_id
+				end
+
+				if j % 4 == 0 
+        	html +=	"<tr>"
+        	row_open = true
+        end
+
+				html += "<td class=\"col0\" align=\"left\" valign=\"top\">"
+
+				html += "<table class=\"carousel-table-inner\" cellpadding=\"0\" cellspacing=\"0\">" +
+								"	<tr>" +
+							  "		<td class=\"col1\" align=\"left\" valign=\"top\">" +
+        				"		<a href=\"javascript:window.location.hash='top'; content_onClick('" + 
+        					program.program_name_cn + "', '" + 
+        					channel_id + "', '" + 
+        					category_id + "', '" + 
+        					program.program_id.to_s + "', '" + 
+        					description + "', '" + 
+        					url + "', '" + 
+        					@note + "', '" + 
+        					external_id + "', '" + 
+        					$syndication_id.to_s + "', '" + 
+        					@list_type + "', '" + 
+        					@parent_category_id + "')\">" +
+								"		<img class=\"thumbnail\" id=\"program-" + 
+									program.program_id.to_s + "\" src=\"" + 
+									make_path($path_program_icon, program.program_icon) + "\" alt=\"" + 
+									program_name + "\" title=\"" + 
+									program_name + "\"></a>" +
+								"		</td>" +
+								"	</tr>" +
+								"	<tr>" +
+								"		<td class=\"col1\" align=\"left\" valign=\"top\">" +
+				        "		<p><a href=\"javascript:window.location.hash='top'; content_onClick('" + 
+				        	program.program_name_cn + "', '" + 
+				        	channel_id + "', '" + 
+				        	category_id + "', '" + 
+				        	program.program_id.to_s + "', '" + 
+				        	description + "', '" + 
+				        	url + "', '" + 
+				        	@note + "', '" + 
+				        	external_id +"', '" + 
+				        	$syndication_id.to_s + "', '" + 
+				        	@list_type + "', '" + 
+				        	@parent_category_id + "')\" title=\"" + 
+				        	program_name + "\">" + 
+				        	short_program_name + "</a></p>" +
+				      	"		</td>" +
+				      	"	</tr>" +
+				      	"</table>"
+
+				html += "</td>"
+
+				if j % 4 == 3 
+					html += "</tr>"
+					row_open = false
+				end
+
+			else
+				if j % 4 == 0 
+        	html +=	"<tr>"
+        	row_open = true
+        end
+
+				html += "<td class=\"col0\" align=\"left\" valign=\"top\">"
+
+				html += "<table class=\"carousel-table-inner\" cellpadding=\"0\" cellspacing=\"0\">" +
+								"	<tr>" +
+							  "		<td class=\"col1\" align=\"left\" valign=\"top\">" +
+								"		<img class=\"blank_thumbnail\" src= \"/images/blank_thumbnail.gif\">" + 
+								"		</td>" +
+								"	</tr>" +
+								"	<tr>" +
+								"		<td class=\"col1\" align=\"left\" valign=\"top\">" +
+				        "		<p></p>" +
+				      	"		</td>" +
+				      	"	</tr>" +
+				      	"</table>"
+
+				html += "</td>"
+
+				if j % 4 == 3 
+					html += "</tr>"
+					row_open = false
+				end
+
+			end
+		end
+		
+		if row_open
+			html += "</tr>"
+		end
+		
+		html += "</table>"
+%>
+<html-code><%=html%></html-code>
+<% end %>

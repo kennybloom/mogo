@@ -1,0 +1,21 @@
+<h1>Users</h1>
+<br>
+<table width=300 cellpadding="0" cellspacing="2" >
+<tr><td width=100 bgcolor="yellow"><font color=black>name</font></td><td width=100 bgcolor="yellow"><font color=black>role</font></td><td width=100 bgcolor="yellow"></td>
+<% for user in @all_users %>
+<tr>
+	<td bgcolor="#333333"><%= h(user.user_name) %></td>
+	<td bgcolor="#333333"><%= h(user.role) %></td>
+	<td bgcolor="#333333">
+<%= link_to "delete" , { # link_to options
+:controller => 'login',
+:action => 'delete_user',
+:id => user},
+{ # html options
+:method => :post,
+:confirm => "Really delete #{user.user_name}?"
+} %>
+	</td>
+</tr>
+<% end %>
+</table>

@@ -1,0 +1,5 @@
+<% programs = Program.find(:all, :order => "program_id DESC") %>
+
+<% for program in programs %>
+<%=program.program_name_cn%>|<%=program.program_id%>|video/<%= program.program_path_stream %><br>
+<% end %>

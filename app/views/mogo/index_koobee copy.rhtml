@@ -1,0 +1,505 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Mogo -- 首页</title>
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Expires" CONTENT="-1">
+<meta HTTP-EQUIV="Content-Language" content="cn">
+<META name="description" content="">
+<META name="keywords" content="">
+<link rel="shortcut icon" type="image/ico" href="/favicon.ico" >
+<link rel=stylesheet type=text/css href=/stylesheets/mogo.css>
+<%= stylesheet_link_tag "carousel" , :media => "all" %>
+<script type="text/javascript">
+	var name = navigator.appName;
+	if (name == "Netscape"){
+		document.write( "<link rel=stylesheet type=text/css href=/stylesheets/mogo-firefox.css>");
+	}
+	else {
+		document.write( "<link rel=stylesheet type=text/css href=/stylesheets/mogo-ie.css>");
+	}
+</script>
+
+<%= javascript_include_tag "jquery" %>
+<%= javascript_include_tag "mogo" %>
+
+<script type="text/javascript">
+function unset_special_category_highlite() {
+	$("ul.special-categories a").removeClass("highlite");
+}
+
+$(function() {
+	$('ul.special-categories li')
+		.click(function(event){
+			if (this == event.target) {
+        list_type = $(this).attr("list_type");
+        $('a.highlite').removeClass('highlite');
+  			$(this).children('a').addClass('highlite');
+
+        category_onClick('/mogo/list_programs/' + list_type);
+				parent.frames.channelframe.remove_highlite();
+      }
+      return false;
+    })
+    .children('a')
+		.click(function(event){
+			if (this == event.target) {
+				$(this).parent().trigger('click');
+			}
+			return false;
+    });          
+
+
+		var target_program_id = get_url_param('program_id');
+		if (target_program_id != null && target_program_id != '') {
+	    jQuery.get(
+        '/mogo/target_video/' + target_program_id,
+        {
+        },
+        function(html_code) {
+					jQuery("#cache").html(html_code);
+					program_name = jQuery('#target-video').attr("program_name");
+					channel_id = jQuery('#target-video').attr("channel_id");
+					category_id = jQuery('#target-video').attr("category_id");
+					program_desc = jQuery('#target-video').attr("program_desc");
+					program_url = jQuery('#target-video').attr("program_url");
+
+					content_onClick(program_name, channel_id, category_id, target_program_id, program_desc, program_url, 'friend', '', <%=$syndication_id%>, 'child_category', '')
+
+        },
+        'html');
+		
+		}
+		else {
+			var random_program = Math.floor(Math.random() * <%=@new_programs.length()%>)
+			switch(random_program) {
+<%  	count = 0
+			for program in @new_programs 
+				channel_id = ""
+				category_id = ""
+				category = Category.findByProgramId(program.program_id)
+				if category != nil
+					category_id = category.category_id
+					channel = Channel.findByCategoryId(category.category_id)
+					if channel != nil
+						channel_id = channel.channel_id
+					end
+				end
+%>
+				case <%=count%>:
+					content_onClick('<%=program.program_name_cn%>', '<%=channel_id%>', '<%=category_id%>', '<%=program.program_id%>','<%=program.description%>', '<%=program.url%>', 'first', '<%=program.external_id%>', '<%=$syndication_id%>', 'new', '');
+					break;
+<%			count += 1 %>				
+<% 		end %>
+			}
+			
+		}
+
+		parent.frames.programframe.location.href = "/mogo/list_programs/new";
+
+
+});
+</script>
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "<%=$google_analytics_acct%>";
+urchinTracker();
+</script>
+
+<script type="text/javascript" src="http://partner.googleadservices.com/gampad/google_service.js">
+</script>
+<script type="text/javascript">
+function doLoad(){
+}
+</script>
+</head>
+
+<body topmargin="0" bgcolor="white" onLoad="doLoad()">
+<a name="top"></a>
+
+<center>
+<!-- ********************************************************************* -->
+<!-- ********** Start: Koobee top banner -->
+<script type="text/javascript" src="http://www.koobee.com.cn/misc/jquery.js"></script>
+<script type="text/javascript" src="http://www.koobee.com.cn/misc/drupal.js"></script>
+<script type="text/javascript" src="http://www.koobee.com.cn/sites/all/modules/fpss/engines/jquery-comp.js"></script>
+<script type="text/javascript" src="http://www.koobee.com.cn/sites/all/modules/fpss/engines/jquery-fpss-comp.js"></script>
+<script type="text/javascript">var speed_delay = 4000;var slide_speed = 500;var fpssLoaderDelay = 500;var CTRrotateAction = 'click';</script>
+<style type="text/css" media="all">@import "http://www.koobee.com.cn/sites/all/modules/fpss/templates/koobee/template_css.php?w=430&h=300&sw=130";</style>
+
+<style type="text/css" media="all">@import "http://www.koobee.com.cn/modules/node/node.css";</style>
+<style type="text/css" media="all">@import "http://www.koobee.com.cn/modules/system/defaults.css";</style>
+<style type="text/css" media="all">@import "http://www.koobee.com.cn/modules/system/system.css";</style>
+<style type="text/css" media="all">@import "http://www.koobee.com.cn/modules/user/user.css";</style>
+<style type="text/css" media="all">@import "http://www.koobee.com.cn/sites/all/modules/archive/archive.css";</style>
+<style type="text/css" media="all">@import "http://www.koobee.com.cn/sites/all/modules/cck/content.css";</style>
+<style type="text/css" media="all">@import "http://www.koobee.com.cn/sites/all/modules/checkbox_validate/checkbox_validate.css";</style>
+<style type="text/css" media="all">@import "http://www.koobee.com.cn/sites/all/modules/fckeditor3/fckeditor.css";</style>
+<style type="text/css" media="all">@import "http://www.koobee.com.cn/sites/all/modules/tagadelic/tagadelic.css";</style>
+
+<style type="text/css" media="all">@import "http://www.koobee.com.cn/sites/all/modules/cck/fieldgroup.css";</style>
+<style type="text/css" media="all">@import "http://www.koobee.com.cn/sites/all/themes/koobee/style.css";</style>
+<!--[if gt IE 6]><style type="text/css" media="all">@import "/sites/all/themes/koobee/ie7.css";</style><![endif]-->
+<LINK REL="SHORTCUT ICON" HREF="http://www.koobee.com.cn/sites/all/themes/koobee/favicon.ico" />
+<script type="text/javascript" src="http://www.koobee.com.cn/misc/kb.js"></script>
+
+<div id="container"  style="width:1181px;">
+		<div id="top">
+		<div class="logo"><a href="http://www.koobee.com.cn/"><img src="http://www.koobee.com.cn/sites/all/themes/koobee/images/logo.gif" alt="koobee.net 酷比网"/></a></div>
+			<div class="right_wrap">
+
+				<div class="lang"><ul>
+		<li class="zh-hans first active">
+		<a class="language-link active" href="http://www.koobee.com.cn/zh-hans">简体中文</a>
+		</li>
+		<li class="en last active">
+		<a class="language-link active" href="http://www.koobee.com.cn/en">English</a>
+		</li>
+		</ul></div>				<div class="login"><form action="http://www.koobee.com.cn/zh-hans/header?destination=header"  accept-charset="UTF-8" method="post" id="user-login-form">
+
+ <label for="edit-name">用户名：</label>
+ <input id="edit-name" class="form-text required" type="text" value="" size="15" name="name" maxlength="60"/>
+ <label for="email">密码：</label>
+ <input id="edit-pass" class="form-text required" type="password" size="15" maxlength="60" name="pass"/>
+ <input type="submit" class="form-submit" value="登录" id="edit-submit" name="op"/>
+ <input type="button" onclick="window.location.href='http://koobee.com.cn/user/register' " value="注册" name="op" class="form-button" id="edit-button"/>
+<input type="hidden" name="form_id" id="edit-user-login-block" value="user_login_block"  />
+</form>
+</div>			</div>
+
+        <div class="nav_menu">
+            <div id="slidingBlock" style="background-image:url(http://www.koobee.com.cn/sites/all/themes/koobee/images/1181mogo.gif); width:1181px;">
+                 <div id="nav_box">
+    <h4 class="menuOn" id="mod1" onmouseover="switchmodTag('mod','slidingList','1')">
+<a href="/node" title="酷比网首页">主页</a></h4><div id="line"></div>
+    <h4 class="menuNo" id="mod2" onmouseover="switchmodTag('mod','slidingList','2')">
+直播</h4><div id="line"></div>
+    <h4 class="menuNo" id="mod3" onmouseover="switchmodTag('mod','slidingList','3')">
+体育</h4><div id="line"></div>
+
+    <h4 class="menuNo" id="mod4" onmouseover="switchmodTag('mod','slidingList','4');">
+音乐</h4><div id="line"></div>
+    <h4 class="menuNo" id="mod5" onmouseover="switchmodTag('mod','slidingList','5')">
+娱乐</h4><div id="line"></div>
+    <h4 class="menuNo" id="mod6" onmouseover="switchmodTag('mod','slidingList','6')">
+校园</h4><div id="line"></div>
+    <h4 class="menuNo" id="mod7" onmouseover="switchmodTag('mod','slidingList','7')">
+原创</h4></div><div class="slidingList" id="slidingList1"><ul><li><img src="http://www.koobee.com.cn/sites/all/themes/koobee/images/menu_arrow.gif"/><a href="/zh-hans/sports">酷频道</a></li><li><img src="/sites/all/themes/koobee/images/menu_arrow.gif"/><a href="/zh-hans/outdoor">酷活动</a></li></ul></div><div class="slidingList_none" id="slidingList2">
+
+<ul>
+<li style="width:100px;"></li>
+<li><img src="/sites/all/themes/koobee/images/menu_arrow.gif"/><a href="http://www.koobee.com.cn/zh-hans/epl">英超</a></li>
+<li><img src="/sites/all/themes/koobee/images/menu_arrow.gif"/><a href="http://www.koobee.com.cn/zh-hans/sports">酷比全体育</a></li>
+<li><img src="/sites/all/themes/koobee/images/menu_arrow.gif"/><a href="http://www.koobee.com.cn/zh-hans/bttv">兵团卫视</a></li>
+</ul>
+</div><div class="slidingList_none" id="slidingList3">
+<ul><li style="width:200px;"></li><li><img src="http://www.koobee.com.cn/sites/all/themes/koobee/images/menu_arrow.gif"/><a href="/zh-hans/epl">英超</a></li><li><img src="/sites/all/themes/koobee/images/menu_arrow.gif"/><a href="/zh-hans/sports">酷比全体育</a></li><li><img src="/sites/all/themes/koobee/images/menu_arrow.gif"/><a href="/zh-hans/fight">搏击频道</a></li></ul>
+</div>
+<div class="slidingList_none" id="slidingList4"><ul><li style="width:300px;"></li><li><img src="http://www.koobee.com.cn/sites/all/themes/koobee/images/menu_arrow.gif"/><a href="/zh-hans/bttv">兵团卫视</a></li></ul></div>
+
+<div class="slidingList_none" id="slidingList5"><ul><li style="width:400px;"></li><li><img src="http://www.koobee.com.cn/sites/all/themes/koobee/images/menu_arrow.gif"/><a href="/zh-hans/quest">挑战频道</a></li><li><img src="/sites/all/themes/koobee/images/menu_arrow.gif"/><a href="/zh-hans/fashion">时尚频道</a></li><li><img src="/sites/all/themes/koobee/images/menu_arrow.gif"/><a href="/zh-hans/creativetube">非常短片</a></li></ul></div>
+<div class="slidingList_none" id="slidingList6"><ul><li style="width:500px;"></li><li><img src="http://www.koobee.com.cn/sites/all/themes/koobee/images/menu_arrow.gif"/><a href="/zh-hans/campus">校园文化</a></li><li><img src="/sites/all/themes/koobee/images/menu_arrow.gif"/><a href="/zh-hans/outdoor">酷比户外摄影摄像大奖赛</a></li></ul></div><div class="slidingList_none" id="slidingList7"><ul><li style="width:620px;"></li><li><img src="/sites/all/themes/koobee/images/menu_arrow.gif"/><a href="/zh-hans/creativetube">非常短片</a></li></ul></div><script language="javascript">
+                 function switchmodTag(modtag,modcontent,modk) {
+				 var menu_count=8;
+                 for(i=1; i <menu_count; i++) {
+                     if (i==modk) {
+                        document.getElementById(modtag+i).className="menuOn";document.getElementById(modcontent+i).className="slidingList";}
+                     else {
+                       document.getElementById(modtag+i).className="menuNo";document.getElementById(modcontent+i).className="slidingList_none";}
+                     }
+                  }
+                 </script>		</div>
+	</div>
+    </div>
+		<!--//top-->
+</div>
+
+<!-- ********** end: Koobee top banner -->
+<!-- ********************************************************************* -->
+
+<!-- ********** Start: outer most table -->
+<table id="outer-most" cellpadding="0" cellspacing="0">
+<tr><td align="left" valign="top">
+
+<!-- ********** start: top banner -->
+<table id="top-banner" cellpadding="0" cellspacing="0">
+<tr>
+	<td align="left" valign="center" width="1005">
+		<iframe align="left" name="ad_frame_top_banner_728x90" id="ad_frame_top_banner_728x90" ALLOWTRANSPARENCY="true" vspace="0" scrolling="no" frameborder="0" hspace="0" src="/mogo/show_ad_top_banner_728x90/0"></iframe>
+	</td>
+	<td align="left" valign="center">
+		<iframe align="left" name="ad_frame_square_125x125_top_left" id="ad_frame_square_125x125_top_left" ALLOWTRANSPARENCY="true" vspace="0" scrolling="no" frameborder="0" hspace="0" src="/mogo/show_ad_square_125x125_top_right/0"></iframe>
+	</td>	
+</tr>
+</table>
+<!-- ********** end: top banner -->
+
+</td></tr>
+<tr><td align="left" valign="top">
+
+<!-- ********** start: content outer section-->
+<table id="content-outer-section" cellpadding="0" cellspacing="0">
+<tr><td align="left" valign="top">
+
+<!-- ********** start: content section (right below banner)-->
+<table id="content-section" cellpadding="0" cellspacing="0">
+<tr><td align="left" valign="top">
+
+<!-- ********** start: (content) top section -->
+<table id="top-section" cellpadding="0" cellspacing="0">
+	<tr>
+		<td align="middle" valign="top">
+      <!-- ********** start: top section => left section (video display) -->
+    	<table id="top-section-left-section" cellpadding="0" cellspacing="0">
+				<tr>
+					<td id="title_td" align="left" valign="top">&nbsp;<input id="txt_title" name="txt_title" type="text" size="50" readonly="yes" value="未选中影片">
+          </td>
+        </tr>
+      	<tr>
+          <td align="middle" valign="bottom">
+            <iframe align="center" name="videoframe" id="videoframe" ALLOWTRANSPARENCY="true" vspace="0" scrolling="no" frameborder="0" hspace="0" src="/mogo/play_video/intro">
+            </iframe>
+						<input id="videoloaded" name="videoloaded" type="hidden" value="">
+          </td>
+       	</tr>
+     	</table>
+      <!-- ********** end: top section => left section (video display) -->
+		</td>
+		<td align="right" valign="top">
+      <!-- ********** start: top section => right section -->
+      <table id="top-section-right-section" cellpadding="0" cellspacing="0">
+      	<tr>
+      		<td align="left" valign="top">
+      			<!-- ********** start: top section => right section => top section -->
+      			<table id="top-section-right-section-top-section" cellpadding="0" cellspacing="0">
+      				<tr>
+      					<td align="left" valign="top">
+      						<!-- ********** start: top section => right section => top section => left section -->
+      						<table id="top-section-right-section-top-section-left-section" cellpadding="0" cellspacing="0">
+      							<tr>
+      								<td align="left" valign="top">
+      									<table cellpadding="0" cellspacing="0">
+      										<tr>
+      											<td colspan="2" align="left" valign="top"><div id="program-description"></div></td>
+      										</tr>
+													<tr>
+														<td align="left" valign="top"><div id="program-go-channel"></div></td>
+														<td align="left" valign="top"><div id="program-more"></div></td>
+													</tr>
+												</table>
+      								</td>
+      							</tr>
+      							<tr>
+      								<td align="left" valign="bottom">
+      									<table id="top-section-right-section-top-section-left-section-buttons" cellpadding="0" cellspacing="0">
+													<tr>
+														<td id="button-1" colspan="2" align="left" valign="top"><div id="button-topics"><a href="http://guide.mogo.com.cn" target="_new"></a></div></td>
+													</tr>
+													<tr>
+														<td id="button-2" colspan="2" align="left" valign="top"><div id="button-embed"><a href="javascript:goEmbed()"></a></div></td>
+													</tr>
+													<tr>
+														<td id="button-4a" align="left" valign="top"><div id="button-bbs"><a href="javascript:goBBS()"></a></div></td>
+														<td id="button-4b" align="right" valign="top"><div id="button-blog"><a href="http://blog.mogo.com.cn" target="_new"></a></div></td>
+													</tr>
+												</table>
+      								</td>
+      							</tr>
+									</table>
+      					</td>
+      					<td align="left" valign="top">
+      						<!-- ********** start: top section => right section => top section => right section -->
+      						<iframe align="right" name="ad_frame_rectangle_300x250" id="ad_frame_rectangle_300x250" ALLOWTRANSPARENCY="true" vspace="0" scrolling="no" frameborder="0" hspace="0" src="/mogo/show_ad_rectangle_300x250/0">
+									</iframe>
+      					</td>
+      				</tr>
+      			</table>
+      			<!-- ********** end: top section => right section => top section -->
+      		</td>
+      	</tr>
+      	<tr>
+      		<td align="left" valign="bottom">
+      			<!-- ********** start: top section => right section => bottom section -->
+      			<table id="top-section-right-section-bottom-section" cellpadding="0" cellspacing="0">
+      				<tr>
+      					<td align="left" valign="bottom">
+			            <iframe align="center" name="nextvideoframe" id="nextvideoframe" ALLOWTRANSPARENCY="true" vspace="0" scrolling="no" frameborder="0" hspace="0" src="/mogo/next_video/new">
+            			</iframe>
+      					</td>
+      				</tr>
+      			</table>
+      			<!-- ********** end: top section => right section => bottom section -->
+      		</td>
+      	</tr>
+      </table>
+      <!-- ********** end: top section => right section -->
+		</td>
+	</tr>
+</table>
+<!-- ********** end: (content) top section -->
+
+</td></tr>
+<tr><td align="left" valign="top">
+
+<!-- ********** start: (content) bottom section -->
+<a name="bottom"></a>
+<div id="bottom-section-outer">
+<table id="bottom-section" cellpadding="0" cellspacing="0">
+	<tr>
+		<td align="left" valign="top">
+			<!-- ********** start: bottom section => left section (channel title)-->
+			<table id="bottom-section-left-section-title" cellpadding="0" cellspacing="0">
+				<tr><td align="left" valign="center"><p>CHANNELS&nbsp;&nbsp;频道</p></td></tr>
+			</table>
+			<!-- ********** end: bottom section => left section (channel title)-->
+			<!-- ********** start: bottom section => left section (channel list)-->
+			<table id="bottom-section-left-section" cellpadding="0" cellspacing="0">
+				<tr>
+					<td align="left" valign="top" height="40">
+						<ul class="special-categories">
+							<li list_type="new"><a class="highlite" href="#">New 最新节目</a></li>
+							<li list_type="popular"><a href="#">Hot 最热节目</a></li>
+							<li list_type="recommend"><a href="#">Recommended 推荐</a></li>
+						</ul>
+						</div>
+						<hr id="category-divider"></hr>
+					</td>
+				</tr>
+				<tr>
+					<td align="left" valign="top">
+						<iframe frameborder="0" id="channelframe" name="channelframe" ALLOWTRANSPARENCY="true" scrolling="auto" vspace="0" hspace="0" src="/mogo/list_channel_category"></iframe>
+					</td>
+				</tr>
+			</table>
+			<!-- ********** end: bottom section => left section (channel list)-->		
+		</td>
+		<td align="left" valign="top">
+			<!-- ********** start: bottom section => right section (program thumb)-->
+			<table id="bottom-section-right-section-program-thumb" cellpadding="0" cellspacing="0">
+				<tr>
+					<td align="left" valign="top">
+						<iframe frameborder="0" id="programframe" name="programframe" ALLOWTRANSPARENCY="true" scrolling="no" vspace="0" hspace="0" ></iframe>
+					</td>
+				</tr>
+			</table>
+			<!-- ********** end: bottom section => right section (program thumb)-->		
+		</td>
+	</tr>
+</table>
+</div>
+<!-- ********** end: (content) bottom section -->
+
+</td>
+</tr>
+</table>
+<!-- ********** end: content section (right below banner) -->
+
+</td>
+<td align="center" valign="top">
+	<!-- ********** start: right ad panel --> 
+	<table border="0" cellpadding="0" cellspacing="0">
+		<tr>
+			<td align="left" valign="top">
+				<iframe align="center" id="ad_frame_skyscraper_top_right_120x600" name="ad_frame_skyscraper_top_right_120x600" ALLOWTRANSPARENCY="true" bgcolor="white" height="600" width="120" vspace="0" scrolling="no" frameborder="0" hspace="0" src="/mogo/show_ad_skyscraper_top_right_120x600/0">
+				</iframe>
+			</td>
+		</tr>
+		<tr><td height="38"></td></tr>
+		<tr>			
+			<td align="left" valign="top">
+				<iframe align="center" id="ad_frame_skyscraper_bottom_right_120x600" ALLOWTRANSPARENCY="true" bgcolor="white" height="600" width="120" vspace="0" scrolling="no" frameborder="0" hspace="0" src="/mogo/show_ad_skyscraper_bottom_right_120x600/0">
+				</iframe>
+			</td>
+		</tr>		
+	</table>
+	<!-- ********** end: right ad panel --> 
+</td>
+</tr>
+</table>
+<!-- ********** end: content outer section -->
+
+</td></tr>
+<tr>
+	<td>
+	<!-- ********** start: bottom ad section --> 
+		<div id="bottom-ad-section-outer">
+		<table id="bottom-ad-section" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left" valign="top">
+					<table cellpadding="0" cellspacing="0">
+						<tr>
+							<td align="left" valign="top"><iframe align="left" id="ad_frame_rectangle_234x60_1" ALLOWTRANSPARENCY="true" vspace="0" scrolling="no" frameborder="0" hspace="0" src="/mogo/show_ad_rectangle_234x60_1/0"></iframe></td>
+						</tr>
+						<tr>
+							<td align="left" valign="top"><iframe align="left" id="ad_frame_rectangle_234x60_2" ALLOWTRANSPARENCY="true" vspace="0" scrolling="no" frameborder="0" hspace="0" src="/mogo/show_ad_rectangle_234x60_2/0"></iframe></td>
+						</tr>
+						<tr>
+							<td align="left" valign="top"><iframe align="left" id="ad_frame_rectangle_234x60_3" ALLOWTRANSPARENCY="true" vspace="0" scrolling="no" frameborder="0" hspace="0" src="/mogo/show_ad_rectangle_234x60_3/0"></iframe></td>
+						</tr>
+						<tr>
+							<td align="left" valign="top"><iframe align="left" id="ad_frame_rectangle_234x60_4" ALLOWTRANSPARENCY="true" vspace="0" scrolling="no" frameborder="0" hspace="0" src="/mogo/show_ad_rectangle_234x60_4/0"></iframe></td>
+						</tr>
+					</table>
+				</td>
+				<td align="left" valign="top">
+					<table cellpadding="0" cellspacing="0">
+						<tr>
+							<td align="left" valign="top">
+								<table cellpadding="0" cellspacing="0">
+									<tr>
+										<td align="left" valign="top"><iframe align="left" id="ad_frame_square_125x125_bottom_left" ALLOWTRANSPARENCY="true" vspace="0" scrolling="no" frameborder="0" hspace="0" src="/mogo/show_ad_square_125x125_bottom_left/0"></iframe></td>
+										<td align="left" valign="top"><iframe align="left" id="ad_frame_square_125x125_bottom_right" ALLOWTRANSPARENCY="true" vspace="0" scrolling="no" frameborder="0" hspace="0" src="/mogo/show_ad_square_125x125_bottom_right/0"></iframe></td>
+									</tr>
+								</table>
+							</td>
+						<tr>
+							<td align="left" valign="top"><iframe align="left" id="ad_frame_rectangle_300x100_bottom" ALLOWTRANSPARENCY="true" vspace="0" scrolling="no" frameborder="0" hspace="0" src="/mogo/show_ad_rectangle_300x100_bottom/0"></iframe></td>
+						</tr>
+					</table>
+				</td>
+				<td align="left" valign="top"><iframe align="left" id="ad_frame_rectangle_300x250_bottom" ALLOWTRANSPARENCY="true" vspace="0" scrolling="no" frameborder="0" hspace="0" src="/mogo/show_ad_rectangle_300x250_bottom/0"></iframe></td>
+				<td align="left" valign="top"><iframe align="left" id="ad_frame_rectangle_120x240_bottom" ALLOWTRANSPARENCY="true" vspace="0" scrolling="no" frameborder="0" hspace="0" src="/mogo/show_ad_rectangle_120x240_bottom/0"></iframe></td>
+			</tr>
+		</table>
+		</div>
+	<!-- ********** end: bottom ad section --> 
+	</td>
+</tr>
+<tr>
+	<td>
+		<table id="bottom-about-section" cellpadding="0" cellspacing="0">
+			<tr>
+				<td height="50" align="center" valign="bottom"><a href="mailto:contact@mogo.tv">联系我们</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:goPartners()">我们的朋友们</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="mailto:sales@mogo.tv">广告服务</a></td>
+			</tr>
+			<tr>
+				<td align="center"><a href="http://www.uitv.com/" target="_blank"><img src="/images/mogo/mogo-icp.jpg"></a></td>
+			</tr>
+		</table>
+	</td>
+</tr>
+</table>
+<!-- ********** end: outer most table -->
+
+<input id="curr_video_channel_id" name="curr_video_channel_id" type="hidden" value="">
+<input id="curr_video_category_id" name="curr_video_category_id" type="hidden" value="">
+<input id="curr_video_program_id" name="curr_video_program_id" type="hidden" value="">
+<input id="next_video_program_name" name="next_video_program_name" type="hidden" value="">
+<input id="next_video_program_id" name="next_video_program_id" type="hidden" value="">
+<input id="next_video_channel_id" name="next_video_channel_id" type="hidden" value="">
+<input id="next_video_category_id" name="next_video_category_id" type="hidden" value="">
+<input id="next_video_description" name="next_video_description" type="hidden" value="">
+<input id="next_video_url" name="next_video_url" type="hidden" value="">
+<input id="next_video_external_id" name="next_video_external_id" type="hidden" value="">
+<input id="next_video_syndication_id" name="next_video_syndication_id" type="hidden" value="">
+<input id="next_video_list_type" name="next_video_list_type" type="hidden" value="">
+<input id="next_video_parent_category_id" name="next_video_parent_category_id" type="hidden" value="">
+</center>
+<iframe frameborder="0" height="1" width="1" id="helperframe" name="helperframe" bgcolor="white" ALLOWTRANSPARENCY="true" scrolling="auto" vspace="0" hspace="0" src=""></iframe>      
+<div id="cache"></div>
+</body>
+<HEAD>
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Expires" CONTENT="-1">
+</HEAD>
+</html>

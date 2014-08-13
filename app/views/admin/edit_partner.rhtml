@@ -1,0 +1,8 @@
+<h1>Editing partner</h1>
+
+<% form_tag( { :action => 'update_partner', :id => @partner}, :multipart => true ) do %>
+  <%= render :partial => 'partner_form' %>
+  <%= submit_tag 'Update' %>
+<% end %>
+
+<%= link_to 'Show partner', :action => 'show_partner', :id => @partner %>

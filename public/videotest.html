@@ -1,0 +1,60 @@
+<html>
+<head>
+
+<script src="/javascripts/swfobject.js?1197393730" type="text/javascript"></script>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-2590283-1";
+urchinTracker();
+</script>
+
+<script type="text/javascript" src="http://partner.googleadservices.com/gampad/google_service.js">
+</script>
+<script type="text/javascript">
+  GS_googleAddAdSenseService("ca-pub-4319899706835777");
+  GS_googleEnableAllServices();
+</script>
+<script type="text/javascript">
+  GA_googleAddSlot("ca-pub-4319899706835777", "video");
+</script>
+<script type="text/javascript">
+	
+   GA_googleAddAttr("channels", "17");
+	
+   GA_googleFetchAds();
+</script>
+
+</head>
+<body leftmargin="0" topmargin="0" rightmargin="0" buttommargin="0" style="background-color:black">
+      <!-- ********** start: diaplay default flash -->
+      
+
+<!-- END Google Ad Manager -->
+
+					<div id="ad_id" name="ad_id" style="display:none;"><script type="text/javascript">GA_googleFillSlot("video");</script></div>
+					<div id="flvcontent">
+						<script type="text/javascript">
+							var node = document.getElementById('ad_id');
+							var ad_id = node.innerHTML;
+							var pos1 = ad_id.indexOf("<id>");
+							if (pos1 == -1) pos1 = ad_id.indexOf("<ID>");
+
+							var pos2 = ad_id.indexOf("</id>");
+							if (pos2 == -1) pos2 = ad_id.indexOf("</ID>");
+
+							ad_id = ad_id.substring(pos1+4, pos2);
+
+alert("ad id:" + ad_id);
+							var out='<embed id="flvplayer" width="415" height="360"	flashvars="autoplay=true&config=/mogo/video_config%3FprogramId%3D491%26channelId%3D12%26categoryId%3D181%26videoNote%3D1%26mode%3Dlocal%26ad%3D' + ad_id + '" ' +
+							' allowscriptaccess="always" allowfullscreen="true" quality="high" name="flvplayer" src="/flvplayer.swf" type="application/x-shockwave-flash"/>';
+alert(out);
+							document.write(out);
+						</script>
+        	</div>
+      
+      <!-- ********** end: video player -->
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+<select id="program_icon_dir_select2" name="program_icon_dir_select2"  onChange="var value=document.getElementById('program_icon_dir_select2').value; new Ajax.Updater('program_icon_file_div', '/admin/get_video_thumb_file_select_options', {asynchronous:true, evalScripts:true, parameters:'dir=' + value}); ">
+<option>-- folder --</option>
+<% for item in @list %>
+	<%= item %>
+<% end %>
+</select>

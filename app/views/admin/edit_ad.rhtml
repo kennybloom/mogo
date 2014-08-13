@@ -1,0 +1,8 @@
+<h1>Editing ad</h1>
+
+<% form_tag( { :action => 'update_ad', :id => @ad}, :multipart => true ) do %>
+  <%= render :partial => 'ad_form' %>
+  <%= submit_tag 'Update' %>
+<% end %>
+
+<%= link_to 'Show ad', :action => 'show_ad', :id => @ad %>

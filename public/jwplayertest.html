@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <title>JW API Example 1-1-1-0 JW FLV Media Player</title>
+        <style type="text/css">
+            #wrapper { position:absolute; left:64px; top:128px; width:320; height:196; background-color:#CCCC00; }
+        </style>
+        <script type="text/javascript" src="/jwplayer/swfobject.js"></script>
+        <script type="text/javascript">
+
+        function createPlayer() {
+            var flashvars = {
+    file:"/video/M Arts/m_arts_lomo_798_2.flv", 
+                    autostart:"true"
+            }
+            var params = {
+                    allowfullscreen:"true", 
+                    allowscriptaccess:"always"
+            }
+            var attributes = {
+                    id:"player1",  
+                    name:"player1"
+            }
+            swfobject.embedSWF("/jwplayer/player.swf", "placeholder1", "320", "196", "9.0.115", false, flashvars, params, attributes);
+        }
+        </script>
+        <body onload="createPlayer();">
+
+<a href="http://www.jeroenwijering.com/?item=JW_FLV_Media_Player">JW FLV Media Player</a> embedded using swfobject and a createPlayer function.
+
+            <div id="wrapper">
+                <div id="placeholder1"></div>
+            </div>
+
+    </body>
+</html><!-- Nedenstående indsat af TDC for at måle trafikken samtidig med at brugeren er 100% anonym. Koden må ikke sættes ud af funktion, kopieres, eller ændres. --> <img src="http://statistik-gallup.net/V11***tdckoncern_dk/dk/ISO-8859-1//">

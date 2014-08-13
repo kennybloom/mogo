@@ -1,0 +1,78 @@
+<% 
+	case @month
+	 when 1 then 
+		month_desc = "Jan"
+	 when 2 then 
+		month_desc = "Feb"
+	 when 3 then 
+		month_desc = "Mar"
+	 when 4 then 
+		month_desc = "Apr"
+	 when 5 then 
+		month_desc = "May"
+	 when 6 then 
+		month_desc = "Jun"
+	 when 7 then 
+		month_desc = "Jul"
+	 when 8 then 
+		month_desc = "Aug"
+	 when 9 then 
+		month_desc = "Sep"
+	 when 10 then 
+		month_desc = "Oct"
+	 when 11 then 
+		month_desc = "Nov"
+	 when 12 then 
+		month_desc = "Dec"
+	end
+%>	
+
+<chart>
+	<chart_data>
+		<row>
+			<null/>
+<% for sum_hour in @sum_hours %>			
+		<string><%=sum_hour.hour%></string>
+<% end %>
+		</row>
+		<row>
+			<string>views</string>
+<% for sum_hour in @sum_hours %>			
+			<number><%=sum_hour.count%></number>
+<% end %>
+		</row>
+		<row>
+			<string>unique visitors</string>
+<% for sum_hour in @sum_hours %>			
+			<number><%=sum_hour.unique_users%></number>
+<% end %>
+		</row>
+
+	</chart_data>
+
+	<axis_category skip='0' font='arial' bold='true' size='14' color='ffff00' alpha='100' orientation='horizontal' />
+	<axis_ticks value_ticks='false' category_ticks='true' major_thickness='2' minor_thickness='1' minor_count='1' major_color='000000' minor_color='222222' position='inside' />
+	<axis_value min='0' size='10' color='ffffff' alpha='50' steps='6' prefix='' suffix='' decimals='0' separator='' show_min='false' />
+	
+	<chart_grid_h alpha='10' color='000000' thickness='1' />
+	<chart_pref line_thickness='2' point_shape='circle' fill_shape='true' />
+	<chart_rect x='50' y='50' width='500' height='300' positive_color='ffffff' positive_alpha='50' negative_color='000000' negative_alpha='10' />
+	<chart_transition type='slide_left' delay='.5' duration='0.5' order='series' />
+	<chart_type>Line</chart_type>
+	<chart_value position='cursor' size='12' color='000000' background_color='aaff00' alpha='80' />
+	
+	<draw>
+		<text transition='dissolve' delay='0' duration='0.5' color='ff4444' alpha='100' font='Arial' rotation='0' bold='true' size='30' x='50' y='-30' width='500' height='75' h_align='center' v_align='bottom'><%=@year.to_s%> <%=month_desc%> <%=@day%> video views by hour</text>
+	</draw>
+	
+	<legend_label layout='horizontal' bullet='line' font='arial' bold='true' size='13' color='ffff00' alpha='65' />
+	<legend_rect x='50' y='75' width='320' height='5' margin='5' fill_color='000000' fill_alpha='7' line_color='000000' line_alpha='0' line_thickness='0' />
+	<legend_transition type='dissolve' delay='0' duration='0.5' />
+	
+	<series_color>
+		<color>ff4444</color>
+		<color>048cff</color>
+	</series_color>
+
+</chart>
+
